@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#243e34">
+{{META}}
+<link rel="icon" type="image/png" href="art/book-mark.png?v=94aef816ddb0">
+<link rel="preload" href="art/young-serif.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="style.css?v={{STYLE_VERSION}}">
+</head>
+<body>
+<div id="reader" class="covered" role="region" aria-label="Interactive pop-up book" hidden>
+  <section id="gate" aria-label="Illustrated History of Salsa Dance" data-side="front">
+    <p id="cover-subtitle">From the shores of Cuba to the world stage</p>
+    <div id="back-transcript" class="sr" hidden></div>
+    <button id="cover-button" type="button" aria-label="Open Illustrated History of Salsa Dance">
+
+    </button>
+    <div id="cover-colophon">
+      <div class="cover-actions">
+        <button id="cover-prompt" type="button"><i data-icon="book"></i><span id="cover-action">Open the book</span></button>
+        <button id="share-book" type="button" hidden><i data-icon="share"></i><span>Share this book</span></button>
+      </div>
+      <label id="manual-share" hidden>Copy this link <input type="url" readonly></label>
+      <div class="cover-byline"><a id="cover-credit" href="https://www.salsavida.com/" rel="noopener" target="_blank">An interactive experience by Salsa Vida</a><a class="read-text" href="#reading-edition">Read as text</a></div>
+    </div>
+    {{LEGAL_LINKS}}
+  </section>
+  <div id="stage">
+    <div id="edition" aria-hidden="true"></div>
+    <div id="cover-film" aria-hidden="true" hidden></div>
+    <canvas id="world" tabindex="0" aria-label="An open pop-up book. Select glowing objects to read their stories. Drag its pages to turn them. Drag the surrounding table to rotate. Use the left and right arrow keys to turn pages, A and D to rotate, and W and S to tilt. Pinch or use the plus and minus keys to zoom. R resets the view."></canvas>
+    <div id="scene-notes" role="group" aria-label="Explore objects on this page" hidden>
+      <template id="note-button"><button type="button" class="scene-note" aria-haspopup="dialog"><span></span></button></template>
+    </div>
+  </div>
+  <div class="grain" aria-hidden="true"></div><div class="shade" aria-hidden="true"></div>
+  <header class="tools">
+    <div class="imprint"><span class="tile"><img src="art/book-mark.png?v=94aef816ddb0" width="39" height="39" alt=""></span><div><strong>Illustrated History of Salsa Dance</strong></div></div>
+    <nav aria-label="Book tools">
+      <button id="reset" title="Reset view" aria-label="Reset view"><i data-icon="reset"></i><span>Reset view</span></button>
+      <button id="sound" title="Turn paper sounds on" aria-label="Turn paper sounds on" aria-pressed="false"><i data-icon="mute"></i></button>
+      <button id="contents" title="Chapters" aria-label="Chapters" aria-haspopup="dialog"><i data-icon="list"></i><span>Chapters</span></button>
+    </nav>
+  </header>
+  <section class="chapter" aria-labelledby="title">
+    <div class="eyebrow"><b id="folio">CHAPTER 01 / 16 · THREE WORLDS MEET</b></div>
+    <h2 id="title">Cuba: Where Salsa’s Story Begins</h2>
+    <p id="place">Cuba and the northern Caribbean · October 1492 onward</p>
+    <button id="listen" hidden></button>
+  </section>
+  <footer class="bottom">
+    <section class="narration" aria-label="Chapter introduction"><div class="kicker"><i data-icon="feather"></i> ON THIS PAGE</div>
+      <p id="line">Salsa’s story begins in Cuba, where Indigenous, Spanish and African cultures came together over centuries. Born out of conquest, slavery, survival and extraordinary creativity, their encounter laid the foundations for some of the world’s most influential music and dances.</p>
+      <button id="read" aria-haspopup="dialog">Read more <i data-icon="book"></i></button>
+    </section>
+    <div class="transport" aria-label="Turn the pages">
+      <div class="rail-label"><span id="help">DRAG TO TURN · PINCH TO ZOOM</span><b id="counter">01 / 16</b></div>
+      <div class="rail-row"><button id="prev" aria-label="Previous page" disabled><i data-icon="left"></i></button>
+        <div class="rail"><div class="ticks"><i></i><i></i><i></i></div><input id="scrub" type="range" min="0" max="15" step=".01" value="0" aria-label="Turn the page slowly" aria-valuetext="Page 1 of 16"></div>
+        <button id="next" aria-label="Next page"><i data-icon="right"></i></button>
+      </div>
+    </div>
+  </footer>
+</div>
+<dialog id="dialog" aria-labelledby="dialog-title"><article class="sheet">
+  <button id="close" aria-label="Close"><i data-icon="close"></i></button>
+  <div id="sheet-body"></div>
+</article></dialog>
+<p class="sr" role="status" id="announce"></p>
+{{READING_EDITION}}
+{{SCRIPTS}}
+</body></html>

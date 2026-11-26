@@ -1,0 +1,17 @@
+location ~ ^/chapters(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#book-contents"; }
+location ~ ^/chapters/cuba-and-the-roots-of-salsa(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#landfall"; }
+location ~ ^/chapters/taino-music-and-instruments(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#taino"; }
+location ~ ^/chapters/spanish-influences-in-cuba(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#spain"; }
+location ~ ^/chapters/african-roots-of-salsa(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#africa"; }
+location ~ ^/chapters/son-cubano(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#son"; }
+location ~ ^/chapters/cuban-music-and-dance(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#cuban-dances"; }
+location ~ ^/chapters/palladium-ballroom-and-mambo(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#palladium"; }
+location ~ ^/chapters/fania-records-and-salsa(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#fania"; }
+location ~ ^/chapters/fania-all-stars-at-yankee-stadium(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#stadium"; }
+location ~ ^/chapters/eddie-torres-and-new-york-on2(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#eddie"; }
+location ~ ^/chapters/los-angeles-style-salsa(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#los-angeles"; }
+location ~ ^/chapters/salsa-in-cali-colombia(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#cali"; }
+location ~ ^/chapters/puerto-rico-salsa-congress(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#puerto-rico"; }
+location ~ ^/chapters/international-salsa-festivals(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#congress-world"; }
+location ~ ^/chapters/world-salsa-championships(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#championship"; }
+location ~ ^/chapters/salsa-at-the-super-bowl(?:/index[.]html|/)?$ { return 301 "https://www.salsahistory.com/#halftime"; }
