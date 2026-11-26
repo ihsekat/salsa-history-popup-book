@@ -7,7 +7,7 @@ import {originsScene} from './origins.js';
 import {modernScene} from './modern-scenes.js';
 import {makeSceneItem} from './scene-item.js';
 
-import {revisionScene,revisionFigures} from './revision-scenes.js';
+import {revisionScene,revisionFigures,rotateCasinoCouple} from './revision-scenes.js';
 
 const figures={
   ...revisionFigures,
@@ -69,18 +69,33 @@ function standee(k,texture,x,z,h,baseY=0,tabPosition=0,yaw=0){
   k.box(foot,w*tabPosition,.018,-.13,Math.min(w*.57,.76),.033,.40,'#c3a879');
   const support=k.group(foot,w*tabPosition,0,-.005);support.rotation.y=Math.PI/2;
   k.card(support,[[0,0],[.34,0],[0,h*.41]],'#c5b58e',-.025,.05);
-  return {puppet,cutout};
+  return {foot,puppet,cutout};
 }
+const figureMotion={
+  spain:{player:'music',partners:'partnerTurn'},
+  africa:{duo:'step',prop:'music'},
+  son:{duo:'son',player:'music'},
+  'cuban-dances':{rumba:'step',charanga:'music',chacha:'twist',pachanga:'twist'},
+  palladium:{duo:'step',player:'music',piro:'step'},
+  fania:{founders:'people',band:'music'},
+  stadium:{pacheco:'music',duo:'music',colon:'music',player:'music',mongo:'music'},
+  eddie:{duo:'step'},'los-angeles':{duo:'twist'},cali:{duo:'step',team:'twist'},
+  'puerto-rico':{social:'son',workshops:'step',performances:'twist'},
+  'congress-world':{duo:'step'},championship:{duo:'twist'},halftime:{duo:'step',player:'music'}
+};
 export function buildChapter(id,root,textures){
   const stage=new T.Group();root.add(stage);stage.visible=false;
   const k=makeKit(stage);
   const pieces=revisionFigures[id]?revisionScene(id,k):pilot[id]?pilotScene(k,id):['landfall','taino','spain','africa'].includes(id)?originsScene(id,k):modernScene(id,k);
   const cutouts={},puppets={};
   for(const [key,file,x,z,h,baseY,facing=1,yaw=0] of figures[id]){
-    const {cutout,puppet}=standee(k,textures[file],x,z,h,baseY,tabPositions[file],yaw);
+    const {foot,cutout,puppet}=standee(k,textures[file],x,z,h,baseY,tabPositions[file],yaw);
     puppet.scale.x=facing;
     if(file==='ship')k.animateAtRest(puppet,'ship',.4);
     if(file==='taino')k.animateAtRest(puppet,'people');
+    if(key==='rueda')rotateCasinoCouple(k,foot);
+    const motion=figureMotion[id]?.[key];
+    if(motion)k.animateAtRest(foot,motion,key==='chacha'?0:key==='pachanga'?1:x*.8);
     if(key){(cutouts[key]??=[]).push(cutout);puppets[key]??=puppet;}
   }
   k.anchors.forEach(batchStock);
@@ -88,6 +103,9 @@ export function buildChapter(id,root,textures){
   for(const key of new Set([...Object.keys(pieces),...Object.keys(cutouts)])){
     const anchors=[].concat(pieces[key] || []);
     const props=anchors.flatMap(anchor=>anchor.children.filter(child=>child.isMesh && child.material.vertexColors));
+    for(const anchor of anchors)anchor.traverse(m=>{
+      if(m.isMesh && m.parent!==anchor && m.material.vertexColors)props.push(m);
+    });
     const meshes=cutouts[key] || props;
     if(!meshes.length)throw Error('Missing paper object '+id+' / '+key);
     const parts=meshes.map(mesh=>makeSceneItem(mesh,.50,.52));

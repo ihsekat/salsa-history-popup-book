@@ -34,7 +34,7 @@ function house(k,x,z,size,taino){
   return g;
 }
 function leafTree(k,x,z,h){
-  const g=k.anchor(x,z);
+  const g=k.animateAtRest(k.anchor(x,z),'palm',x*.55);
   k.rod(g,[0,0,0],[.12,h*.70,0],.11,'#795e43',7);
   for(const [xx,yy,r,col] of [[-.50,.76,.61,'#638062'],[.47,.77,.69,'#6f8c61'],[0,.9,.72,'#819262'],[-.16,.72,.56,'#587b61']]){
     k.rod(g,[.06,h*.46,0],[xx,h*yy,0],.055,'#856347',5);
@@ -156,7 +156,7 @@ function spanish(k){
       }
     }
   }
-  return {duo:patio,prop:music,primer:spanishPrimer(k)};
+  return {duo:patio,prop:k.animateAtRest(music,'paper',.4),primer:k.animateAtRest(spanishPrimer(k),'paper',1.6)};
 }
 function gathering(k){
   ridge(k,-3.4,-2.95,4.79,1.23,'#b9946a','#95855d');ridge(k,2.23,-2.96,5.6,1.48,'#a68d66','#8a795b');
@@ -167,7 +167,7 @@ function gathering(k){
     const a=i*Math.PI/4;gourd(k,fire,.36*Math.cos(a),.06,.23*Math.sin(a),.12,.09,'#887963');
   }
   for(let i=0;i<5;i++){
-    const f=k.group(fire,(i-2)*.075,.04,.05);f.rotation.y=i*.67;
+    const f=k.group(fire,(i-2)*.075,.04,.05);f.rotation.y=i*.67;k.animateAtRest(f,'fire',i*1.27);
     const h=[.45,.67,.91,.59,.46][i];
     k.card(f,[[-.13,0],[-.19,.27],[-.05,h*.65],[-.04,h],[.10,h*.67],[.08,.31],[.17,.14],[.10,.02]],i%2?'#efb359':'#c96c44',0,.029);
   }
@@ -182,7 +182,7 @@ function gathering(k){
       k.rod(drums,[x+r*Math.cos(a),h*.90,z+r*Math.sin(a)],[x+r*.71*Math.cos(b),h*.30,z+r*.71*Math.sin(b)],.012,'#e0bd89',5);
     }
   }
-  return {player:drums};
+  return {player:k.animateAtRest(drums,'drum')};
 }
 export function originsScene(id,k){
   return {landfall:coast,taino:village,spain:spanish,africa:gathering}[id](k);

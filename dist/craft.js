@@ -69,6 +69,7 @@ export function makeKit(root) {
   const anchors=[];
   const motions=[];
   function animateAtRest(node,kind,phase=0){
+    node.userData.movingStock=true;
     motions.push(paperMotion(node,kind,phase));
     return node;
   }
@@ -85,11 +86,22 @@ export function makeKit(root) {
 const pooled=new THREE.MeshLambertMaterial({vertexColors:true,side:THREE.DoubleSide,flatShading:true});
 export function batchStock(anchor) {
   anchor.updateWorldMatrix(true,true);
-  const inv=anchor.matrixWorld.clone().invert();
-  const positions=[],normals=[],colors=[], movable=[];
-  const v=new THREE.Vector3(),n=new THREE.Vector3();
+  const batches=new Map();
   anchor.traverse(m=>{
-    if(!m.isMesh || !m.material.isMeshLambertMaterial || m.material.map || Array.isArray(m.material)) return;
+    if(!m.isMesh || !m.material.isMeshLambertMaterial || m.material.map)return;
+    let pivot=m.parent;
+    while(pivot!==anchor && !pivot.userData.movingStock)pivot=pivot.parent;
+    if(!batches.has(pivot))batches.set(pivot,[]);
+    batches.get(pivot).push(m);
+  });
+  for(const [pivot,stock] of batches)mergeStock(pivot,stock);
+}
+
+function mergeStock(pivot,stock){
+  const inv=pivot.matrixWorld.clone().invert();
+  const positions=[],normals=[],colors=[];
+  const v=new THREE.Vector3(),n=new THREE.Vector3();
+  for(const m of stock){
     const world=new THREE.Matrix4().multiplyMatrices(inv,m.matrixWorld);
     const normal=new THREE.Matrix3().getNormalMatrix(world);
     const g=m.geometry, pos=g.getAttribute('position'), norm=g.getAttribute('normal');
@@ -103,14 +115,12 @@ export function batchStock(anchor) {
       n.fromBufferAttribute(norm,i).applyMatrix3(normal).normalize(); normals.push(n.x,n.y,n.z);
       colors.push(m.material.color.r,m.material.color.g,m.material.color.b);
     }
-    movable.push(m);
-  });
-  if(!movable.length)return;
-  movable.forEach(m=>{m.removeFromParent(); m.geometry.dispose();});
+  }
+  stock.forEach(m=>{m.removeFromParent(); m.geometry.dispose();});
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
   geometry.setAttribute('normal',new THREE.Float32BufferAttribute(normals,3));
   geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
-  mesh(anchor,geometry,pooled);
+  mesh(pivot,geometry,pooled);
 }
 

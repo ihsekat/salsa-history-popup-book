@@ -128,6 +128,7 @@ function spectator(k,g,x,y,z,seed) {
   const coat=crowdCoats[(seed*13)%crowdCoats.length], skin=crowdSkin[(seed*5)%crowdSkin.length];
   const hair=crowdHair[seed%crowdHair.length];
   const s=k.group(g,x,y,z);s.rotation.z=r;
+  if(seed%9===2)k.animateAtRest(s,'cheer',seed*.69);
   flat(k,s,[[-shoulder,-.048],[-shoulder*.9,.082],[-.062,.147],[.062,.147],[shoulder*.92,.083],[shoulder,-.048]],coat);
   flat(k,s,[[-.065,.161],[-.075,.218],[-.048,.278],[.009,.30],[.062,.277],[.079,.225],[.054,.160],[.018,.133],[-.028,.136]],skin,.008);
   if(seed%5===0){
@@ -166,7 +167,7 @@ function judgingDesk(k,drawJudge) {
   }
   for(const [i,skin,coat,hair] of [[0,'#ad7958','#5e606c','#463c37'],[1,'#c89c79','#76525c','#644d41'],[2,'#946747','#556162','#3f3a36']]){
     const chair=k.group(panel,-.693+i*.696,.574,-.02);
-    chair.scale.setScalar(.86);
+    chair.scale.setScalar(.86);k.animateAtRest(chair,'judge',i*2.4);
     drawJudge(k,chair,0,0,skin,coat,hair);
     const scorecard=k.group(panel,-.693+i*.696,.744,.092);
     scorecard.rotation.x=-.72;

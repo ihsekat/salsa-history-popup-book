@@ -634,7 +634,7 @@ export const expansion = {
       "1 2 3 4",
       "5 6 7 8",
     ],
-    alt: "Johnny Vázquez and his partner dance LA-style salsa on a lit stage beside an On1 count board.",
+    alt: "Johnny Vázquez and his partner dance beside stage lights and an On1 count board. The Hollywood sign stands on the hillside behind them.",
     copy: [
       "Los Angeles had a Latin music and dance scene of its own, shaped by its Mexican, Central American and other communities. By the 1990s, Francisco, Luis and Johnny Vázquez were among the dancers helping develop and popularize a distinctive West Coast approach to salsa.",
       "Like New York style, LA salsa is generally danced in a line, but its break steps fall on counts 1 and 5 rather than 2 and 6. The style became associated with sharp turns, energetic shines and dramatic partnerwork. Performance teams such as Los Rumberos and Salsa Brava brought that energy to stages, where routines could include dips, lifts and acrobatics.",

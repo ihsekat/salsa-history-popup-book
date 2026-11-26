@@ -1,3 +1,4 @@
+import {smoothUnit} from './paper-motion.js';
 import {t} from './edition.js';
 import {orlandoFinals} from './orlando-finals.js';
 import {canvasTexture,surfaceHeight} from './craft.js';
@@ -45,7 +46,8 @@ function floodlight(k,x,z,h,dir=1) {
 
 function pennant(k,g,x,y,z,color,dir=1) {
   k.rod(g,[x,y-.67,z],[x,y,z],.024,p.amber,5);
-  k.card(g,[[x,y-.03],[x+dir*.49,y-.12],[x,y-.23]],color,z,.027);
+  const cloth=k.animateAtRest(k.group(g,x,y,z),'flag',x);
+  k.card(cloth,[[0,-.03],[dir*.49,-.12],[0,-.23]],color,0,.027);
 }
 
 function stadium(k) {
@@ -60,8 +62,10 @@ function stadium(k) {
       if(variant===2 || variant===7)continue;
       const coat=[p.wine,p.navy,p.ochre,p.pine,p.coral][(row+col)%5];
       const skin=['#ba885e','#a26a47','#dfb68c','#996748'][(row*3+col)%4];
-      k.card(stands,[[x-.10,y+.015],[x-.079,y+.145],[x,y+.20],[x+.081,y+.14],[x+.106,y+.015]],coat,z+.02,.024);
-      k.disc(stands,x,y+.215,z+.046,.066,skin,8);
+      const fan=k.group(stands,x,y,z);
+      if((row===1 && col===3)||(row===2 && col===9)||(row===0 && col===11))k.animateAtRest(fan,'cheer',col*.53);
+      k.card(fan,[[-.10,.015],[-.079,.145],[0,.20],[.081,.14],[.106,.015]],coat,.02,.024);
+      k.disc(fan,0,.215,.046,.066,skin,8);
     }
   }
   k.box(stands,0,1.92,-.10,4.90,.13,.34,p.ivory);
@@ -185,15 +189,20 @@ function eddie(k) {
   k.label(tape,'MAMBO / ON2 LESSONS',0,.71,.092,1.24,.134,{ink:'#663d36'});
   k.box(tape,0,.39,.075,1.18,.33,.021,'#677c75');
   for(const x of [-.38,.38]){
-    k.disc(tape,x,.39,.099,.143,'#dfd8bb',20);
-    k.disc(tape,x,.39,.122,.056,'#3a4541',8);
+    const spool=k.animateAtRest(k.group(tape,x,.39,.099),'reel');
+    k.disc(spool,0,0,0,.143,'#dfd8bb',20);
+    k.disc(spool,0,0,.024,.056,'#3a4541',8);
+    for(let i=0;i<3;i++){
+      const a=2*Math.PI*i/3;
+      k.disc(spool,.093*Math.cos(a),.093*Math.sin(a),.026,.026,'#677c75',6);
+    }
   }
   k.box(tape,0,.12,.077,1.40,.065,.019,'#535954');
   return {duo:null,player,prop,vhs};
 }
 
 function palm(k,x,z,h,lean) {
-  const g=k.anchor(x,z), end=lean*h;
+  const g=k.animateAtRest(k.anchor(x,z),'palm',x*.67), end=lean*h;
   for(let j=0;j<5;j++){
     const a=j/5,b=(j+1)/5;
     k.rod(g,[end*a*a,h*a,0],[end*b*b,h*b,0],h*(.032-a*.012),j%2?p.wood:p.amber,6);
@@ -212,17 +221,29 @@ function stageLight(k,g,x,y,z,tilt=0) {
   const lamp=k.group(g,x,y,z);lamp.rotation.z=tilt;
   k.card(lamp,[[-.24,.12],[-.21,-.15],[.18,-.15],[.26,.13]],p.navy,-.12,.25);
   k.box(lamp,0,0,.149,.35,.24,.03,p.ink);
-  oblong(k,lamp,0,.008,.18,.135,.09,p.gold,12);
+  const lens=oblong(k,lamp,0,.008,.18,.135,.09,p.gold,12);
+  const dim=new k.THREE.Color('#695b42'),bright=new k.THREE.Color('#ffebac');
+  lens.material=new k.THREE.MeshBasicMaterial({color:bright,side:k.THREE.DoubleSide});
+  k.motions.push((seconds,strength)=>{
+    const pulse=smoothUnit(.5+.7*Math.cos(seconds*Math.PI/2+tilt*7));
+    lens.material.color.copy(dim).lerp(bright,1-strength*(1-pulse));
+  });
   k.card(lamp,[[-.19,.13],[-.26,.29],[.22,.27],[.20,.13]],p.slate,.14);
   k.card(lamp,[[-.19,-.13],[-.22,-.21],[.21,-.20],[.18,-.13]],p.slate,.14);
 }
 
 function losAngeles(k) {
   const hills=k.anchor(-2.77,-2.70);
-  k.card(hills,[[-2.67,0],[-2.67,.82],[-2.36,1.10],[-1.91,1.18],[-1.56,1.42],[-.93,1.36],[-.43,1.72],[.12,1.88],[.53,1.66],[1.01,1.69],[1.62,1.23],[2.30,1.42],[2.65,1.17],[2.65,0]],'#799484',0,.04);
-  k.card(hills,[[-2.64,0],[-2.64,.60],[-2.01,.86],[-1.54,.83],[-1.15,1.04],[-.60,.84],[.02,1.12],[.54,.96],[1.07,1.26],[1.50,1.16],[2.64,1.33],[2.64,0]],p.jade,.07);
-  k.disc(hills,1.1,2.03,-.07,.47,p.gold,28);
-  palm(k,-4.69,-1.35,2.50,.10);palm(k,-2.72,-2.20,1.72,.075);
+  k.card(hills,[[-2.67,0],[-2.67,.91],[-2.31,1.46],[-1.86,1.68],[-1.43,2.09],[-.97,2.25],[-.50,2.86],[.03,3.04],[.47,2.97],[.90,2.58],[1.34,2.43],[1.76,1.93],[2.28,2.07],[2.65,1.57],[2.65,0]],'#708975',0,.04);
+  k.card(hills,[[-2.64,0],[-2.64,.63],[-2.01,1.16],[-1.48,1.03],[-.91,1.33],[-.35,1.18],[.17,1.51],[.70,1.33],[1.19,1.69],[1.71,1.50],[2.64,1.41],[2.64,0]],p.jade,.07);
+  const letters='HOLLYWOOD';
+  for(let i=0;i<letters.length;i++){
+    const x=-1.23+i*.32,y=2.45+.14*Math.sin(i*.42);
+    k.rod(hills,[x,y-.27,.076],[x,y+.07,.076],.013,'#526858',4);
+    k.label(hills,letters[i],x,y,.108,.37,.43,{ink:'#fff4d7',font:'Arial'});
+  }
+  k.disc(hills,1.79,3.11,-.10,.43,p.gold,32);
+  palm(k,-5.04,-1.42,2.37,.08);palm(k,-2.72,-2.20,1.72,.075);
   const theatre=k.anchor(2.79,-1.68);
   k.card(theatre,[[-2.38,0],[-2.38,2.37],[-1.97,2.37],[-1.97,2.61],[-1.62,2.61],[-1.62,2.84],[-.72,2.84],[-.72,3.06],[-.38,3.06],[0,3.36],[.38,3.06],[.72,3.06],[.72,2.84],[1.62,2.84],[1.62,2.61],[1.97,2.61],[1.97,2.37],[2.38,2.37],[2.38,0]],p.coral,-.16,.31);
   k.box(theatre,0,1.02,.031,3.58,1.98,.19,p.wine);
@@ -253,16 +274,17 @@ function losAngeles(k) {
 function islandFlag(k,g,x,y,z,s) {
   const flag=k.group(g,x,y,z); flag.scale.setScalar(s);
   k.rod(flag,[0,-.78,0],[0,.41,0],.019,p.amber,6);
+  const cloth=k.animateAtRest(k.group(flag),'flag',.6);
   const xFields=[0,.42,.82,1.20],heights=[0,-.045,.018,-.024];
   for(let j=0;j<3;j++) {
     for(let i=0;i<5;i++){
       const t=.37-.15*i;
-      k.card(flag,[[xFields[j],t+heights[j]],[xFields[j+1],t+heights[j+1]],[xFields[j+1],t-.15+heights[j+1]],[xFields[j],t-.15+heights[j]]],
+      k.card(cloth,[[xFields[j],t+heights[j]],[xFields[j+1],t+heights[j+1]],[xFields[j+1],t-.15+heights[j+1]],[xFields[j],t-.15+heights[j]]],
         i%2?p.white:(j===1?p.brick:p.coral),.016*j,.018);
     }
   }
-  k.card(flag,[[0,.37],[.64,-.014],[0,-.38]],'#497b86',.066,.014);
-  star(k,flag,.193,-.012,.089,.105,p.white);
+  k.card(cloth,[[0,.37],[.64,-.014],[0,-.38]],'#497b86',.066,.014);
+  star(k,cloth,.193,-.012,.089,.105,p.white);
 }
 
 function garland(k,g,from,to,drop,count){
@@ -311,7 +333,7 @@ export function trophyStand(k,x,z,place,event){
   placard(k,g,place,0,.365,.398,1.62,.136,p.navy,null,'Arial');
   placard(k,g,event,0,.236,.399,1.64,.196,p.wine,null);
   for(const sx of [-.82,.82])for(const y of [.18,.40])k.disc(g,sx,y,.402,.014,p.amber,8);
-  const cup=k.group(g,0,.542,-.025);
+  const cup=k.animateAtRest(k.group(g,0,.542,-.025),'trophyTurn');
   k.box(cup,0,.077,0,.68,.154,.47,p.wine);
   k.box(cup,0,.16,0,.59,.062,.42,p.gold);
   const profile=[[.22,.19],[.21,.23],[.105,.28],[.071,.33],[.071,.40],[.13,.45],
@@ -376,10 +398,19 @@ function routeMap(k) {
   k.box(board,0,1.23,-.040,4.80,2.69,.17,p.wood);
   k.box(board,0,1.23,.065,4.69,2.59,.063,p.ivory);
   k.box(board,0,1.19,.113,4.45,2.13,.057,'#7c9f99');
-  const chart=drawCongressMap();
+  let drawRoutes;
+  const chart=drawCongressMap(update=>{drawRoutes=update;});
   const width=4.45,height=2.13;
   const print=new k.THREE.MeshLambertMaterial({map:canvasTexture(chart),side:k.THREE.DoubleSide});
   k.mesh(board,new k.THREE.PlaneGeometry(width,height),print,0,1.19,.151);
+  let lastStep=64;
+  k.motions.push((seconds,strength)=>{
+    const t=(seconds+5.1)%8;
+    const progress=t<5?smoothUnit(t/5):1-smoothUnit((t-7)/1);
+    const step=Math.round(64*(1-strength*(1-progress)));
+    if(step===lastStep)return;
+    lastStep=step;drawRoutes(step/64);print.map.needsUpdate=true;
+  });
   for(const {lon,lat} of regions){
     const [px,py]=projectRegion(lon,lat);
     const x=(px/chart.width-.5)*width,y=1.19+(.5-py/chart.height)*height;
@@ -391,7 +422,7 @@ function routeMap(k) {
 }
 
 function travelCase(k,x,z) {
-  const g=k.anchor(x,z),bag=k.group(g);bag.rotation.y=-.12;bag.rotation.z=-.045;
+  const g=k.animateAtRest(k.anchor(x,z),'rattle'),bag=k.group(g);bag.rotation.y=-.12;bag.rotation.z=-.045;
   k.box(bag,0,.52,0,1.44,.94,.53,'#936950');
   k.box(bag,0,.53,.281,1.37,.83,.055,'#b88451');
   k.box(bag,0,.53,-.278,1.37,.83,.047,'#ae7b50');
@@ -472,7 +503,7 @@ function championship(k){
 }
 
 function cane(k,x,z,h,flip=1) {
-  const g=k.anchor(x,z);
+  const g=k.animateAtRest(k.anchor(x,z),'bush',x*.61);
   const green=['#547953','#79945b','#688559'];
   for(let j=0;j<5;j++){
     const a=-.46+j*.23,ht=h*(.72+.17*((j*3)%4)/2),bend=(j-2)*.11*flip;
@@ -528,10 +559,11 @@ function casita(k) {
   k.box(g,-.29,.055,1.23,1.02,.085,.25,p.ivory);
   for(const [x,z] of [[-1.88,.70],[1.59,.76]]){
     k.card(g,[[x-.15,.29],[x+.15,.29],[x+.21,.61],[x-.21,.61]],p.brick,z,.18);
+    const leaves=k.animateAtRest(k.group(g,x,.58,z+.10),'bush',x);
     for(let i=0;i<5;i++){
       const d=(i-2)*.096,high=.80+(i%3)*.09;
-      k.rod(g,[x,.58,z+.10],[x+d,high,z+.10],.014,p.pine,5);
-      k.card(g,[[x+d*.55,.70],[x+d+.075,high+.08],[x+d,high+.13],[x+d-.05,high]],i%2?p.sea:p.jade,z+.12,.015);
+      k.rod(leaves,[0,0,0],[d,high-.58,0],.014,p.pine,5);
+      k.card(leaves,[[d*.55,.12],[d+.075,high-.50],[d,high-.45],[d-.05,high-.58]],i%2?p.sea:p.jade,.02,.015);
     }
   }
   return g;

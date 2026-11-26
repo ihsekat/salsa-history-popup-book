@@ -3,6 +3,7 @@ import {chapters,plateName,bookCopy,bookTitle,t,lang} from './edition.js';
 import {orderedReferences} from './references.js';
 import {asset} from './assets.js';
 import {plateBounds} from './plate-bounds.js';
+import {artRevisions} from './art-revisions.js';
 const $=id=>document.getElementById(id);
 const otherPath=lang==='en'?'/es/':'/';
 const otherEdition=location.protocol==='file:'?new URL(otherPath,bookCopy.back.share.url).href:otherPath;
@@ -202,7 +203,7 @@ function drawCoverFilm(){
   }
   if(!transition)placeCover((w-width)/2+.301*width,(h-height)/2+.145*height,(w-width)/2+.743*width,(h-height)/2+.858*height);
 }
-const ambientPlates=new Map();
+let ambientPlate=null;
 let flatOnScreen=true;
 function setIllustration(name){
   const page=$('edition');
@@ -214,16 +215,18 @@ function showRestingIllustration(){
   if(!illustrated || current<0)return;
   const id=chapters[current].id;
   let name=plateName(id);
-  if((id==='landfall' || id==='taino') && !cover && !transition && !anim && Number.isInteger(pos) &&
+  const moving='ambient-'+id+'.avif';
+  const available=artRevisions[lang==='en'?'en':'es'][moving];
+  if(available && !cover && !transition && !anim && Number.isInteger(pos) &&
     flatOnScreen && !document.hidden && !$('dialog').open && !reduced.matches && !navigator.connection?.saveData){
-    const moving='ambient-'+id+'.avif';
-    if(!ambientPlates.has(id)){
+    if(ambientPlate?.id!==id){
+      if(ambientPlate)ambientPlate.image.onload=null;
       const image=new Image();
-      ambientPlates.set(id,image);
+      ambientPlate={id,image};
       image.onload=showRestingIllustration;
       image.src=asset(moving);
     }
-    const image=ambientPlates.get(id);
+    const {image}=ambientPlate;
     if(image.complete && image.naturalWidth)name=moving;
   }
   setIllustration(name);

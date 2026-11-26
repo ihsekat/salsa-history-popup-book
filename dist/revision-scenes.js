@@ -15,6 +15,18 @@ function casinoCouple(file,dx,dz,height,yaw){
   return ['rueda',file,x,casinoFloor.z+dz,height,y,1,yaw];
 }
 
+export function rotateCasinoCouple(k,foot){
+  const dx=foot.position.x-casinoFloor.x,dz=foot.position.z-casinoFloor.z;
+  const facing=foot.rotation.y;
+  k.motions.push((seconds,strength)=>{
+    const angle=.14*strength*Math.sin(seconds*Math.PI/4);
+    const c=Math.cos(angle),s=Math.sin(angle);
+    foot.position.x=casinoFloor.x+dx*c+dz*s;
+    foot.position.z=casinoFloor.z+dz*c-dx*s;
+    foot.rotation.y=facing+angle;
+  });
+}
+
 export const revisionFigures={
   'cuban-dances':[
     ['rumba','cuban-rumba',-3.64,-1.38,1.92,.10],
@@ -145,7 +157,7 @@ function danceDisplay(k,x,z,w,title,color,trim){
 
 function cubanDances(k){
   rumbaPatio(k);charangaPavilion(k);
-  const ring=k.anchor(casinoFloor.x,casinoFloor.z);
+  const ring=k.animateAtRest(k.anchor(casinoFloor.x,casinoFloor.z),'circle');
   for(const [a,b,y,c] of [[2.16,1.18,.019,paper.tan],[2.10,1.13,.043,paper.pale],[1.99,1.04,.056,'#c8ac87']]){
     const o=spin(k,ring,0,y,0,1,c,48);o.rotation.x=-Math.PI/2;o.scale.set(a,b,1);
   }
@@ -154,13 +166,15 @@ function cubanDances(k){
   print(k,name,'CASINO',0,.112,.044,1.32,.185,paper.navy);
   const record=k.anchor(-4.97,1.81);
   const item=k.group(record);item.rotation.z=.085;item.rotation.x=-.13;
-  sleeveDisc(k,item,.09,.82,-.025,.675,paper.yellow);
+  const vinyl=k.animateAtRest(k.group(item,.09,.82,-.025),'disc');
+  sleeveDisc(k,vinyl,0,0,0,.675,paper.yellow);
   k.card(item,[[-.72,.014],[.67,.014],[.67,.73],[.06,.63],[-.72,.83]],paper.coral,.13,.07);
   k.card(item,[[-.68,.062],[-.36,.062],[-.12,.65],[-.37,.71]],paper.rust,.205);
   k.card(item,[[.32,.045],[.57,.045],[.64,.235],[.44,.27]],paper.ochre,.207);
   print(k,item,'MAMBO',-.06,.389,.245,1.17,.35,paper.chalk);
   const chacha=danceDisplay(k,-2.95,1.65,1.79,'CHA-CHA-CHA',paper.sea,paper.chalk);
   const pachanga=danceDisplay(k,-.89,2.00,1.52,'PACHANGA',paper.ochre,paper.wine);
+  k.animateAtRest(chacha,'twist');k.animateAtRest(pachanga,'twist',1);
   return {record,chacha,pachanga,rueda:ring};
 }
 
@@ -253,8 +267,9 @@ function reel(k,g,x,y,z,r){
     outer.holes.push(cut);
   }
   const body=new k.THREE.ExtrudeGeometry(outer,{depth:.047,bevelEnabled:false,curveSegments:6});
-  k.mesh(g,body,k.stock(paper.pale),x,y,z);
-  spin(k,g,x,y,z+.056,r*.15,paper.slate,12);
+  const wheel=k.animateAtRest(k.group(g,x,y,z),'reel');
+  k.mesh(wheel,body,k.stock(paper.pale));
+  spin(k,wheel,0,0,.056,r*.15,paper.slate,12);
 }
 
 function filmReel(k){
@@ -369,9 +384,12 @@ function turntable(k){
   k.box(g,0,.58,0,2.10,.103,1.16,paper.tan);
   const deck=k.group(g,0,.65,0);
   k.box(deck,0,0,0,2.01,.073,1.09,paper.sea);
+  const platter=k.animateAtRest(k.group(deck,-.34,0,0),'platter');
   for(const [r,y,c] of [[.497,.053,paper.pale],[.467,.082,paper.ink],[.40,.103,paper.slate],[.38,.119,paper.ink],[.145,.135,paper.coral],[.020,.154,paper.pale]]){
-    const disc=spin(k,deck,-.34,y,0,r,c,40);disc.rotation.x=-Math.PI/2;
+    const disc=spin(k,platter,0,y,0,r,c,40);disc.rotation.x=-Math.PI/2;
   }
+  k.box(platter,.083,.148,.015,.066,.008,.023,paper.cream);
+  k.box(platter,-.24,.126,.063,.12,.005,.012,paper.slate,.03);
   const tone=k.group(deck,.65,.10,-.27);
   const swivel=spin(k,tone,0,.012,0,.127,paper.navy,16);swivel.rotation.x=-Math.PI/2;
   k.rod(tone,[0,.11,-.03],[-.14,.148,.14],.041,paper.pale,6);
@@ -406,7 +424,7 @@ function awardStar(k,g,x,y,z,r,ink){
 }
 
 function smallCup(k,g,x,scale,metal,shade){
-  const cup=k.group(g,x,.62,-.045);cup.scale.setScalar(scale);
+  const cup=k.group(g,x,.62,-.045);cup.scale.setScalar(scale);k.animateAtRest(cup,'rattle',x);
   k.box(cup,0,.057,0,.39,.114,.27,paper.wine);
   k.box(cup,0,.15,0,.28,.07,.21,shade);
   k.box(cup,0,.224,0,.105,.12,.13,metal);
@@ -433,6 +451,7 @@ function caliAwards(k){
   smallCup(k,g,-.78,.87,'#c1c5bd','#79918b');
   smallCup(k,g,.77,.76,'#d79670','#a3614c');
   const starCup=k.group(g,0,.62,-.08);
+  k.animateAtRest(starCup,'rattle',.5);
   k.box(starCup,0,.063,0,.46,.126,.32,paper.wine);
   k.box(starCup,0,.15,0,.37,.056,.25,paper.ochre);
   k.card(starCup,[[-.13,.178],[.13,.178],[.16,.24],[.069,.31],[.092,.48],[-.092,.48],[-.069,.31],[-.16,.24]],paper.ochre,-.06,.12);

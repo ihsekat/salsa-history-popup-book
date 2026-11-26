@@ -129,10 +129,15 @@ export function courtyard(k){
     const a=i/11*Math.PI*2;
     k.rod(sun,[.56*Math.cos(a),3.30+.56*Math.sin(a),.015],[.68*Math.cos(a),3.30+.68*Math.sin(a),.015],.013,'#edc26d',4);
   }
-  cloud(k,-3.30,-2.96,2.06,.70); cloud(k,3.95,-2.96,3.46,.79);
+  k.animateAtRest(cloud(k,-3.30,-2.96,2.06,.70),'cloud');
+  k.animateAtRest(cloud(k,3.95,-2.96,3.46,.79),'cloud',.85);
   hut(k,-3.40,-1.85,.95,'#daac70');hut(k,-4.54,-1.99,.79,'#70a292');
-  veranda(k);palm(k,4.80,-1.92,3.06,.9);palm(k,-4.45,-.81,2.42,.31);
-  for(const [x,z,s,f] of [[-5.20,.12,.80,false],[-4.43,1.36,.56,true],[-2.52,-1.67,.70,false],[4.89,.65,.80,true],[3.94,1.85,.53,false],[.62,-1.39,.45,true]]) shrub(k,x,z,s,f);
+  veranda(k);
+  k.animateAtRest(palm(k,4.80,-1.92,3.06,.9),'palm',.6);
+  k.animateAtRest(palm(k,-4.45,-.81,2.42,.31),'palm',1.3);
+  for(const [x,z,s,f] of [[-5.20,.12,.80,false],[-4.43,1.36,.56,true],[-2.52,-1.67,.70,false],[4.89,.65,.80,true],[3.94,1.85,.53,false],[.62,-1.39,.45,true]]){
+    k.animateAtRest(shrub(k,x,z,s,f),'bush',x*.6);
+  }
 }
 
 

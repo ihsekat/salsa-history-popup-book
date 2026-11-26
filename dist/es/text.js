@@ -418,7 +418,7 @@ export const text = {
     "style": "ON1 EN LA COSTA OESTE",
     "place": "Los Ángeles, California · Desde los años noventa",
     "line": "En la costa oeste de Estados Unidos surgió una forma vistosa de bailar salsa, con conteo On1, giros rápidos y gran presencia escénica. Los hermanos Vázquez y otros bailarines de Los Ángeles popularizaron este estilo, que llegó a ser uno de los más enseñados del mundo.",
-    "alt": "Johnny Vázquez y su pareja bailan salsa estilo Los Ángeles en un escenario iluminado, junto a un tablero con el conteo On1.",
+    "alt": "Johnny Vázquez y su pareja bailan junto a las luces del escenario y un tablero con el conteo On1. Detrás de ellos se ve el letrero de Hollywood en la ladera.",
     "copy": [
       "Los Ángeles tenía su propia escena de música y baile latinos, marcada por sus comunidades mexicanas, centroamericanas y de otros orígenes. En los años noventa, Francisco, Luis y Johnny Vázquez estuvieron entre los bailarines que desarrollaron y difundieron un estilo propio de la costa oeste.",
       "Como la salsa estilo Nueva York, la de Los Ángeles suele bailarse en línea. Los cambios de dirección principales caen en 1 y 5 en vez de 2 y 6. El estilo se dio a conocer por sus giros precisos, sus pasos libres enérgicos y sus figuras de pareja espectaculares. Compañías como Los Rumberos y Salsa Brava llevaron esa energía a los escenarios, donde podían incorporar caídas, cargadas y acrobacias.",

@@ -22,10 +22,10 @@ export function projectRegion(lon,lat){
   return [500+lon*2.6,270-lat*2.95];
 }
 
-export function drawCongressMap(){
+export function drawCongressMap(onRoutes){
   const chart=document.createElement('canvas');
   chart.width=1000;chart.height=500;
-  const ctx=chart.getContext('2d');
+  let ctx=chart.getContext('2d');
   ctx.fillStyle='#769a95';ctx.fillRect(0,0,chart.width,chart.height);
   ctx.strokeStyle='#91ada1';ctx.lineWidth=1.4;ctx.beginPath();
   for(let lon=-150;lon<=150;lon+=30){
@@ -47,13 +47,31 @@ export function drawCongressMap(){
   }
   const points=regions.map(({lon,lat})=>projectRegion(lon,lat));
   const connections=[[0,1,-90],[1,2,-68],[0,3,32],[1,4,30],[2,5,-24]];
-  ctx.strokeStyle='#935f4e';ctx.lineWidth=2.8;ctx.setLineDash([8,7]);
-  for(const [start,end,bend] of connections){
-    const [x,y]=points[start],[u,v]=points[end];
-    ctx.beginPath();ctx.moveTo(x,y);
-    ctx.quadraticCurveTo((x+u)/2+(v-y)*.13,(y+v)/2+bend,u,v);ctx.stroke();
+  function routes(target,progress){
+    target.strokeStyle='#935f4e';target.lineWidth=2.8;target.setLineDash([8,7]);
+    for(const [i,[start,end,bend]] of connections.entries()){
+      const amount=Math.max(0,Math.min(1,progress*1.8-i*.2));
+      if(!amount)continue;
+      const [x,y]=points[start],[u,v]=points[end];
+      const cx=(x+u)/2+(v-y)*.13,cy=(y+v)/2+bend;
+      const ax=x+(cx-x)*amount,ay=y+(cy-y)*amount;
+      const bx=cx+(u-cx)*amount,by=cy+(v-cy)*amount;
+      target.beginPath();target.moveTo(x,y);
+      target.quadraticCurveTo(ax,ay,ax+(bx-ax)*amount,ay+(by-ay)*amount);target.stroke();
+    }
+    target.setLineDash([]);
   }
-  ctx.setLineDash([]);ctx.font='bold 28px Georgia, serif';
+  let refresh;
+  if(onRoutes){
+    const coast=document.createElement('canvas'),labels=document.createElement('canvas');
+    for(const layer of [coast,labels]){layer.width=chart.width;layer.height=chart.height;}
+    coast.getContext('2d').drawImage(chart,0,0);
+    const map=ctx;ctx=labels.getContext('2d');
+    refresh=progress=>{
+      map.drawImage(coast,0,0);routes(map,progress);map.drawImage(labels,0,0);
+    };
+  }else routes(ctx,1);
+  ctx.font='bold 28px Georgia, serif';
   ctx.textAlign='center';ctx.textBaseline='middle';
   for(const [i,{label,dx,dy}] of regions.entries()){
     const [x,y]=points[i],cx=x+dx,cy=y+dy,word=t(label).toUpperCase();
@@ -64,5 +82,6 @@ export function drawCongressMap(){
     ctx.beginPath();ctx.arc(x,y,14,0,2*Math.PI);ctx.fillStyle='#733d32';ctx.fill();
     ctx.beginPath();ctx.arc(x,y,7,0,2*Math.PI);ctx.fillStyle='#f4c875';ctx.fill();
   }
+  if(refresh){refresh(1);onRoutes(refresh);}
   return chart;
 }

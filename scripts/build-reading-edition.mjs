@@ -5,8 +5,6 @@ import {fileURLToPath} from 'node:url';
 import * as english from '../dist/edition.js';
 import * as spanish from '../dist/es/edition.js';
 import {orderedReferences} from '../dist/references.js';
-import {asset as englishAsset} from '../dist/assets.js';
-import {asset as spanishAsset} from '../dist/es/assets.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const dist=join(root,'dist');
@@ -32,6 +30,15 @@ async function output(name,contents){
     await writeFile(file,contents);
   }
 }
+
+const revisions={};
+for(const [language,folder] of [['en','art'],['es','es/art']]){
+  const files=(await readdir(join(dist,folder))).filter(name=>name.startsWith('ambient-') || name.startsWith('spread-')).sort();
+  revisions[language]=Object.fromEntries(await Promise.all(files.map(async name=>[name,await digest(folder+'/'+name)])));
+}
+await output('art-revisions.js','export const artRevisions='+JSON.stringify(revisions,null,2)+';\n');
+const {asset:englishAsset}=await import('../dist/assets.js');
+const {asset:spanishAsset}=await import('../dist/es/assets.js');
 
 async function moduleImports(){
   const imports={};

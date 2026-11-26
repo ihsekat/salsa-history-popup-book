@@ -30,6 +30,18 @@ The Spanish edition lives at `/es/`. Edit the Latin American Spanish chapter and
 
 Deploy the **contents** of `dist/` to the root of a static host. Point your domain there. The build generates the homepage, static information pages, sitemap and robots.txt. The book also includes artwork source files in `artwork/`; the browser loads the finished artwork from `dist/art/`.
 
+### Animate a spread
+
+Register a pivot with `k.animateAtRest(pivot, motion, phase)` in its scene builder. The motion functions in `dist/paper-motion.js` use seconds and a strength from 0 to 1. Put hinges at the feet of figures or the axle of a moving part. The reader freezes the pose for page turns and honors the reader’s reduced-motion preference.
+
+To regenerate the illustrated animation after changing a scene, start the local server above. The optional renderer uses Playwright with Chromium, the libavif `avifenc` command, and `cwebp` for the Los Angeles still. Install Playwright with `npm install --no-save --package-lock=false playwright` and `npx playwright install chromium`. Run each language you publish, then regenerate the reading editions.
+
+```sh
+node scripts/render-ambient-edition.mjs en spain los-angeles
+node scripts/render-ambient-edition.mjs es spain los-angeles
+npm run build
+```
+
 ## License and attribution
 
 © 2026 Salsa Vida. The original code, text and illustrations are available under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/). The [full license](LICENSE) is included. You may share the book, adapt it and use it commercially. Credit Takeshi Young / Salsa Vida, link to the license, and indicate any changes. Link your credit to [the original book](https://www.salsahistory.com/) (preferred) or [Salsa Vida](https://www.salsavida.com/).

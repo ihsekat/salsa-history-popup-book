@@ -1,6 +1,8 @@
 import {asset as sharedAsset} from '../assets.js?shared';
+import {artRevisions} from '../art-revisions.js';
 export function asset(name){
-  if(name==='ambient-taino.avif')return '/es/art/'+name+'?v=832b049ad88f';
-  if(/^(front-cover\.webp|spread-|resting-|motion-|ambient-)/.test(name))return '/es/art/'+name;
+  const version=artRevisions.es[name];
+  if(version)return '/es/art/'+name+'?v='+version;
+  if(/^(front-cover\.webp|resting-|motion-)/.test(name))return '/es/art/'+name;
   return sharedAsset(name).replace(/^\.\//,'/');
 }

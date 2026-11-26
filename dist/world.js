@@ -196,6 +196,15 @@ export async function createWorld(canvas,callbacks){
     });
     request();
   }
+  // Used by the offline illustration renderer to sample the same pose and shadows.
+  function renderPlate(index,seconds,{zoom=.9,strength=1}={}){
+    if(!paused)pause(true);
+    if(position!==index || !resting)show(index);
+    readerZoom=zoom;
+    for(const pose of chapterAt(index).motions)pose(seconds,strength);
+    renderer.shadowMap.needsUpdate=true;
+    render(2600);
+  }
   function replay(t){
     const pose=replayPose(t);
     lift=pose.lift;roll.position.y=hingeHeight+lift;roll.rotation.z=pose.angle;
@@ -277,6 +286,6 @@ export async function createWorld(canvas,callbacks){
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)request();},{signal:input.signal});
   reduced.addEventListener('change',request,{signal:input.signal});
   resize();show(0);
-  return {show,replay,pause,nudge,zoomBy,reset,play,render,highlightItem,disposeInput};
+  return {show,replay,pause,renderPlate,nudge,zoomBy,reset,play,render,highlightItem,disposeInput};
 }
 
