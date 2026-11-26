@@ -34,7 +34,7 @@ Deploy the **contents** of `dist/` to the root of a static host. Point your doma
 
 Register a pivot with `k.animateAtRest(pivot, motion, phase)` in its scene builder. The motion functions in `dist/paper-motion.js` use seconds and a strength from 0 to 1. Put hinges at the feet of figures or the axle of a moving part. The reader freezes the pose for page turns and honors the reader’s reduced-motion preference.
 
-To regenerate the illustrated animation after changing a scene, start the local server above. The optional renderer uses Playwright with Chromium, the libavif `avifenc` command, and `cwebp` for the Los Angeles still. Install Playwright with `npm install --no-save --package-lock=false playwright` and `npx playwright install chromium`. Run each language you publish, then regenerate the reading editions.
+To regenerate the illustrated animation after changing a scene, start the local server above. The optional renderer uses Playwright with Chromium, the libavif `avifenc` command, and `cwebp` for still images. Add `--poster` to refresh the static illustration for each selected spread. The Los Angeles still is refreshed automatically. Install Playwright with `npm install --no-save --package-lock=false playwright` and `npx playwright install chromium`. Run each language you publish, then regenerate the reading editions.
 
 ```sh
 node scripts/render-ambient-edition.mjs en spain los-angeles

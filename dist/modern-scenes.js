@@ -52,6 +52,7 @@ function pennant(k,g,x,y,z,color,dir=1) {
 
 function stadium(k) {
   const stands=k.anchor(2.82,-1.81);
+  const cheering=[.2,2.3,4.4].map(phase=>k.animateAtRest(k.group(stands),'cheer',phase));
   k.box(stands,0,.78,-.05,4.7,1.55,.37,p.pine);
   for(let row=0;row<4;row++){
     const y=.38+row*.34,z=.74-row*.23;
@@ -62,8 +63,8 @@ function stadium(k) {
       if(variant===2 || variant===7)continue;
       const coat=[p.wine,p.navy,p.ochre,p.pine,p.coral][(row+col)%5];
       const skin=['#ba885e','#a26a47','#dfb68c','#996748'][(row*3+col)%4];
-      const fan=k.group(stands,x,y,z);
-      if((row===1 && col===3)||(row===2 && col===9)||(row===0 && col===11))k.animateAtRest(fan,'cheer',col*.53);
+      const section=(row+col)%2===0?cheering[(row+Math.floor(col/2))%cheering.length]:stands;
+      const fan=k.group(section,x,y,z);
       k.card(fan,[[-.10,.015],[-.079,.145],[0,.20],[.081,.14],[.106,.015]],coat,.02,.024);
       k.disc(fan,0,.215,.046,.066,skin,8);
     }
@@ -242,7 +243,9 @@ function losAngeles(k) {
     k.rod(hills,[x,y-.27,.076],[x,y+.07,.076],.013,'#526858',4);
     k.label(hills,letters[i],x,y,.108,.37,.43,{ink:'#fff4d7',font:'Arial'});
   }
-  k.disc(hills,1.79,3.11,-.10,.43,p.gold,32);
+  const sun=k.group(hills,1.79,0,-.10);
+  k.rod(sun,[0,0,-.018],[0,3.11,-.018],.012,'#bfad82');
+  k.disc(sun,0,3.11,0,.43,p.gold,32);
   palm(k,-5.04,-1.42,2.37,.08);palm(k,-2.72,-2.20,1.72,.075);
   const theatre=k.anchor(2.79,-1.68);
   k.card(theatre,[[-2.38,0],[-2.38,2.37],[-1.97,2.37],[-1.97,2.61],[-1.62,2.61],[-1.62,2.84],[-.72,2.84],[-.72,3.06],[-.38,3.06],[0,3.36],[.38,3.06],[.72,3.06],[.72,2.84],[1.62,2.84],[1.62,2.61],[1.97,2.61],[1.97,2.37],[2.38,2.37],[2.38,0]],p.coral,-.16,.31);
@@ -403,13 +406,14 @@ function routeMap(k) {
   const width=4.45,height=2.13;
   const print=new k.THREE.MeshLambertMaterial({map:canvasTexture(chart),side:k.THREE.DoubleSide});
   k.mesh(board,new k.THREE.PlaneGeometry(width,height),print,0,1.19,.151);
-  let lastStep=64;
+  let lastStep=64,lastOpacity=16;
   k.motions.push((seconds,strength)=>{
-    const t=(seconds+5.1)%8;
-    const progress=t<5?smoothUnit(t/5):1-smoothUnit((t-7)/1);
-    const step=Math.round(64*(1-strength*(1-progress)));
-    if(step===lastStep)return;
-    lastStep=step;drawRoutes(step/64);print.map.needsUpdate=true;
+    const t=seconds%8;
+    const step=strength?Math.round(64*smoothUnit(t/4.4)):64;
+    const opacity=strength?Math.round(16*(1-smoothUnit((t-7)/1))):16;
+    if(step===lastStep && opacity===lastOpacity)return;
+    lastStep=step;lastOpacity=opacity;
+    drawRoutes(step/64,opacity/16);print.map.needsUpdate=true;
   });
   for(const {lon,lat} of regions){
     const [px,py]=projectRegion(lon,lat);
@@ -467,6 +471,7 @@ function congressWorld(k){
 function tvCamera(k) {
   const g=k.anchor(-4.11,.92);
   const yoke=k.group(g,0,1.33,0);yoke.rotation.y=-.82;
+  k.animateAtRest(yoke,'cameraPan');
   for(const [x,z] of [[-.49,.32],[.48,.29],[.02,-.45]]){
     k.rod(g,[x*.27,1.16,z*.27],[x*.75,.44,z*.75],.061,p.slate,5);
     k.rod(g,[x*.75,.47,z*.75],[x,0,z],.041,p.ink,5);

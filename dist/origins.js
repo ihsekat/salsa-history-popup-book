@@ -36,9 +36,11 @@ function house(k,x,z,size,taino){
 function leafTree(k,x,z,h){
   const g=k.animateAtRest(k.anchor(x,z),'palm',x*.55);
   k.rod(g,[0,0,0],[.12,h*.70,0],.11,'#795e43',7);
-  for(const [xx,yy,r,col] of [[-.50,.76,.61,'#638062'],[.47,.77,.69,'#6f8c61'],[0,.9,.72,'#819262'],[-.16,.72,.56,'#587b61']]){
+  const foliage=[[-.50,.76,.61,-.09,'#638062'],[.47,.77,.69,-.045,'#6f8c61'],
+    [0,.9,.72,0,'#819262'],[-.16,.72,.56,.045,'#587b61']];
+  for(const [xx,yy,r,depth,col] of foliage){
     k.rod(g,[.06,h*.46,0],[xx,h*yy,0],.055,'#856347',5);
-    k.disc(g,xx,h*yy,-.04,r,col,10);
+    k.disc(g,xx,h*yy,depth,r,col,10);
   }
 }
 function canoe(k,x,z){
@@ -74,7 +76,8 @@ function village(k){
   for(const [x,z] of [[-5.02,.75],[-4.5,1.35],[-3.95,1.70],[4.72,-.28]]){
     k.animateAtRest(shrub(k,x,z,.74),'bush',x*.6+z);
   }
-  const scraper=k.anchor(1.43,1.52), gui=k.group(scraper,0,.63,0);gui.rotation.z=-.65;
+  const scraper=k.animateAtRest(k.anchor(1.43,1.52),'guiro');
+  const gui=k.group(scraper,0,.63,0);gui.rotation.z=-.65;
   gourd(k,gui,0,0,0,.26,.70,'#c99a4d');
   for(let i=0;i<11;i++){
     const yy=-.37+i*.073, rr=Math.sqrt(1-(yy/.70)**2)*.24;

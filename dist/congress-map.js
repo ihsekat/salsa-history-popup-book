@@ -46,20 +46,29 @@ export function drawCongressMap(onRoutes){
     ctx.strokeStyle='#a4a77c';ctx.lineWidth=1.4;ctx.stroke();
   }
   const points=regions.map(({lon,lat})=>projectRegion(lon,lat));
-  const connections=[[0,1,-90],[1,2,-68],[0,3,32],[1,4,30],[2,5,-24]];
-  function routes(target,progress){
-    target.strokeStyle='#935f4e';target.lineWidth=2.8;target.setLineDash([8,7]);
-    for(const [i,[start,end,bend]] of connections.entries()){
-      const amount=Math.max(0,Math.min(1,progress*1.8-i*.2));
+  // Control points keep the two shorter routes clear of the paper labels.
+  const connections=[
+    [0,1,340,35,0], [0,3,175,255,.04], [1,2,717,43,.16],
+    [1,4,615,244,.22], [2,5,963,280,.30]
+  ];
+  function routes(target,progress,opacity=1){
+    target.save();target.lineCap='round';target.globalAlpha=opacity;
+    for(const [start,end,cx,cy,delay] of connections){
+      const amount=Math.max(0,Math.min(1,(progress-delay)/.70));
       if(!amount)continue;
       const [x,y]=points[start],[u,v]=points[end];
-      const cx=(x+u)/2+(v-y)*.13,cy=(y+v)/2+bend;
       const ax=x+(cx-x)*amount,ay=y+(cy-y)*amount;
       const bx=cx+(u-cx)*amount,by=cy+(v-cy)*amount;
-      target.beginPath();target.moveTo(x,y);
-      target.quadraticCurveTo(ax,ay,ax+(bx-ax)*amount,ay+(by-ay)*amount);target.stroke();
+      const tipX=ax+(bx-ax)*amount,tipY=ay+(by-ay)*amount;
+      target.beginPath();target.moveTo(x,y);target.quadraticCurveTo(ax,ay,tipX,tipY);
+      target.setLineDash([]);target.lineWidth=8;target.strokeStyle='#e8d4a4';target.stroke();
+      target.setLineDash([11,7]);target.lineWidth=5.5;target.strokeStyle='#844632';target.stroke();
+      if(amount<1){
+        target.beginPath();target.arc(tipX,tipY,4.5,0,2*Math.PI);
+        target.fillStyle='#844632';target.fill();
+      }
     }
-    target.setLineDash([]);
+    target.restore();
   }
   let refresh;
   if(onRoutes){
@@ -67,8 +76,8 @@ export function drawCongressMap(onRoutes){
     for(const layer of [coast,labels]){layer.width=chart.width;layer.height=chart.height;}
     coast.getContext('2d').drawImage(chart,0,0);
     const map=ctx;ctx=labels.getContext('2d');
-    refresh=progress=>{
-      map.drawImage(coast,0,0);routes(map,progress);map.drawImage(labels,0,0);
+    refresh=(progress,opacity=1)=>{
+      map.drawImage(coast,0,0);routes(map,progress,opacity);map.drawImage(labels,0,0);
     };
   }else routes(ctx,1);
   ctx.font='bold 28px Georgia, serif';

@@ -12,7 +12,11 @@ const motions={
   step:   ['rotation','z',.050,4],
   son:    ['rotation','z',.046,8],
   twist:  ['rotation','y',.16,4],
+  guiro:  ['rotation','y',.14,8],
   circle: ['rotation','y',.14,8],
+  sideStep: ['position','x',.16,8],
+  cameraPan: ['rotation','y',.20,8],
+  audience: ['position','y',.048,2],
   paper:  ['rotation','z',.036,8],
   flag:   ['rotation','y',.32,4],
   fire:   ['scale','y',.14,2],
@@ -50,6 +54,7 @@ export function paperMotion(node,kind,phase=0){
       const beat=seconds%4;
       offset*=beat<1?Math.sin(Math.PI*beat)**2:0;
     }
+    if(kind==='audience')offset=(1+offset)/2;
     if(kind==='cheer')offset=Math.max(0,offset)**2;
     if(kind==='fire')offset=.7*offset+.3*Math.sin(seconds*tau+phase*.6);
     transform[axis]=rest+amplitude*strength*offset;

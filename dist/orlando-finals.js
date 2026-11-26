@@ -128,7 +128,6 @@ function spectator(k,g,x,y,z,seed) {
   const coat=crowdCoats[(seed*13)%crowdCoats.length], skin=crowdSkin[(seed*5)%crowdSkin.length];
   const hair=crowdHair[seed%crowdHair.length];
   const s=k.group(g,x,y,z);s.rotation.z=r;
-  if(seed%9===2)k.animateAtRest(s,'cheer',seed*.69);
   flat(k,s,[[-shoulder,-.048],[-shoulder*.9,.082],[-.062,.147],[.062,.147],[shoulder*.92,.083],[shoulder,-.048]],coat);
   flat(k,s,[[-.065,.161],[-.075,.218],[-.048,.278],[.009,.30],[.062,.277],[.079,.225],[.054,.160],[.018,.133],[-.028,.136]],skin,.008);
   if(seed%5===0){
@@ -141,6 +140,7 @@ function spectator(k,g,x,y,z,seed) {
 function audienceBank(k,side) {
   const bank=k.anchor(side*4.06,.00);
   bank.rotation.y=-side*1.07;
+  const groups=[0,Math.PI].map(phase=>k.animateAtRest(k.group(bank),'audience',phase));
   const width=3.60;
   for(let row=0;row<4;row++){
     const z=.37-row*.285,y=.09+row*.198;
@@ -150,7 +150,7 @@ function audienceBank(k,side) {
       const index=(side===1?170:30)+row*13+i;
       const x=-width/2+.135+i*.276+(row%2)*.035;
       if(i===10&&row===1)continue;
-      spectator(k,bank,x,y+.13+(index%3)*.014,z,index);
+      spectator(k,groups[(i+row)%2],x,y+.13+(index%3)*.014,z,index);
     }
   }
   return bank;

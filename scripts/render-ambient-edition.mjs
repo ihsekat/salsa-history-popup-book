@@ -9,9 +9,11 @@ import {fileURLToPath} from 'node:url';
 import {chapters,plateName} from '../dist/chapters.js';
 
 const run=promisify(execFile);
-const [lang,...requested]=process.argv.slice(2);
+const [lang,...args]=process.argv.slice(2);
+const includePoster=args.includes('--poster');
+const requested=args.filter(arg=>arg!=='--poster');
 if(!['en','es'].includes(lang) || !requested.length || requested.some(id=>!chapters.some(c=>c.id===id))){
-  throw Error('Usage: node scripts/render-ambient-edition.mjs en|es <chapter-id> [chapter-id ...]');
+  throw Error('Usage: node scripts/render-ambient-edition.mjs en|es [--poster] <chapter-id> [chapter-id ...]');
 }
 const origin=new URL(process.env.BOOK_PREVIEW_URL || 'http://127.0.0.1:8000/');
 if(!['localhost','127.0.0.1','[::1]'].includes(origin.hostname))throw Error('Start the local preview server first.');
@@ -42,7 +44,7 @@ try{
     const temp=await mkdtemp(join(tmpdir(),'salsa-frames-'));
     const outfile=join(art,'ambient-'+id+'.avif'),partial=outfile+'.'+randomUUID()+'.avif';
     try{
-      if(id==='los-angeles'){
+      if(includePoster || id==='los-angeles'){
         await size(1400,788);
         const still=join(temp,'still.png');
         await capture(index,0,{strength:0},still);

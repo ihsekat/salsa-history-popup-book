@@ -73,15 +73,15 @@ function standee(k,texture,x,z,h,baseY=0,tabPosition=0,yaw=0){
 }
 const figureMotion={
   spain:{player:'music',partners:'partnerTurn'},
-  africa:{duo:'step',prop:'music'},
-  son:{duo:'son',player:'music'},
+  africa:{duo:'twist',prop:'music'},
+  son:{duo:'sideStep',player:'music'},
   'cuban-dances':{rumba:'step',charanga:'music',chacha:'twist',pachanga:'twist'},
-  palladium:{duo:'step',player:'music',piro:'step'},
-  fania:{founders:'people',band:'music'},
-  stadium:{pacheco:'music',duo:'music',colon:'music',player:'music',mongo:'music'},
-  eddie:{duo:'step'},'los-angeles':{duo:'twist'},cali:{duo:'step',team:'twist'},
-  'puerto-rico':{social:'son',workshops:'step',performances:'twist'},
-  'congress-world':{duo:'step'},championship:{duo:'twist'},halftime:{duo:'step',player:'music'}
+  palladium:{duo:'step',player:'twist',piro:'step'},
+  fania:{founders:'twist',band:'music'},
+  stadium:{pacheco:'twist',duo:'music',colon:'twist',player:'music',mongo:'music'},
+  eddie:{duo:'twist'},'los-angeles':{duo:'twist'},cali:{duo:'step',team:'twist'},
+  'puerto-rico':{social:'son',workshops:'twist',performances:'twist'},
+  'congress-world':{duo:'twist'},championship:{duo:'twist'},halftime:{duo:'partnerTurn',player:'music'}
 };
 export function buildChapter(id,root,textures){
   const stage=new T.Group();root.add(stage);stage.visible=false;
