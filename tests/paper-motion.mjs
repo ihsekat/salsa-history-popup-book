@@ -4,7 +4,7 @@ import * as T from '../dist/three.module.min.js';
 import {makeKit,batchStock} from '../dist/craft.js';
 import {originsScene} from '../dist/origins.js';
 import {paperMotion} from '../dist/paper-motion.js';
-import {rotateCasinoCouple} from '../dist/revision-scenes.js';
+import {revisionScene,rotateCasinoCouple} from '../dist/revision-scenes.js';
 
 test('batching keeps a mechanical part on its axle while its housing stays fixed',()=>{
   const kit=makeKit(new T.Group()),base=kit.anchor(3,1);
@@ -82,4 +82,33 @@ test('the güiro and scraper turn together on a planted pivot and return to rest
   }
   for(const pose of kit.motions)pose(2,0);
   assert.equal(player.rotation.y,0);
+});
+
+test('every Cali pennant stays above the sign throughout its swing',()=>{
+  const kit=makeKit(new T.Group()),flags=[];
+  const register=kit.animateAtRest;
+  let sign;
+  kit.animateAtRest=(node,kind,phase)=>{
+    if(kind==='pennant')flags.push(node);
+    return register(node,kind,phase);
+  };
+  kit.label=(parent,text,x,y,z)=>{
+    if(text==='CALI')sign=parent;
+    return kit.group(parent,x,y,z);
+  };
+  revisionScene('cali',kit);
+  assert.equal(flags.length,11);
+  sign.updateWorldMatrix(true,true);
+  const signBox=new T.Box3().setFromObject(sign,true);
+  for(let frame=0;frame<=64;frame++){
+    for(const pose of kit.motions)pose(frame/16,1);
+    let overhead=0;
+    for(const flag of flags){
+      flag.updateWorldMatrix(true,true);
+      const box=new T.Box3().setFromObject(flag,true);
+      if(box.min.x>signBox.max.x || box.max.x<signBox.min.x)continue;
+      overhead++;assert.ok(box.min.y>signBox.max.y+.05);
+    }
+    assert.ok(overhead>=3);
+  }
 });

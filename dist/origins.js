@@ -120,9 +120,54 @@ function spanishPrimer(k){
   return primer;
 }
 
+function courtyardTower(k){
+  const tower=k.anchor(-3.12,-2.3);
+  const positions=[],colors=[],tint=new k.THREE.Color();
+  function face(color,...points){
+    tint.set(color);
+    for(let i=1;i+1<points.length;i++)for(const p of [points[0],points[i],points[i+1]]){
+      positions.push(...p);colors.push(tint.r,tint.g,tint.b);
+    }
+  }
+  const rim=(w,d,y)=>[[-w,y,d],[w,y,d],[w,y,-d],[-w,y,-d]];
+  function band(a,b,color,first=0){
+    for(let i=first;i<4;i++){
+      const j=(i+1)%4;
+      face(color,a[i],a[j],b[j],b[i]);
+    }
+  }
+  // Print the windows into the facade so its ink cannot compete with a second surface in a fold.
+  function storey(w,d,heights,windowEdges,stone,ink){
+    const xs=[-w,...windowEdges,w];
+    for(let row=0;row<3;row++){
+      const lo=heights[row],hi=heights[row+1];
+      for(let col=0;col+1<xs.length;col++){
+        const a=xs[col],b=xs[col+1];
+        face(row===1 && col%2===1?ink:stone,[a,lo,d],[b,lo,d],[b,hi,d],[a,hi,d]);
+      }
+    }
+    band(rim(w,d,heights[0]),rim(w,d,heights[3]),stone,1);
+  }
+  storey(.60,.33,[0,1.50,1.90,2.50],[-.425,-.295,-.065,.065,.295,.425],'#d8af82','#776b55');
+  face('#d8af82',...rim(.60,.33,0).reverse());
+  band(rim(.60,.33,2.50),rim(.465,.30,2.50),'#d8af82');
+  storey(.465,.30,[2.50,2.53,2.90,2.98],[-.19,.19],'#c89b72','#645f50');
+  const roof='#a15b40',eaves=rim(.725,.39,2.98);
+  band(rim(.465,.30,2.98),eaves,roof);
+  const front=[.02,3.55,.39],back=[.02,3.55,-.39];
+  face(roof,eaves[0],eaves[1],front);face(roof,eaves[2],eaves[3],back);
+  face(roof,eaves[1],eaves[2],back,front);face(roof,eaves[3],eaves[0],front,back);
+  const geometry=new k.THREE.BufferGeometry();
+  geometry.setAttribute('position',new k.THREE.Float32BufferAttribute(positions,3));
+  geometry.setAttribute('color',new k.THREE.Float32BufferAttribute(colors,3));
+  geometry.computeVertexNormals();
+  const stock=new k.THREE.MeshStandardMaterial({vertexColors:true,side:k.THREE.DoubleSide,roughness:1,flatShading:true});
+  k.mesh(tower,geometry,stock).receiveShadow=false;
+}
+
 function fountainWater(k,fountain){
-  round(k,fountain,.397,.397,.012,0,.897,0,'#83b4ab',24);
-  round(k,fountain,.595,.595,.012,0,.282,0,'#7daea5',32);
+  round(k,fountain,.397,.397,.012,0,.897,0,'#aecfc5',24);
+  round(k,fountain,.595,.595,.012,0,.282,0,'#98bfb4',32);
   const radius=t=>.412+.177*t;
   const height=t=>.900+.048*t-.667*t*t;
   for(let i=0;i<5;i++){
@@ -130,11 +175,11 @@ function fountainWater(k,fountain){
     jet.rotation.y=(i+.14)*Math.PI*2/5;
     for(let j=0;j<7;j++){
       const a=j/7,b=(j+1)/7;
-      k.rod(jet,[radius(a),height(a),0],[radius(b),height(b),0],.022,'#9ec8c0',6);
+      k.rod(jet,[radius(a),height(a),0],[radius(b),height(b),0],.022,'#c4e4dc',6);
     }
     const glint=k.group(jet);
     glint.userData.movingStock=true;
-    gourd(k,glint,0,0,0,.025,.049,'#e0f1d8');
+    gourd(k,glint,0,0,0,.025,.049,'#f2fbef');
     const flow=(seconds,strength)=>{
       const t=(i/5+.10+seconds*strength*.75)%1;
       glint.position.set(radius(t),height(t),0);
@@ -159,11 +204,7 @@ function spanish(k){
   }
   k.box(patio,0,2.98,0,5.22,.12,.92,'#aa5b43');
   for(let i=0;i<31;i++)k.rod(patio,[-2.52+i*.167,3,-.36],[-2.52+i*.167,2.91,.45],.055,i%3?'#bd7151':'#d28a5e',6);
-  const tower=k.anchor(-3.12,-2.3);
-  k.box(tower,0,1.25,0,1.20,2.50,.66,'#d8af82');
-  k.box(tower,0,2.65,0,.93,.68,.60,'#c89b72');k.box(tower,0,2.68,.32,.38,.44,.02,'#645f50');
-  k.card(tower,[[-.72,2.98],[.02,3.55],[.73,2.98]],'#a15b40',-.36,.78);
-  for(const x of [-.36,0,.36])k.box(tower,x,1.70,.34,.13,.40,.03,'#776b55');
+  courtyardTower(k);
   const fountain=k.anchor(-3.60,.30);
   round(k,fountain,.71,.61,.23,0,.12,0,'#b58960');round(k,fountain,.62,.67,.08,0,.24,0,'#9fae95');
   round(k,fountain,.12,.18,.56,0,.52,0,'#ceb18c');round(k,fountain,.45,.16,.17,0,.81,0,'#dec19a');gourd(k,fountain,0,.98,0,.09,.12,'#c4a27c');

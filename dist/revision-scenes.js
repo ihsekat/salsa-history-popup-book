@@ -364,9 +364,12 @@ function caliStage(k){
 
 function streetBunting(k){
   const g=k.anchor(-2.49,-1.55);
-  k.rod(g,[-2.79,.01,.06],[-2.79,2.35,.06],.035,paper.timber,5);
-  k.rod(g,[1.77,.01,0],[1.77,2.39,0],.035,paper.timber,5);
-  const count=13,point=t=>[-2.79+4.56*t,2.31+.06*t-.37*Math.sin(Math.PI*t),.06*(1-t)];
+  k.rod(g,[-2.79,.01,.06],[-2.79,2.63,.06],.035,paper.timber,5);
+  k.rod(g,[1.77,.01,0],[1.77,2.67,0],.035,paper.timber,5);
+  const sign=k.group(g,-.83,0,.02);
+  k.box(sign,0,1.77,.016,1.31,.344,.105,paper.navy);
+  print(k,sign,'CALI',0,1.78,.082,1.18,.302,paper.chalk);
+  const count=13,point=t=>[-2.79+4.56*t,2.59+.06*t-.32*Math.sin(Math.PI*t),.06*(1-t)];
   for(let i=0;i<count;i++){
     const a=point(i/count),b=point((i+1)/count);
     k.rod(g,a,b,.012,paper.ink,4);
@@ -484,9 +487,6 @@ function cali(k){
   barrioHouse(k,-2.95,-2.20,1.67,1.85,paper.ochre,paper.sea,true);
   barrioHouse(k,-1.31,-2.10,1.39,1.41,paper.sea,paper.cream,false);
   streetBunting(k);
-  const sign=k.anchor(-3.32,-1.53);
-  k.box(sign,0,1.77,.016,1.31,.344,.105,paper.navy);
-  print(k,sign,'CALI',0,1.78,.082,1.18,.302,paper.chalk);
   const bench=k.anchor(-4.79,-.38);
   k.box(bench,0,.32,0,1.03,.07,.36,paper.honey);
   k.box(bench,0,.52,-.15,1.02,.18,.05,paper.tan);

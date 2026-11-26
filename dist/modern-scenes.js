@@ -40,7 +40,19 @@ function floodlight(k,x,z,h,dir=1) {
   }
   const lamp=k.group(g,0,h,0); lamp.rotation.y=dir*.16;
   k.box(lamp,0,0,0,1.04,.39,.16,p.navy);
-  for(let i=0;i<4;i++)k.disc(lamp,-.36+i*.24,0,.099,.093,p.white,10);
+  const warm=new k.THREE.Color('#ddb778'),bright=new k.THREE.Color('#fff3c9');
+  const banks=[0,1].map(()=>new k.THREE.MeshBasicMaterial({color:p.white,side:k.THREE.DoubleSide}));
+  for(let i=0;i<4;i++){
+    const lens=k.disc(lamp,-.36+i*.24,0,.099,.093,p.white,10);
+    lens.material=banks[i%2];
+  }
+  const rest=new k.THREE.Color(p.white);
+  k.motions.push((seconds,strength)=>{
+    for(const [i,bank] of banks.entries()){
+      const level=.5+.5*Math.cos(seconds*Math.PI/4+dir*1.1+i*.72);
+      bank.color.copy(warm).lerp(bright,level).lerp(rest,1-strength);
+    }
+  });
   return g;
 }
 
