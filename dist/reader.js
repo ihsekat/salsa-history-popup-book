@@ -366,8 +366,15 @@ function selectChapter(target){
   if(count<=1 || reduced.matches){turn(target);return;}
 
   stop();
-  const direction=Math.sign(target-current);
-  const milliseconds=Math.max(155,320-count*11);
+  const startPage=current;
+  const direction=Math.sign(target-startPage);
+  const edgeDuration=Math.max(155,320-count*11);
+  const maxReduction=Math.min(.48,.16*(count-2));
+  function pageDuration(page){
+    const fraction=Math.abs(page-startPage)/(count-1);
+    const ramp=Math.sin(Math.PI*fraction);
+    return edgeDuration*(1-maxReduction*ramp*ramp);
+  }
   const plates=new Map();
   if(!world){
     for(let page=current;page!==target+direction;page+=direction){
@@ -376,7 +383,8 @@ function selectChapter(target){
       plates.set(page,image);
     }
   }
-  let from=current,progress=0,previous;
+  let from=startPage,progress=0,previous;
+  let milliseconds=edgeDuration;
   rustle();
   function tick(now){
     const next=from+direction;
@@ -393,6 +401,7 @@ function selectChapter(target){
     if(progress===1){
       if(next===target){stop();turn(target);return;}
       from=next;progress=0;
+      milliseconds=pageDuration(from);
     }
     anim=requestAnimationFrame(tick);
   }
