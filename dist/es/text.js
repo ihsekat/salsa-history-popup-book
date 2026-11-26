@@ -37,7 +37,7 @@ export const text = {
     "style": "TRADICIONES INDÍGENAS DEL CARIBE",
     "place": "Antillas Mayores · Desde antes de 1492 hasta hoy",
     "line": "Mucho antes de que existiera la salsa, los taínos y otros pueblos indígenas del Caribe ya hacían música y bailaban. Sus comunidades sufrieron pérdidas devastadoras tras la colonización europea. En instrumentos como el güiro y las maracas aún se escucha su legado.",
-    "alt": "En un asentamiento taíno hay un bohío con techo de palma, un güiro acanalado y un par de maracas.",
+    "alt": "Un grupo de taínos se reúne junto a un bohío con techo de palma. En primer plano hay un güiro acanalado y un par de maracas.",
     "copy": [
       "Los taínos eran uno de los pueblos indígenas que habitaban Cuba, La Española, Puerto Rico y las islas vecinas cuando llegaron los europeos. La música, el baile y la narración oral formaban parte de la vida en comunidad. En los areítos, la gente cantaba y bailaba para recordar a sus antepasados, a sus líderes y su historia.",
       "Fabricaban instrumentos de percusión con los materiales que tenían a mano, entre ellos frutos huecos y madera. Las sonajas y los raspadores son parte de su herencia musical más reconocible. Las maracas y el güiro siguen dando una textura inconfundible al ritmo de la salsa.",
@@ -45,6 +45,13 @@ export const text = {
     ],
     "footerPlace": "Antillas Mayores",
     "objects": {
+      "people": {
+        "title": "El pueblo taíno",
+        "copy": [
+          "Los taínos son un pueblo indígena del Caribe. Hace más de 2.000 años, algunos de sus antepasados llegaron a las islas en canoa desde el norte de Sudamérica. Trajeron consigo lenguas arahuacas y cultivos como la yuca. En Cuba y las islas vecinas, las familias rallaban la yuca y con su harina hacían casabe, un pan delgado y redondo.",
+          "En los areítos, la gente cantaba y bailaba para transmitir la memoria de sus antepasados. Hoy, en distintas partes del Caribe, sus descendientes siguen preparando casabe y contando las historias de sus familias."
+        ]
+      },
       "duo": {
         "title": "El bohío",
         "copy": [

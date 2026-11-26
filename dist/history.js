@@ -67,7 +67,7 @@ export const expansion = {
     objectsLabel: "FROM THE SPREAD · The Taíno: Indigenous Roots",
     line: "Long before salsa, the Taíno and other Indigenous Caribbean peoples made music and danced. Their population suffered catastrophic losses after European colonization, but instruments such as the güiro and maracas preserve a legacy you can still hear in Caribbean music today.",
     footer: ["Greater Antilles", "INDIGENOUS CARIBBEAN TRADITIONS · 02"],
-    alt: "A thatched bohío, a ridged güiro and a pair of maracas stand in a Taíno settlement.",
+    alt: "Taíno villagers gather beside a thatched bohío. A ridged güiro and a pair of maracas stand in the foreground.",
     copy: [
       "The Taíno were among the Indigenous peoples living in Cuba, Hispaniola, Puerto Rico and neighboring islands when Europeans arrived. Music, dance and storytelling were part of community life. At gatherings known as areítos, people sang and danced to remember their ancestors, leaders and histories.",
       "They made percussion instruments from materials found around them, including hollow gourds and wood. Rattles and scrapers are among their most recognizable musical legacies. The sounds of modern maracas and the güiro still help shape salsa’s rhythm.",
@@ -82,6 +82,18 @@ export const expansion = {
       archive("Columbus and the Taíno — Library of Congress", "https://www.loc.gov/exhibits/exploring-the-early-americas/columbus-and-the-taino"),
     ],
     objects: {
+      people: {
+        title: "The Taíno people",
+        copy: [
+          "The Taíno are Indigenous to the Caribbean. More than 2,000 years ago, some of their ancestors traveled by canoe from northern South America to the islands, bringing Arawakan languages and crops such as cassava. In Cuba and the neighboring islands, families grated cassava roots and baked the flour into thin rounds of bread called casabe.",
+          "At gatherings called areítos, people sang and danced together to pass on memories of their ancestors. Today, Taíno descendants across the Caribbean still make casabe and keep family stories alive.",
+        ],
+        sources: [
+          archive("History of Salsa Dance - Salsa Vida", "https://www.salsavida.com/articles/history-of-salsa-dance/#caribbean-cultural-influences"),
+          archive("Taíno: Native Heritage and Identity in the Caribbean - National Museum of the American Indian", "https://americanindian.si.edu/nk360/pdf/Taino-Gallery-Guide-English.pdf"),
+          archive("Taino Settlement - National Park Service", "https://www.nps.gov/places/taino-settlement.htm"),
+        ],
+      },
       duo: {
         title: "The bohío",
         copy: [

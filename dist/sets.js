@@ -12,7 +12,7 @@ import {revisionScene,revisionFigures} from './revision-scenes.js';
 const figures={
   ...revisionFigures,
   landfall:[['duo','ship',-2.58,.25,3.05]],
-  taino:[['','taino',-1.52,1.04,1.89]],
+  taino:[['people','taino',-1.52,1.04,1.89]],
   spain:[['player','spain',-2.03,.65,2.03],['partners','spanish-partners',1.14,1.30,2.22]],
   africa:[['duo','africa',-1.44,.92,2.19],['prop','singing-chorus',2.06,-.38,1.72]],
   son:[['duo','son',-1.30,1.23,2.54],['player','tresero',3.35,.80,1.67]],
@@ -79,6 +79,8 @@ export function buildChapter(id,root,textures){
   for(const [key,file,x,z,h,baseY,facing=1,yaw=0] of figures[id]){
     const {cutout,puppet}=standee(k,textures[file],x,z,h,baseY,tabPositions[file],yaw);
     puppet.scale.x=facing;
+    if(file==='ship')k.animateAtRest(puppet,'ship',.4);
+    if(file==='taino')k.animateAtRest(puppet,'people');
     if(key){(cutouts[key]??=[]).push(cutout);puppets[key]??=puppet;}
   }
   k.anchors.forEach(batchStock);
@@ -98,5 +100,5 @@ export function buildChapter(id,root,textures){
       printedAt(uv,target){return parts.find(part=>part.mesh===target)?.printedAt(uv) ?? true;}
     };
   }
-  return {stage,anchors:k.anchors,items,puppets,faces:null};
+  return {stage,anchors:k.anchors,items,puppets,faces:null,motions:k.motions,motionTime:0};
 }

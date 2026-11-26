@@ -1,4 +1,8 @@
 export const sources = {
+  "https://americanindian.si.edu/nk360/pdf/Taino-Gallery-Guide-English.pdf": [
+    "Taíno: herencia e identidad indígena en el Caribe",
+    "https://americanindian.si.edu/nk360/pdf/Taino-Gallery-Guide-Spanish.pdf"
+  ],
   "https://www.salsavida.com/articles/history-of-salsa-dance/#caribbean-cultural-influences": [
     "Historia de la Salsa: Orígenes, Música y Evolución",
     "https://www.salsavida.com/es/articles/history-of-salsa-dance/#caribbean-cultural-influences"

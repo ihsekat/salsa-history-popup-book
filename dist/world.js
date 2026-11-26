@@ -78,6 +78,7 @@ export async function createWorld(canvas,callbacks){
   }
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   let resting=false,paused=false,pulseTimer=0,disposed=false;
+  let allowAmbient=true,onScreen=true,lastShadow=0;
   const ray=new T.Raycaster(), pointer=new T.Vector2();
   const seat=.090;
   let width=1,height=1,position=0, yaw=seat,pitch=0,wantYaw=seat,wantPitch=0, frame=0,beatStart=-2000,beatWhich='player';
@@ -123,6 +124,14 @@ export async function createWorld(canvas,callbacks){
     const ease=1-Math.exp(-dt/65);
     yaw+=(wantYaw-yaw)*ease;pitch+=(wantPitch-pitch)*ease;cameraPose();
     const active=chapterAt(Math.round(position)), t=(now-beatStart)/1000;
+    const moving=active.motions.length>0 && resting && allowAmbient && onScreen &&
+      !reduced.matches && !paused && !document.hidden;
+    if(moving || (resting && reduced.matches && active.motionTime>0)){
+      active.motionTime=moving?active.motionTime+dt/1000:0;
+      const strength=T.MathUtils.smoothstep(active.motionTime,0,.8);
+      for(const pose of active.motions)pose(active.motionTime,strength);
+      if(now-lastShadow>110 || !moving){renderer.shadowMap.needsUpdate=true;lastShadow=now;}
+    }
     const puppet=active.puppets[beatWhich];
     if(puppet)puppet.rotation.z=(t>=0 && t<1.22)?.085*Math.exp(-2.4*t)*Math.sin(t*16):0;
     const closure=Math.max(closed,Math.abs(position-Math.round(position)));
@@ -140,8 +149,8 @@ export async function createWorld(canvas,callbacks){
     if(puppet && t>=0 && t<1.35)renderer.shadowMap.needsUpdate=true;
     if(closed===1 && roll.rotation.z===0)placeCover();
     renderer.render(scene,camera);
-    if(resting && !paused && !reduced.matches && !document.hidden){
-      clearTimeout(pulseTimer);pulseTimer=setTimeout(request,80);
+    if(resting && onScreen && !paused && !reduced.matches && !document.hidden){
+      clearTimeout(pulseTimer);pulseTimer=setTimeout(request,moving?24:80);
     }
     if(Math.abs(wantYaw-yaw)>.001||Math.abs(wantPitch-pitch)>.001||(t>=0&&t<1.22))request();
   }
@@ -150,7 +159,8 @@ export async function createWorld(canvas,callbacks){
     paused=value;clearTimeout(pulseTimer);
     if(value){cancelAnimationFrame(frame);frame=0;}else request();
   }
-  function show(p,closure=0,edge='front'){
+  function show(p,closure=0,edge='front',ambient=true){
+    allowAmbient=ambient;
     closed=closure;coverEdge=edge;lift=0;
     roll.position.set(0,hingeHeight,0);roll.rotation.z=0;
     root.position.set((edge==='front'?-1:1)*boardCenter*closure,-hingeHeight,0);
@@ -163,6 +173,8 @@ export async function createWorld(canvas,callbacks){
     resting=!f && !closure;
     chapters.forEach((chapter,i)=>{
       chapter.stage.visible=resting && i===outgoing;
+      // A new turn should fold the pose the reader just saw.
+      if(chapter.stage.visible && allowAmbient && chapter.motions.length && chapter.faces)releaseFolds(chapter);
       const inTurn=f>0 && (i===outgoing || i===outgoing+1);
       const atCover=closure>0 && closure<1 && i===outgoing;
       if(!inTurn && !atCover){
@@ -194,6 +206,11 @@ export async function createWorld(canvas,callbacks){
     renderer.setSize(width,height,false);camera.aspect=width/height;camera.updateProjectionMatrix();request();
   }
   const observer=new ResizeObserver(resize);observer.observe(canvas);
+  const viewport=new IntersectionObserver(([entry])=>{
+    onScreen=entry.isIntersecting;
+    if(onScreen)request();else clearTimeout(pulseTimer);
+  });
+  viewport.observe(canvas);
   function targets(e){
     const r=canvas.getBoundingClientRect();pointer.set((e.clientX-r.left)/r.width*2-1, -(e.clientY-r.top)/r.height*2+1);
     ray.setFromCamera(pointer,camera);
@@ -253,7 +270,7 @@ export async function createWorld(canvas,callbacks){
   bindBookGestures(stage,{startDrag,moveDrag,endDrag,cancelDrag,zoomBy,
     hover(e){const key=targets(e).item;highlightItem(key);canvas.style.cursor=key?'pointer':'grab';}
   },input.signal);
-  function disposeInput(){disposed=true;clearTimeout(pulseTimer);input.abort();observer.disconnect();cancelAnimationFrame(frame);frame=0;}
+  function disposeInput(){disposed=true;clearTimeout(pulseTimer);input.abort();observer.disconnect();viewport.disconnect();cancelAnimationFrame(frame);frame=0;}
   function nudge(az,el){wantYaw=clamp(wantYaw+az,-.72,.72);wantPitch=clamp(wantPitch+el,-.18,.39);request();}
   function reset(){wantYaw=seat;wantPitch=0;setZoom(1);request();}
   function play(which){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;beatStart=performance.now();beatWhich=which;request();}

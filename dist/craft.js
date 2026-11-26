@@ -1,5 +1,6 @@
 import * as THREE from './three.module.min.js';
 import {blockDepth} from './hardcover.js';
+import {paperMotion} from './paper-motion.js';
 
 const paper = new Map();
 function stock(color) {
@@ -66,12 +67,17 @@ export function surfaceHeight(x) {
 }
 export function makeKit(root) {
   const anchors=[];
+  const motions=[];
+  function animateAtRest(node,kind,phase=0){
+    motions.push(paperMotion(node,kind,phase));
+    return node;
+  }
   function anchor(x,z,baseY=0) {
     const piece=group(root,x,baseY+surfaceHeight(x),z);
     anchors.push(piece);
     return piece;
   }
-  return {THREE,root,anchors,anchor,group,mesh,stock,box,card,disc,rod,label};
+  return {THREE,root,anchors,anchor,group,mesh,stock,box,card,disc,rod,label,motions,animateAtRest};
 }
 
 // Fold each assembly around its own foot. Batch the printed stock within each

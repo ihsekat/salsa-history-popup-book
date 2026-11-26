@@ -77,6 +77,7 @@ export function cubanIsland(k){
     const [x,y,z]=site(lon,lat);
     const tree=palm(k,land.position.x+x,land.position.z+z,height,turn);
     tree.position.y=land.position.y+y;
+    if(height>=.72)k.animateAtRest(tree,'palm',turn*2);
   }
   land.userData.notePin=new k.THREE.Vector3(...site(-79.85,21.96));
   return land;

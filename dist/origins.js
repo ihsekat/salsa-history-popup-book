@@ -52,12 +52,15 @@ function canoe(k,x,z){
 }
 function coast(k){
   const shore=cubanIsland(k);
-  cloud(k,-3.83,-2.65,2.8,.77);cloud(k,2.81,-2.72,3.15,.91);sky(k,-.20,2.9,'#e8b85a');
+  k.animateAtRest(cloud(k,-3.83,-2.65,2.8,.77),'cloud');
+  k.animateAtRest(cloud(k,2.81,-2.72,3.15,.91),'cloud',.85);
+  sky(k,-.20,2.9,'#e8b85a');
   for(const [x,z,w] of [[-4.7,.42,1.25],[-2.75,1.45,2.0],[-.77,.86,1.16],[1.01,1.86,1.72],[4.10,1.88,1.18],[-4.6,-1.68,1.23],[-.78,-1.42,1.52]]){
     const wave=k.anchor(x,z);
+    k.animateAtRest(wave,'wave',x*.45+z*.2);
     k.card(wave,[[-w/2,0],[-w*.26,.07],[-w*.07,.05],[w*.12,.19],[w*.26,.11],[w*.46,.10],[w/2,.04],[w*.19,.055],[w*.09,.11],[-w*.06,.02]],'#d8dec1',0,.016);
   }
-  return {player:shore,prop:canoe(k,2.85,1.53)};
+  return {player:shore,prop:k.animateAtRest(canoe(k,2.85,1.53),'canoe',.4)};
 }
 function gourd(k,g,x,y,z,rx,ry,color){
   const o=k.mesh(g,new k.THREE.SphereGeometry(1,16,12),k.stock(color),x,y,z);
@@ -65,9 +68,12 @@ function gourd(k,g,x,y,z,rx,ry,color){
 }
 function village(k){
   ridge(k,-3.81,-2.92,4,1.58,'#8ba18a','#73957a');ridge(k,1.36,-3.02,5.65,1.52,'#688d78','#537d71');
-  palm(k,-4.58,-2.05,2.65);palm(k,4.70,-1.94,2.4);
+  k.animateAtRest(palm(k,-4.58,-2.05,2.65),'palm',.2);
+  k.animateAtRest(palm(k,4.70,-1.94,2.4),'palm',1.1);
   const dwelling=house(k,2.27,-1.26,1.19,true);house(k,-3.72,-1.36,.77,true);
-  for(const [x,z] of [[-5.02,.75],[-4.5,1.35],[-3.95,1.70],[4.72,-.28]])shrub(k,x,z,.74);
+  for(const [x,z] of [[-5.02,.75],[-4.5,1.35],[-3.95,1.70],[4.72,-.28]]){
+    k.animateAtRest(shrub(k,x,z,.74),'bush',x*.6+z);
+  }
   const scraper=k.anchor(1.43,1.52), gui=k.group(scraper,0,.63,0);gui.rotation.z=-.65;
   gourd(k,gui,0,0,0,.26,.70,'#c99a4d');
   for(let i=0;i<11;i++){
@@ -82,7 +88,7 @@ function village(k){
     gourd(k,g,0,.15,0,.22,.295,'#c58a47');
     round(k,g,.091,.086,.064,0,-.12,0,'#dfc58d');
   }
-  return {duo:dwelling,player:scraper,prop:rattles};
+  return {duo:dwelling,player:scraper,prop:k.animateAtRest(rattles,'rattle')};
 }
 function spanishPrimer(k){
   const primer=k.anchor(-4.33,2.16);

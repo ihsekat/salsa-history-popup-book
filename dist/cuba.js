@@ -11,6 +11,7 @@ function cloud(k,x,z,y,s) {
   k.rod(g,[0,0,0],[0,y,0],.014,'#c3b798');
   const p=k.group(g,0,y,.02);p.scale.setScalar(s);
   k.card(p,[[-.66,0],[-.58,.14],[-.40,.16],[-.29,.34],[-.03,.34],[.09,.53],[.37,.50],[.48,.29],[.51,.18],[.68,.14],[.77,0]],cream,0,.03);
+  return g;
 }
 function palm(k,x,z,h,rotation=0) {
   const g=k.anchor(x,z);g.rotation.y=rotation;
@@ -115,6 +116,7 @@ function shrub(k,x,z,s,flower=false) {
     k.card(leaf,[[-.04,0],[-.13,.32],[-.07,.57],[.03,.76],[.11,.40],[.10,.15]],i%2?jade:pine,0,.016);
     if(flower && i%2===0) k.disc(leaf,0,.69,.022,.08,i%4?mustard:rose,5);
   }
+  return g;
 }
 export function courtyard(k){
   mountain(k,-4.45,-2.96,3.0,1.68,['#75978a','#607f77']);
