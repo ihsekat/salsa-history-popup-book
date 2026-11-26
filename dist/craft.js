@@ -56,9 +56,10 @@ function label(parent,text,x,y,z,w,h,options={}) {
   if(options.bg) {c.fillStyle=options.bg;c.fillRect(0,0,can.width,can.height);}
   if(options.border){c.strokeStyle=typeof options.border==='string'?options.border:'#ebd4a3';c.lineWidth=4;c.strokeRect(8,8,can.width-16,can.height-16);}
   c.textAlign='center';c.textBaseline='middle';c.fillStyle=options.ink||'#302b23';
-  c.font='bold 129px '+(options.font||'Georgia');
+  const textScale=options.textScale??1;
+  c.font='bold '+(129*textScale)+'px '+(options.font||'Georgia');
   if(options.tracking && 'letterSpacing' in c) c.letterSpacing=String(parseFloat(options.tracking)||0)+'px';
-  c.fillText(text,can.width/2,can.height*.52,can.width*.94);
+  c.fillText(text,can.width/2,can.height*.52,can.width*.94*textScale);
   return mesh(parent,new THREE.PlaneGeometry(w,h),new THREE.MeshLambertMaterial({map:canvasTexture(can),alphaTest:.35,side:THREE.DoubleSide}),x,y,z);
 }
 export function surfaceHeight(x) {

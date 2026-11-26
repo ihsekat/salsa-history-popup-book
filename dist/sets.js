@@ -49,7 +49,7 @@ function pilotScene(k,id){
   const index=Array.from(plank.geometry.index.array);
   index.splice(front.start,front.count);
   plank.geometry.clearGroups();plank.geometry.setIndex(index);
-  const face=k.label(sign,'ORIENTE',0,middle,depth/2,width,height,{bg:'#dcbb83',ink:'#3e3024',font:'Georgia'});
+  const face=k.label(sign,'ORIENTE',0,middle,depth/2,width,height,{bg:'#dcbb83',ink:'#3e3024',font:'Georgia',textScale:.88});
   face.castShadow=false;
   sign.userData.hitAreas=[face];
   sign.userData.notePin=new T.Vector3(0,middle,depth/2);
