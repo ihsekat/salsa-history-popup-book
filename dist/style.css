@@ -8,7 +8,9 @@ button{color:inherit;cursor:pointer}
 button:focus-visible,input:focus-visible,canvas:focus-visible,a:focus-visible{outline:2px solid #e9bc65;outline-offset:4px}
 button:disabled{cursor:default}
 [hidden]{display:none!important}
-#reader{position:relative;isolation:isolate;width:100%;height:100vh;height:100svh;min-height:490px;overflow:hidden;background:radial-gradient(ellipse at 53% 48%,#425444 0,#364b3d 46%,#263f34 83%,#20382e 100%)}
+.book-surface{position:relative;isolation:isolate;background:radial-gradient(ellipse at 53% 48%,#425444 0,#364b3d 46%,#263f34 83%,#20382e 100%)}
+.book-surface:has(>#reader:not([hidden])){padding-block-end:50px}
+#reader{position:relative;width:100%;height:100vh;height:100svh;min-height:490px;overflow:hidden}
 #stage{position:absolute;inset:0;z-index:0}
 #world,#edition{width:100%;height:100%;display:block;position:absolute;inset:0}
 #stage{touch-action:none}

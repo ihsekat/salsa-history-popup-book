@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="{{ASSET_ROOT}}style.css?v={{STYLE_VERSION}}">
 </head>
 <body>
+<div class="book-surface">
 <div id="reader" class="covered" role="region" aria-label="{{t|Interactive pop-up book}}" hidden>
   <section id="gate" aria-label="{{BOOK_TITLE}}" data-side="front">
     <p id="cover-subtitle">{{SUBTITLE}}</p>
@@ -36,7 +37,6 @@
       <template id="note-button"><button type="button" class="scene-note" aria-haspopup="dialog"><span></span></button></template>
     </div>
   </div>
-  <div class="grain" aria-hidden="true"></div><div class="shade" aria-hidden="true"></div>
   <header class="tools">
     <div class="imprint"><span class="tile"><img src="{{ASSET_ROOT}}art/book-mark.png?v=94aef816ddb0" width="39" height="39" alt=""></span><div><strong>{{BOOK_TITLE}}</strong></div></div>
     <nav aria-label="{{t|Book tools}}">
@@ -65,6 +65,8 @@
       </div>
     </div>
   </footer>
+</div>
+  <div class="grain" aria-hidden="true"></div><div class="shade" aria-hidden="true"></div>
 </div>
 <dialog id="dialog" aria-labelledby="dialog-title"><article class="sheet">
   <button id="close" aria-label="{{t|Close}}"><i data-icon="close"></i></button>
