@@ -13,7 +13,7 @@ export const artRevisions={
     "ambient-palladium.avif": "4144ea36c488",
     "ambient-puerto-rico.avif": "65004bf51c30",
     "ambient-son.avif": "918117540ff1",
-    "ambient-spain.avif": "19faedc79818",
+    "ambient-spain.avif": "d72e47e727fc",
     "ambient-stadium.avif": "f1c48538b5fa",
     "ambient-taino.avif": "fba4a70776d7",
     "spread-09-johnny-vazquez.webp": "ecc4b1b539d7",
@@ -29,7 +29,7 @@ export const artRevisions={
     "spread-landfall.webp": "f4cb98903426",
     "spread-orlando-championship.webp": "8b55deccbe49",
     "spread-paper-mambo.webp": "8c5e8c857c5e",
-    "spread-spanish-danza.webp": "e0c544b4753c",
+    "spread-spanish-danza.webp": "ac34237d5c05",
     "spread-taino.webp": "3c8775a51ca6",
     "spread-yankee-all-stars.webp": "243aea03c3f6"
   },
@@ -47,7 +47,7 @@ export const artRevisions={
     "ambient-palladium.avif": "3043d9af300a",
     "ambient-puerto-rico.avif": "8d59f85f40b1",
     "ambient-son.avif": "7e2ad6a15fd9",
-    "ambient-spain.avif": "b5bdc8cffb25",
+    "ambient-spain.avif": "9a74f751643c",
     "ambient-stadium.avif": "c75798cc9aae",
     "ambient-taino.avif": "599d0c07ec04",
     "spread-09-johnny-vazquez.webp": "9c785d97afaf",
@@ -63,7 +63,7 @@ export const artRevisions={
     "spread-landfall.webp": "ede2b26dd169",
     "spread-orlando-championship.webp": "b5a2eac01bba",
     "spread-paper-mambo.webp": "a0863a6062ee",
-    "spread-spanish-danza.webp": "3ae9a9d257e1",
+    "spread-spanish-danza.webp": "80190dcd85a1",
     "spread-taino.webp": "d97dac498bb6",
     "spread-yankee-all-stars.webp": "c420e5a15c6c"
   }

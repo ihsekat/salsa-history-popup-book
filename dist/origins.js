@@ -166,8 +166,8 @@ function courtyardTower(k){
 }
 
 function fountainWater(k,fountain){
-  round(k,fountain,.397,.397,.012,0,.897,0,'#aecfc5',24);
-  round(k,fountain,.595,.595,.012,0,.282,0,'#98bfb4',32);
+  round(k,fountain,.397,.397,.012,0,.897,0,'#83b4ab',24);
+  round(k,fountain,.595,.595,.012,0,.282,0,'#7daea5',32);
   const radius=t=>.412+.177*t;
   const height=t=>.900+.048*t-.667*t*t;
   for(let i=0;i<5;i++){
