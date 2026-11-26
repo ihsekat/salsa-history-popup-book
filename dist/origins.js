@@ -120,6 +120,32 @@ function spanishPrimer(k){
   return primer;
 }
 
+function fountainWater(k,fountain){
+  round(k,fountain,.397,.397,.012,0,.897,0,'#83b4ab',24);
+  round(k,fountain,.595,.595,.012,0,.282,0,'#7daea5',32);
+  const radius=t=>.412+.177*t;
+  const height=t=>.900+.048*t-.667*t*t;
+  for(let i=0;i<5;i++){
+    const jet=k.group(fountain);
+    jet.rotation.y=(i+.14)*Math.PI*2/5;
+    for(let j=0;j<7;j++){
+      const a=j/7,b=(j+1)/7;
+      k.rod(jet,[radius(a),height(a),0],[radius(b),height(b),0],.022,'#9ec8c0',6);
+    }
+    const glint=k.group(jet);
+    glint.userData.movingStock=true;
+    gourd(k,glint,0,0,0,.025,.049,'#e0f1d8');
+    const flow=(seconds,strength)=>{
+      const t=(i/5+.10+seconds*strength*.75)%1;
+      glint.position.set(radius(t),height(t),0);
+      glint.rotation.z=Math.atan2(.177,1.334*t-.048);
+      glint.scale.setScalar(Math.sin(Math.PI*t));
+    };
+    flow(0,0);
+    k.motions.push(flow);
+  }
+}
+
 function spanish(k){
   const patio=k.anchor(2.28,-1.76);
   k.box(patio,0,1.45,-.22,4.98,2.9,.43,'#cc9472');
@@ -141,6 +167,7 @@ function spanish(k){
   const fountain=k.anchor(-3.60,.30);
   round(k,fountain,.71,.61,.23,0,.12,0,'#b58960');round(k,fountain,.62,.67,.08,0,.24,0,'#9fae95');
   round(k,fountain,.12,.18,.56,0,.52,0,'#ceb18c');round(k,fountain,.45,.16,.17,0,.81,0,'#dec19a');gourd(k,fountain,0,.98,0,.09,.12,'#c4a27c');
+  fountainWater(k,fountain);
   leafTree(k,4.73,-.35,2.15);leafTree(k,-4.89,-1.44,2.31);
   const music=k.anchor(3.35,1.56);
   for(const [index,chords] of [['C','F'],['G','C']].entries()){

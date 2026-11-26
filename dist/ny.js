@@ -28,10 +28,17 @@ function downstageSkyline(k, x, z, heights, shade) {
   });
   silhouette.push([start + heights.length * step, 0]);
   k.card(g, silhouette, shade, 0, 0.04);
-  heights.forEach((h, i) => {
-    if (i % 2 === 0) {
-      k.box(g, start + (i + .42) * step, h * .67, .05, .095, .2, .012, paper.parchment);
-      k.box(g, start + (i + .72) * step, h * .67, .05, .095, .2, .012, paper.jade);
+  const lit=new k.THREE.Color(paper.glow),dim=new k.THREE.Color(paper.blue);
+  heights.forEach((h,i)=>{
+    if(i%2)return;
+    for(const [j,offset] of [.42,.72].entries()){
+      const pane=k.box(g,start+(i+offset)*step,h*.67,.05,.095,.20,.012,paper.jade);
+      const rest=new k.THREE.Color(j?paper.jade:paper.parchment);
+      pane.material=new k.THREE.MeshBasicMaterial({color:rest});
+      k.motions.push((seconds,strength)=>{
+        const level=k.THREE.MathUtils.smoothstep(Math.cos(seconds*Math.PI/4+i*1.3+j*2),-.55,.55);
+        pane.material.color.copy(dim).lerp(lit,level).lerp(rest,1-strength);
+      });
     }
   });
 }

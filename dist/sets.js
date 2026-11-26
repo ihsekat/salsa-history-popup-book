@@ -75,12 +75,12 @@ const figureMotion={
   spain:{player:'music',partners:'partnerTurn'},
   africa:{duo:'twist',prop:'music'},
   son:{duo:'sideStep',player:'music'},
-  'cuban-dances':{rumba:'step',charanga:'music',chacha:'twist',pachanga:'twist'},
+  'cuban-dances':{rumba:'rumba',charanga:'music',chacha:'twist',pachanga:'twist'},
   palladium:{duo:'step',player:'twist',piro:'step'},
   fania:{founders:'twist',band:'music'},
   stadium:{pacheco:'twist',duo:'music',colon:'twist',player:'music',mongo:'music'},
   eddie:{duo:'twist'},'los-angeles':{duo:'twist'},cali:{duo:'step',team:'twist'},
-  'puerto-rico':{social:'son',workshops:'twist',performances:'twist'},
+  'puerto-rico':{social:'socialTurn',workshops:'twist',performances:'sideStep'},
   'congress-world':{duo:'twist'},championship:{duo:'twist'},halftime:{duo:'partnerTurn',player:'music'}
 };
 export function buildChapter(id,root,textures){

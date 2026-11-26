@@ -47,8 +47,8 @@ test('the two spectator groups alternate small rises and the TV camera pans on i
   for(let seconds=0;seconds<=2;seconds+=.125){
     poses.forEach(pose=>pose(seconds,1));
     const [a,b]=groups.map(g=>g.position.y);
-    assert.ok(a>=0 && a<=.048 && b>=0 && b<=.048);
-    assert.ok(Math.abs(a+b-.048)<1e-8);
+    assert.ok(a>=0 && a<=.036 && b>=0 && b<=.036);
+    assert.ok(Math.abs(a+b-.036)<1e-8);
   }
   poses.forEach(pose=>pose(.5,0));assert.ok(groups.every(g=>g.position.y===0));
   const yoke=new T.Group();yoke.position.set(0,1.1,0);
@@ -75,7 +75,7 @@ test('the güiro and scraper turn together on a planted pivot and return to rest
   const foot=player.position.clone();
   batchStock(player);
   assert.equal(player.children.filter(node=>node.isMesh).length,1);
-  for(const [time,yaw] of [[2,.14],[6,-.14],[8,0]]){
+  for(const [time,yaw] of [[2,.09],[6,-.09],[8,0]]){
     for(const pose of kit.motions)pose(time,1);
     assert.ok(Math.abs(player.rotation.y-yaw)<1e-8);
     assert.ok(player.position.equals(foot));

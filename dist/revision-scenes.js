@@ -372,7 +372,12 @@ function streetBunting(k){
     k.rod(g,a,b,.012,paper.ink,4);
     if(i===0||i===count-1)continue;
     const cloth=i%4===0?paper.coral:i%4===1?paper.yellow:i%4===2?paper.mint:paper.blue;
-    k.card(g,[[a[0]+.07,a[1]-.012],[b[0]-.03,b[1]-.012],[(a[0]+b[0])/2+.020,(a[1]+b[1])/2-.25]],cloth,a[2],.017);
+    const line=new k.THREE.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]);
+    const hinge=k.group(g,a[0],a[1],a[2]);
+    hinge.quaternion.setFromUnitVectors(new k.THREE.Vector3(1,0,0),line.clone().normalize());
+    const flag=k.animateAtRest(k.group(hinge),'pennant',-i*.46);
+    const width=line.length();
+    k.card(flag,[[.07,-.012],[width-.03,-.012],[width/2+.020,-.25]],cloth,0,.017);
   }
 }
 
