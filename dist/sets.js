@@ -86,14 +86,16 @@ export function buildChapter(id,root,textures){
   k.anchors.forEach(batchStock);
   const items={};
   for(const key of new Set([...Object.keys(pieces),...Object.keys(cutouts)])){
-    const prop=pieces[key]?.children.find(child=>child.isMesh && child.material.vertexColors);
-    const meshes=cutouts[key] || (prop?[prop]:[]);
+    const anchors=[].concat(pieces[key] || []);
+    const props=anchors.flatMap(anchor=>anchor.children.filter(child=>child.isMesh && child.material.vertexColors));
+    const meshes=cutouts[key] || props;
     if(!meshes.length)throw Error('Missing paper object '+id+' / '+key);
     const parts=meshes.map(mesh=>makeSceneItem(mesh,.50,.52));
     const [lead]=parts;
-    const extraTargets=[...meshes.slice(1),...(pieces[key]?.userData.hitAreas || [])];
-    if(prop && prop!==lead.mesh)extraTargets.push(prop);
-    if(lead.mesh===prop && pieces[key].userData.notePin)lead.pin.copy(pieces[key].userData.notePin);
+    const extraTargets=[...meshes.slice(1),...anchors.flatMap(anchor=>anchor.userData.hitAreas || [])];
+    if(cutouts[key])extraTargets.push(...props);
+    const notePin=anchors[0]?.userData.notePin;
+    if(lead.mesh===props[0] && notePin)lead.pin.copy(notePin);
     items[key]={
       mesh:lead.mesh,pin:lead.pin,extraTargets,
       setGlow(level){for(const part of parts)part.setGlow(level);},

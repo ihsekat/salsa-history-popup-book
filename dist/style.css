@@ -213,8 +213,6 @@ dialog::backdrop{background:#11241dd6;backdrop-filter:blur(4px)}
 }
 
 .cover-byline{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-.cover-byline .read-text{padding-inline:12px 4px;border-inline-start:1px solid #e0bf7d66}
-#gate[data-side="back"] .read-text{display:none}
 .read-chapter-text{display:inline-block;margin:8px 0;color:#315440;text-underline-offset:3px}
 .print-edition{color-scheme:light;background:#f6efdF;color:#263d32;font:18px/1.65 Georgia,serif}
 .print-edition a{color:#24533f;text-underline-offset:.18em}
@@ -248,16 +246,10 @@ dialog::backdrop{background:#11241dd6;backdrop-filter:blur(4px)}
 .chapter-plate{display:block;width:100%;height:auto;background:#354b3e;margin:1.4rem 0;border-radius:4px}
 .print-ending{border-top:1px solid #a99e7a;padding-top:1rem;margin-top:2.5rem}
 
-.legal-links{position:absolute;inset:auto 0 0;padding:0 var(--gutter) env(safe-area-inset-bottom);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 6px;font:400 .75rem/1.4 system-ui,-apple-system,sans-serif;color:#9ca69d}
-#gate.moving .legal-links{display:none}
-.legal-links a{pointer-events:auto;display:inline-flex;align-items:center;min-height:26px;padding:0 3px;color:inherit;text-decoration:none}
-.legal-links a:hover,.legal-links a:focus-visible{color:#e8e5d6;text-decoration:underline;text-underline-offset:.19em}
+.legal-links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0 .45rem;margin-top:2rem;color:#555e50;font:400 .8rem/1.5 system-ui,sans-serif}
+.legal-links a{display:inline-flex;align-items:center;min-height:30px;padding:0 .15rem;color:inherit;text-decoration:none}
+.legal-links a:is(:hover,:focus-visible){text-decoration:underline;text-underline-offset:.19em}
 #cover-colophon{bottom:max(33px,calc(2vh + 18px),calc(env(safe-area-inset-bottom) + 30px))}
-@media(max-width:360px){
-  #gate .legal-links{padding-inline:4px;column-gap:3px}
-  #gate[data-side="front"] .cover-byline{flex-direction:column;gap:0}
-  #gate[data-side="front"] .read-text{padding-inline:4px;border:0}
-}
 .policy-page{min-height:100svh;display:flex;flex-direction:column;background:#f6efdf;color:#263d32;font:18px/1.62 Georgia,serif}
 .policy-page main{width:min(100%,45rem);margin:0 auto;padding:clamp(30px,6vw,64px) clamp(22px,5vw,48px);flex:1}
 .policy-page main a{color:#315a42;text-underline-offset:.18em}

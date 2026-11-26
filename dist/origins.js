@@ -81,14 +81,17 @@ function village(k){
     k.rod(gui,[-rr*.57,yy,rr*.70],[rr*.65,yy,rr*.70],.019,'#806336',5);
   }
   k.rod(scraper,[-.50,.15,.22],[.61,.93,.22],.025,'#b67e40',6);
-  const rattles=k.anchor(4.12,1.72);
-  for(const [xx,yy,t] of [[-.29,.72,.27],[.26,.64,-.28]]){
-    const g=k.group(rattles,xx,yy,0);g.rotation.z=t;
-    k.rod(g,[0,-.67,0],[0,0,0],.052,'#9e7544');
-    gourd(k,g,0,.15,0,.22,.295,'#c58a47');
-    round(k,g,.091,.086,.064,0,-.12,0,'#dfc58d');
+  const rattles=[];
+  for(const [x,tilt] of [[4.01,.27],[4.20,-.28]]){
+    const foot=k.anchor(x,1.72);
+    const g=k.group(foot);
+    g.rotation.z=tilt;
+    k.rod(g,[0,0,0],[0,.67,0],.052,'#9e7544');
+    gourd(k,g,0,.82,0,.22,.295,'#c58a47');
+    round(k,g,.091,.086,.064,0,.55,0,'#dfc58d');
+    rattles.push(k.animateAtRest(foot,'rattle'));
   }
-  return {duo:dwelling,player:scraper,prop:k.animateAtRest(rattles,'rattle')};
+  return {duo:dwelling,player:scraper,prop:rattles};
 }
 function spanishPrimer(k){
   const primer=k.anchor(-4.33,2.16);

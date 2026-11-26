@@ -78,7 +78,7 @@ export async function createWorld(canvas,callbacks){
   }
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   let resting=false,paused=false,pulseTimer=0,disposed=false;
-  let allowAmbient=true,onScreen=true,lastShadow=0;
+  let allowAmbient=true,onScreen=true;
   const ray=new T.Raycaster(), pointer=new T.Vector2();
   const seat=.090;
   let width=1,height=1,position=0, yaw=seat,pitch=0,wantYaw=seat,wantPitch=0, frame=0,beatStart=-2000,beatWhich='player';
@@ -130,7 +130,7 @@ export async function createWorld(canvas,callbacks){
       active.motionTime=moving?active.motionTime+dt/1000:0;
       const strength=T.MathUtils.smoothstep(active.motionTime,0,.8);
       for(const pose of active.motions)pose(active.motionTime,strength);
-      if(now-lastShadow>110 || !moving){renderer.shadowMap.needsUpdate=true;lastShadow=now;}
+      renderer.shadowMap.needsUpdate=true;
     }
     const puppet=active.puppets[beatWhich];
     if(puppet)puppet.rotation.z=(t>=0 && t<1.22)?.085*Math.exp(-2.4*t)*Math.sin(t*16):0;

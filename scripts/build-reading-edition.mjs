@@ -85,17 +85,24 @@ async function buildEdition(edition,isSpanish){
     ' · <a href="'+prefix+'about/">'+t('About the book')+'</a> · '+switchLink('#reading-edition')+'</p><h1>'+bookTitle+'</h1>'+
     '<p class="print-deck">'+esc(bookCopy.front.subtitle)+'</p></header>'+
     '<nav id="book-contents" class="article-contents" aria-labelledby="contents-heading" tabindex="-1"><h2 id="contents-heading">'+t('Contents')+'</h2><ol>'+
-    links+'</ol></nav>'+chapters.map(readingChapter).join('\n')+'<footer class="print-ending">'+paragraphs(bookCopy.back.copy)+'</footer></article></main>';
+    links+'</ol></nav>'+chapters.map(readingChapter).join('\n')+'<footer class="print-ending">'+paragraphs(bookCopy.back.copy)+legalLinks+'</footer></article></main>';
   const canonical=absolute(prefix);
   const schema={'@context':'https://schema.org','@type':'Book','@id':canonical+'#book',url:canonical,name:bookTitle,inLanguage:lang,
     author:{'@type':'Person',name:'Takeshi Young',url:'https://www.salsavida.com'+prefix+'author/takeshi/'},
     publisher:{'@type':'Organization',name:'Salsa Vida',url:bookCopy.front.credit.url},license:'https://creativecommons.org/licenses/by/4.0/',
     description:bookCopy.description,hasPart:chapters.map((c,i)=>({'@type':'Chapter','@id':canonical+'#'+c.id,url:canonical+'#'+c.id,name:c.title,position:i+1}))};
+  const socialImage=absolute('/art/illustrated-history-of-salsa-dance'+(isSpanish?'-es':'')+'.png');
+  const socialAlt=t('A couple dances to a guitarist in a paper courtyard inside an open pop-up book.');
+  function socialMeta(title,url,type,description){
+    const og={'og:type':type,'og:site_name':bookTitle,'og:title':title,'og:url':url,'og:image':socialImage,
+      'og:image:type':'image/png','og:image:width':'1731','og:image:height':'909','og:image:alt':socialAlt};
+    if(description)og['og:description']=description;
+    const twitter={'twitter:card':'summary_large_image','twitter:image':socialImage,'twitter:image:alt':socialAlt};
+    return [...Object.entries(og).map(([k,v])=>'<meta property="'+k+'" content="'+esc(v)+'">'),
+      ...Object.entries(twitter).map(([k,v])=>'<meta name="'+k+'" content="'+esc(v)+'">')].join('\n');
+  }
   const meta=['<title>'+esc(bookTitle)+'</title>','<meta name="description" content="'+esc(bookCopy.description)+'">',
-    '<link rel="canonical" href="'+canonical+'">',headAlternates(''),
-    ...Object.entries({'og:type':'book','og:site_name':bookTitle,'og:title':bookTitle,'og:description':bookCopy.description,'og:url':canonical,
-      'og:image':absolute(prefix+'art/resting-front.webp'),'og:image:alt':t('The closed illustrated salsa history pop-up book')}).map(([k,v])=>'<meta property="'+k+'" content="'+esc(v)+'">'),
-    '<meta name="twitter:card" content="summary_large_image">',
+    '<link rel="canonical" href="'+canonical+'">',headAlternates(''),socialMeta(bookTitle,canonical,'book',bookCopy.description),
     '<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script>'].join('\n');
   const imports=Object.fromEntries(Object.entries(allModules).filter(([key])=>isSpanish||!key.startsWith('/es/')));
   if(isSpanish){
@@ -108,7 +115,7 @@ async function buildEdition(edition,isSpanish){
   const fields={LANG:lang,ASSET_ROOT:isSpanish?'/':'',BOOK_TITLE:esc(bookTitle),META:meta,STYLE_VERSION:styleVersion,SUBTITLE:esc(bookCopy.front.subtitle),
     CREDIT:esc(bookCopy.front.credit.label),CREDIT_URL:esc(bookCopy.front.credit.url),FOLIO:esc(c.pageLabel),CHAPTER_TITLE:esc(c.title),
     CHAPTER_PLACE:esc(c.place),CHAPTER_LINE:esc(c.line),PAGE_ONE:t('Page')+' 1 '+t('of')+' '+chapters.length,READING_EDITION:reading,
-    CHAPTER_LANGUAGE:switchLink('','chapter-language'),COVER_LANGUAGE:switchLink('','cover-language'),LEGAL_LINKS:legalLinks,SCRIPTS:scripts};
+    CHAPTER_LANGUAGE:switchLink('','chapter-language'),COVER_LANGUAGE:switchLink('','cover-language'),SCRIPTS:scripts};
   await output(outDir+'index.html',template.replace(/\{\{(.*?)\}\}/g,(_,key)=>{
     if(key.startsWith('t|'))return esc(t(key.slice(2)));
     if(!(key in fields))throw Error('Unknown template field '+key);
@@ -120,7 +127,7 @@ async function buildEdition(edition,isSpanish){
     await output(outDir+slug+'/index.html','<!doctype html>\n<html lang="'+lang+'"><head><meta charset="utf-8">'+
       '<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#22392f">'+
       '<title>'+esc(title+' | '+bookTitle)+'</title>'+(policy?'<meta name="robots" content="noindex,follow">':'<meta name="description" content="'+esc(description)+'">')+
-      '<link rel="canonical" href="'+absolute(prefix+slug+'/')+'">'+headAlternates(slug+'/')+
+      '<link rel="canonical" href="'+absolute(prefix+slug+'/')+'">'+headAlternates(slug+'/')+socialMeta(title,absolute(prefix+slug+'/'),'website',policy?'':description)+
       '<link rel="icon" href="/art/book-mark.png"><link rel="stylesheet" href="/style.css?v='+styleVersion+'"></head><body class="policy-page"><main>'+
       '<nav aria-label="'+t('Book')+'"><a href="'+prefix+'">'+bookTitle+'</a>'+switchLink(slug+'/')+'</nav><h1>'+title+'</h1>'+
       (policy?'<p class="policy-date">'+t('Last updated November 25, 2026')+'</p>':'')+body+'</main></body></html>\n');
