@@ -22,7 +22,15 @@ button:disabled{cursor:default}
 .scene-note:focus-visible{outline:2px solid #ffebb3;border-radius:50%;outline-offset:-5px}
 #scene-notes.illustrated{inset:50% auto auto 50%;transform:translate(-50%,-50%);aspect-ratio:16/9}
 @media(max-width:720px){.scene-note:not([data-item="duo"]) span{left:auto;right:12px;transform:none}}
-#edition{background-position:center center;background-size:contain;background-repeat:no-repeat}
+#edition{container-type:size;background-position:center center;background-size:contain;background-repeat:no-repeat}
+#edition.turning{background-size:0 0}
+#paper-flip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100%,177.778cqh);aspect-ratio:16/9;perspective:1000px;pointer-events:none}
+#paper-flip::before,#paper-flip::after,#paper-flip i{position:absolute;top:0;bottom:0;width:50%;background-size:200% 100%;background-repeat:no-repeat}
+#paper-flip::before,#paper-flip::after{content:""}
+#paper-flip::before{left:0;background-image:var(--lower-plate);background-position:left}
+#paper-flip::after{right:0;background-image:var(--upper-plate);background-position:right}
+#paper-flip i{z-index:1;right:0;transform-origin:left;background-image:var(--lower-plate);background-position:right}
+#paper-flip[data-face="left"] i{right:50%;transform-origin:right;background-image:var(--upper-plate);background-position:left}
 #world:focus-visible{outline-offset:-6px}
 .shade,.grain{position:absolute;inset:0;pointer-events:none}
 .shade{z-index:1;background:linear-gradient(0deg,rgba(13,32,26,.87),rgba(17,37,29,.52) 8%,transparent 24%,transparent 85%,rgba(17,35,27,.12)),radial-gradient(ellipse at 0% 13%,rgba(26,49,39,.28),transparent 31%)}

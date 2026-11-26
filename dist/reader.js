@@ -84,7 +84,7 @@ function render(p){
     $('edition').style.backgroundImage='url("'+asset(plateName(c.id))+'")';
     document.title=c.title+' · Illustrated History of Salsa Dance';
   }
-  $('scene-notes').hidden=!!cover || transition || (!world && !illustrated) || !Number.isInteger(pos);
+  $('scene-notes').hidden=!!cover || transition || !!anim || (!world && !illustrated) || !Number.isInteger(pos);
   if($('scene-notes').hidden)world?.highlightItem(null);
   drawBook();
 }
@@ -140,7 +140,7 @@ function playInstrument(){
   tipTimer=setTimeout(()=>{$('listen').lastElementChild.textContent=chapters[current].sound;},1800);
 }
 function openItem(key){
-  if(cover || transition || !Number.isInteger(pos) || $('dialog').open)return;
+  if(cover || transition || anim || !Number.isInteger(pos) || $('dialog').open)return;
   popup('object',markers[key],chapters[current].objects[key]);
 }
 for(const [key,button] of Object.entries(markers)){
@@ -152,9 +152,14 @@ function stop(){if(anim)cancelAnimationFrame(anim);anim=0;}
 function scrub(p){if(cover || transition)return;stop();render(p);}
 function placeCover(left,top,right,bottom){
   const stage=$('stage'),button=$('cover-button');
-  $('gate').style.setProperty('--book-bottom',stage.offsetTop+bottom+'px');
   button.style.left=stage.offsetLeft+left+'px';button.style.top=stage.offsetTop+top+'px';
   button.style.width=(right-left)+'px';button.style.height=(bottom-top)+'px';
+}
+function placeOpeningPrompt(){
+  const stage=$('stage'),h=stage.clientHeight;
+  const posterHeight=Math.min(stage.clientWidth*2.04*9/16,h);
+  // Use the resting illustration for layout even after the live camera takes over.
+  $('gate').style.setProperty('--book-bottom',stage.offsetTop+h/2+.358*posterHeight+'px');
 }
 let nextFilm=null,nextFilmName='';
 function preloadFilm(name){
@@ -193,8 +198,23 @@ function drawCoverFilm(){
   }
   if(!transition)placeCover((w-width)/2+.301*width,(h-height)/2+.145*height,(w-width)/2+.743*width,(h-height)/2+.858*height);
 }
+function drawIllustratedTurn(){
+  const flip=$('paper-flip'),lower=Math.floor(pos),fraction=pos-lower;
+  const turning=!cover && !transition && fraction>0;
+  flip.hidden=!turning;
+  $('edition').classList.toggle('turning',turning);
+  if(!turning)return;
+  if(flip.dataset.lower!==String(lower)){
+    flip.dataset.lower=String(lower);
+    flip.style.setProperty('--lower-plate','url("'+asset(plateName(chapters[lower].id))+'")');
+    flip.style.setProperty('--upper-plate','url("'+asset(plateName(chapters[lower+1].id))+'")');
+  }
+  const left=fraction>.5;
+  flip.dataset.face=left?'left':'right';
+  flip.firstElementChild.style.transform='rotateY('+((left?180:0)-180*fraction)+'deg)';
+}
 function drawBook(){
-  if(!world){drawCoverFilm();return;}
+  if(!world){drawCoverFilm();drawIllustratedTurn();return;}
   $('cover-film').hidden=true;$('edition').hidden=true;
   world.show(pos,closed,coverEdge);
   if(replayTime!==null)world.replay(replayTime);
@@ -335,6 +355,44 @@ function turn(index,update=true){
   function tick(now){const t=Math.min(1,(now-begin)/time),s=t*t*(3-2*t);render(start+(index-start)*s);if(t<1)anim=requestAnimationFrame(tick);else{anim=0;finish();}}
   anim=requestAnimationFrame(tick);
 }
+function selectChapter(target){
+  $('dialog').close();
+  const count=Math.abs(target-current);
+  if(count<=1 || reduced.matches){turn(target);return;}
+
+  stop();
+  const direction=Math.sign(target-current);
+  const milliseconds=Math.max(155,320-count*11);
+  const plates=new Map();
+  if(!world){
+    for(let page=current;page!==target+direction;page+=direction){
+      const image=new Image();
+      image.src=asset(plateName(chapters[page].id));
+      plates.set(page,image);
+    }
+  }
+  let from=current,progress=0,previous;
+  rustle();
+  function tick(now){
+    const next=from+direction;
+    const elapsed=previous===undefined?0:now-previous;
+    previous=now;
+    if(reduced.matches){stop();turn(target);return;}
+    if(!world && plates.has(next) && !plates.get(next).complete){
+      anim=requestAnimationFrame(tick);return;
+    }
+    // Show the bend of each leaf even when building a new 3D scene costs a frame.
+    progress=Math.min(1,progress+Math.min(.34,elapsed/milliseconds));
+    const eased=progress*progress*(3-2*progress);
+    render(from+direction*eased);
+    if(progress===1){
+      if(next===target){stop();turn(target);return;}
+      from=next;progress=0;
+    }
+    anim=requestAnimationFrame(tick);
+  }
+  anim=requestAnimationFrame(tick);
+}
 $('prev').onclick=()=>turn(current-1);$('next').onclick=()=>turn(current+1);
 $('scrub').oninput=e=>scrub(Number(e.target.value));
 $('scrub').onchange=e=>turn(Math.round(Number(e.target.value)));
@@ -353,7 +411,7 @@ function popup(kind,button,story){
   remember(current,false);world?.pause(true);
   if(kind==='chapters'){
     $('sheet-body').innerHTML='<span class="overline">FOLD-OUT CONTENTS</span><h2 id="dialog-title">Inside the book</h2><div class="chart">'+chapters.map((p,i)=>'<button data-page="'+i+'" '+(i===current?'aria-current="page"':'')+'><img loading="lazy" src="'+asset(plateName(p.id))+'" alt=""><span><small>CHAPTER '+number(i)+' · '+p.style.toUpperCase()+'</small><strong>'+p.title+'</strong><em>'+p.place+'</em></span></button>').join('')+'</div>';
-    $('sheet-body').querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{$('dialog').close();turn(Number(b.dataset.page));});
+    $('sheet-body').querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>selectChapter(Number(b.dataset.page)));
   }else{
     const entry=story || c;
     const printedLabel=story?'FROM THE SPREAD · '+c.title:'CHAPTER '+number(current)+' / '+total+' · '+c.style.toUpperCase();
@@ -460,6 +518,8 @@ for(const button of document.querySelectorAll('.view-scene')){
   };
 }
 restore();
+placeOpeningPrompt();
+new ResizeObserver(placeOpeningPrompt).observe($('stage'));
 (async()=>{
   try{
     const {createWorld}=await import('./world.js');
