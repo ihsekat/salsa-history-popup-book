@@ -1,5 +1,5 @@
 import * as T from './three.module.min.js';
-import {chapters as entries,bookCopy} from './chapters.js';
+import {chapters as entries,bookCopy} from './edition.js';
 import {loadStock,buildChapter} from './sets.js';
 import {asset} from './assets.js';
 import {coverPageFrame,boardCenter,hingeHeight,replayPose} from './hardcover.js';

@@ -267,3 +267,16 @@ dialog::backdrop{background:#11241dd6;backdrop-filter:blur(4px)}
 .policy-page .policy-date,.policy-page nav{font:400 .82rem/1.5 system-ui,sans-serif}
 .policy-page .policy-date{color:#665e4d;margin-bottom:1.7rem}
 .policy-page blockquote{margin:1rem 0;padding:.1rem 1.15rem;border-inline-start:2px solid #a88957}
+.language-bubble{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:32px;padding:0 7px;border:1px solid #d4c4a265;border-radius:999px;color:#f5dfb0;background:#263d3380;text-decoration:none;font:600 12px/1 system-ui,sans-serif;letter-spacing:.03em;pointer-events:auto}
+.language-bubble:hover,.language-bubble:focus-visible{background:#354c3c;border-color:#ead4a7}
+#cover-language{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(var(--gutter),env(safe-area-inset-right))}
+#gate.moving #cover-language{visibility:hidden}
+.policy-page main nav{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.kicker{text-transform:uppercase}
+@media(max-width:720px) and (orientation:portrait){
+  #reader{overflow-x:clip}
+  .tools .imprint{min-width:0}
+  .tools .imprint strong{max-width:clamp(60px,calc(100vw - 263px),240px)}
+  .tools nav{flex-shrink:0}
+}
+@media(max-width:380px){.tools .tile{display:none}}

@@ -1,3 +1,4 @@
+import {t} from './edition.js';
 const continents=[
   [[-165,67],[-143,72],[-127,67],[-112,74],[-101,70],[-89,74],[-73,69],[-80,59],[-63,51],[-78,45],[-80,30],[-91,18],[-83,12],[-78,9],[-82,8],[-96,15],[-106,22],[-113,24],[-119,34],[-126,49],[-135,55],[-151,57],[-162,55]],
   [[-80,12],[-73,11],[-67,10],[-60,8],[-51,5],[-47,0],[-35,-6],[-39,-17],[-45,-24],[-54,-34],[-57,-39],[-66,-55],[-72,-50],[-75,-33],[-72,-20],[-77,-10],[-81,-3]],
@@ -55,7 +56,7 @@ export function drawCongressMap(){
   ctx.setLineDash([]);ctx.font='bold 28px Georgia, serif';
   ctx.textAlign='center';ctx.textBaseline='middle';
   for(const [i,{label,dx,dy}] of regions.entries()){
-    const [x,y]=points[i],cx=x+dx,cy=y+dy,word=label.toUpperCase();
+    const [x,y]=points[i],cx=x+dx,cy=y+dy,word=t(label).toUpperCase();
     const width=Math.ceil(ctx.measureText(word).width)+19;
     ctx.fillStyle='#5c6859';ctx.fillRect(cx-width/2+1,cy-16,width,36);
     ctx.fillStyle='#f2e4bf';ctx.fillRect(cx-width/2,cy-18,width,35);

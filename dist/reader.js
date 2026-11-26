@@ -1,9 +1,12 @@
 import {drawCongressMap} from './congress-map.js';
-import {chapters,plateName,bookCopy} from './chapters.js';
+import {chapters,plateName,bookCopy,bookTitle,t,lang} from './edition.js';
 import {orderedReferences} from './references.js';
 import {asset} from './assets.js';
 import {plateBounds} from './plate-bounds.js';
 const $=id=>document.getElementById(id);
+const otherPath=lang==='en'?'/es/':'/';
+const otherEdition=location.protocol==='file:'?new URL(otherPath,bookCopy.back.share.url).href:otherPath;
+const pageCount=index=>t('Page')+' '+(index+1)+' '+t('of')+' '+total;
 const icons={
  share:'<path d="M12 14V3m-4 4 4-4 4 4M6 10H4v10h16V10h-2"/>',
  book:'<path d="M3 4.5q4-1.4 8.8 1.2v13Q7.4 16 3 17.5zM21 4.5q-4-1.4-8.8 1.2v13q4.4-2.7 8.8-1.2z"/>',
@@ -26,7 +29,7 @@ const last=chapters.length-1,total=String(chapters.length).padStart(2,'0');
 let cover=null,coverAnim=0,transition=false;
 let closed=1,coverEdge='front',replayTime=null;
 function route(){
-  const id=location.hash.slice(1);
+  const id=location.hash.slice(1).replace(/^scene\//,'');
   if(id==='back-cover')return last+1;
   return chapters.findIndex(c=>c.id===id);
 }
@@ -60,15 +63,16 @@ function placeIllustratedItems(){
 }
 function render(p){
   pos=bounded(p);const index=Math.round(pos),c=chapters[index];
-  $('scrub').value=pos;$('scrub').setAttribute('aria-valuetext','Page '+(index+1)+' of '+total+', '+c.title);
-  $('prev').setAttribute('aria-label',pos===0?'Close to front cover':'Previous page');
-  $('next').setAttribute('aria-label',pos===last?'Close book':'Next page');
+  $('scrub').value=pos;$('scrub').setAttribute('aria-valuetext',pageCount(index)+', '+c.title);
+  $('prev').setAttribute('aria-label',t(pos===0?'Close to front cover':'Previous page'));
+  $('next').setAttribute('aria-label',t(pos===last?'Close book':'Next page'));
   $('next').classList.toggle('finish',pos===last);
   $('prev').disabled=false;$('next').disabled=false;
   $('prev').title=$('prev').getAttribute('aria-label');$('next').title=$('next').getAttribute('aria-label');
   if(current!==index){
     clearTimeout(tipTimer);current=index;
-    $('folio').textContent='CHAPTER '+number(index)+' / '+total+' · '+c.style.toUpperCase();
+    $('chapter-language').href=otherEdition+'#scene/'+c.id;
+    $('folio').textContent=t('CHAPTER')+' '+number(index)+' / '+total+' · '+c.style.toUpperCase();
     $('title').textContent=c.title;$('place').textContent=c.place;$('line').textContent=c.line;
     $('counter').textContent=number(index)+' / '+total;$('listen').innerHTML='<i data-icon="note">'+icon('note')+'</i><span>'+(c.sound||'')+'</span>';
     $('listen').hidden=!c.sound;
@@ -80,9 +84,9 @@ function render(p){
     }
     placeIllustratedItems();
     $('edition').setAttribute('aria-label',c.alt);
-    $('world').setAttribute('aria-label',c.alt+' Select a glowing object to read its story. Drag the paper to turn. Drag the table to rotate. Arrow keys turn pages. A and D rotate. W and S tilt. Pinch or use the plus and minus keys to zoom. R resets the view.');
+    $('world').setAttribute('aria-label',c.alt+' '+t('Select a glowing object to read its story. Drag the paper to turn. Drag the table to rotate. Arrow keys turn pages. A and D rotate. W and S tilt. Pinch or use the plus and minus keys to zoom. R resets the view.'));
     $('edition').style.backgroundImage='url("'+asset(plateName(c.id))+'")';
-    document.title=c.title+' · Illustrated History of Salsa Dance';
+    document.title=c.title+' · '+bookTitle;
   }
   $('scene-notes').hidden=!!cover || transition || !!anim || (!world && !illustrated) || !Number.isInteger(pos);
   if($('scene-notes').hidden)world?.highlightItem(null);
@@ -135,8 +139,8 @@ function playInstrument(){
   const c=chapters[current];clearTimeout(tipTimer);world?.play('player');
   if(phrase(['son','palladium','stadium'].indexOf(c.id))){
     $('listen').lastElementChild.textContent=c.heard;
-    $('announce').textContent=c.heard+'. Synthesized instrument illustration.';
-  }else $('announce').textContent='Sound playback is unavailable.';
+    $('announce').textContent=c.heard+'. '+t('Synthesized instrument illustration.');
+  }else $('announce').textContent=t('Sound playback is unavailable.');
   tipTimer=setTimeout(()=>{$('listen').lastElementChild.textContent=chapters[current].sound;},1800);
 }
 function openItem(key){
@@ -254,8 +258,8 @@ shareButton.onclick=async()=>{
   try{
     await navigator.clipboard.writeText(payload.url);
     if(cover!=='back' || transition)return;
-    shareText.textContent='Link copied';
-    $('announce').textContent='Book link copied.';
+    shareText.textContent=t('Link copied');
+    $('announce').textContent=t('Book link copied.');
     clearTimeout(shareReset);shareReset=setTimeout(resetShare,3200);
   }catch{
     if(cover!=='back' || transition)return;
@@ -270,6 +274,7 @@ function gateState(side){
   for(const element of [$('stage'),document.querySelector('.tools'),document.querySelector('.chapter'),document.querySelector('.bottom')])element.inert=covered;
   $('gate').hidden=!covered;$('cover-button').hidden=transition;
   $('gate').dataset.side=side||'front';
+  $('cover-language').href=otherEdition+(side==='back'?'#back-cover':'');
   $('gate').classList.toggle('moving',transition);
   $('cover-action').textContent=side==='back'?back.button:front.button;
   $('cover-subtitle').hidden=side==='back';
@@ -278,11 +283,11 @@ function gateState(side){
   $('cover-colophon').hidden=transition;
   $('cover-button').tabIndex=-1;
   $('cover-button').setAttribute('aria-hidden','true');
-  $('cover-prompt').setAttribute('aria-label',side==='back'?back.button:'Open Illustrated History of Salsa Dance');
+  $('cover-prompt').setAttribute('aria-label',side==='back'?back.button:t('Open Illustrated History of Salsa Dance'));
   showCoverPrompt();
-  $('cover-button').setAttribute('aria-label',side==='back'?'Start again':'Open Illustrated History of Salsa Dance');
-  if(covered)document.title=(side==='back'?'Back cover · ':'')+'Illustrated History of Salsa Dance';
-  else if(current>=0)document.title=chapters[current].title+' · Illustrated History of Salsa Dance';
+  $('cover-button').setAttribute('aria-label',side==='back'?t('Start again'):t('Open Illustrated History of Salsa Dance'));
+  if(covered)document.title=(side==='back'?t('Back cover')+' · ':'')+bookTitle;
+  else if(current>=0)document.title=chapters[current].title+' · '+bookTitle;
   world?.pause($('dialog').open);
 }
 function cancelBoundary(){
@@ -315,7 +320,7 @@ function boundary(side,opening){
     gateState(opening?null:side);render(index);
     remember(opening?index:side==='front'?-1:last+1);
     (opening?$('world').hidden?$('read'):$('world'):$('cover-prompt')).focus({preventScroll:true});
-    $('announce').textContent=opening?chapters[index].title:side==='front'?'Front cover.':'Back cover. Start again.';
+    $('announce').textContent=opening?chapters[index].title:side==='front'?t('Front cover.'):t('Back cover. Start again.');
   });
 }
 function startAgain(){
@@ -329,8 +334,8 @@ function startAgain(){
   },()=>{
     cancelBoundary();closed=1;coverEdge='front';world?.reset();
     gateState('front');render(0);remember(-1);
-    document.title='Illustrated History of Salsa Dance';
-    $('cover-prompt').focus({preventScroll:true});$('announce').textContent='Front cover. Open the book.';
+    document.title=bookTitle;
+    $('cover-prompt').focus({preventScroll:true});$('announce').textContent=t('Front cover. Open the book.');
   });
 }
 $('cover-button').onclick=()=>cover==='back'?startAgain():boundary('front',true);
@@ -341,13 +346,13 @@ function restore(){
   stop();cancelBoundary();
   const n=route(),side=n<0?'front':n>last?'back':null;
   closed=side?1:0;coverEdge=side||'front';gateState(side);render(bounded(n));
-  if(side)document.title=(side==='back'?'Back cover · ':'')+'Illustrated History of Salsa Dance';
+  if(side)document.title=(side==='back'?t('Back cover')+' · ':'')+bookTitle;
 }
 function turn(index,update=true){
   if(transition || cover)return;
   if(index<0 || index>last){boundary(index<0?'front':'back',false);return;}
   stop();index=bounded(index);const start=pos;const distance=Math.abs(index-start);
-  function finish(){render(index);if(update)remember(index);$('announce').textContent='Page '+(index+1)+' of '+total+'. '+chapters[index].title+'.';}
+  function finish(){render(index);if(update)remember(index);$('announce').textContent=pageCount(index)+'. '+chapters[index].title+'.';}
   if(distance<.004||distance>1.01){finish();return;}
   rustle();
   if(reduced.matches||!world){finish();return;}
@@ -397,11 +402,11 @@ $('prev').onclick=()=>turn(current-1);$('next').onclick=()=>turn(current+1);
 $('scrub').oninput=e=>scrub(Number(e.target.value));
 $('scrub').onchange=e=>turn(Math.round(Number(e.target.value)));
 $('scrub').onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();e.stopPropagation();turn(current+(e.key==='ArrowLeft'?-1:1));}};
-$('reset').onclick=()=>{world?.reset();$('announce').textContent='View reset.';};
+$('reset').onclick=()=>{world?.reset();$('announce').textContent=t('View reset.');};
 $('listen').onclick=playInstrument;
 $('sound').onclick=()=>{
   paperSounds=!paperSounds;$('sound').setAttribute('aria-pressed',String(paperSounds));
-  const label='Turn paper sounds '+(paperSounds?'off':'on');$('sound').title=label;$('sound').setAttribute('aria-label',label);
+  const label=t(paperSounds?'Turn paper sounds off':'Turn paper sounds on');$('sound').title=label;$('sound').setAttribute('aria-label',label);
   $('sound').firstElementChild.innerHTML=icon(paperSounds?'volume':'mute');
   if(paperSounds)rustle();else pageTurnAudio?.pause();
 };
@@ -410,19 +415,19 @@ function popup(kind,button,story){
   const c=chapters[current];
   remember(current,false);world?.pause(true);
   if(kind==='chapters'){
-    $('sheet-body').innerHTML='<span class="overline">FOLD-OUT CONTENTS</span><h2 id="dialog-title">Inside the book</h2><div class="chart">'+chapters.map((p,i)=>'<button data-page="'+i+'" '+(i===current?'aria-current="page"':'')+'><img loading="lazy" src="'+asset(plateName(p.id))+'" alt=""><span><small>CHAPTER '+number(i)+' · '+p.style.toUpperCase()+'</small><strong>'+p.title+'</strong><em>'+p.place+'</em></span></button>').join('')+'</div>';
+    $('sheet-body').innerHTML='<span class="overline">'+bookCopy.contents.label+'</span><h2 id="dialog-title">'+bookCopy.contents.title+'</h2><div class="chart">'+chapters.map((p,i)=>'<button data-page="'+i+'" '+(i===current?'aria-current="page"':'')+'><img loading="lazy" src="'+asset(plateName(p.id))+'" alt=""><span><small>'+t('CHAPTER')+' '+number(i)+' · '+p.style.toUpperCase()+'</small><strong>'+p.title+'</strong><em>'+p.place+'</em></span></button>').join('')+'</div>';
     $('sheet-body').querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>selectChapter(Number(b.dataset.page)));
   }else{
     const entry=story || c;
-    const printedLabel=story?'FROM THE SPREAD · '+c.title:'CHAPTER '+number(current)+' / '+total+' · '+c.style.toUpperCase();
+    const printedLabel=story?t('FROM THE SPREAD')+' · '+c.title:t('CHAPTER')+' '+number(current)+' / '+total+' · '+c.style.toUpperCase();
     const paragraphs=entry.copy.map(p=>'<p class="body-copy">'+p+'</p>').join('');
-    $('sheet-body').innerHTML='<span class="overline">'+printedLabel+'</span><h2 id="dialog-title">'+entry.title+'</h2><p class="location">'+c.place+'</p>'+paragraphs+'<div class="source-list"><small>SOURCES</small></div>';
+    $('sheet-body').innerHTML='<span class="overline">'+printedLabel+'</span><h2 id="dialog-title">'+entry.title+'</h2><p class="location">'+c.place+'</p>'+paragraphs+'<div class="source-list"><small>'+t('SOURCES')+'</small></div>';
     const list=$('sheet-body').querySelector('.source-list');
     if(!story){
       const reading=document.createElement('a');
       reading.className='read-chapter-text';
       reading.href='#'+c.id;
-      reading.textContent='Read this chapter as text';
+      reading.textContent=t('Read this chapter as text');
       reading.onclick=e=>{
         if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
         source=$(c.id);
@@ -437,7 +442,7 @@ function popup(kind,button,story){
       link.target='_blank';link.rel='noopener';
       if(linkOnly){
         link.className='watch-video';
-        link.textContent='Watch on YouTube';
+        link.textContent=t('Watch on YouTube');
         link.setAttribute('aria-label',title+' · '+link.textContent);
         list.before(link);
       }else{
@@ -450,7 +455,7 @@ function popup(kind,button,story){
         player.allowFullscreen=true;
         player.src='https://www.youtube-nocookie.com/embed/'+id;
         const caption=document.createElement('figcaption');
-        link.textContent=title+' · Watch on YouTube';
+        link.textContent=title+' · '+t('Watch on YouTube');
         caption.append(link);figure.append(player,caption);list.before(figure);
       }
     }
@@ -496,7 +501,7 @@ document.addEventListener('keydown',e=>{
 window.addEventListener('popstate',restore);
 window.addEventListener('hashchange',restore);
 function flatEdition(){
-  $('world').hidden=true;$('edition').hidden=false;$('reset').hidden=true;$('help').textContent='TURN THE PAGES';
+  $('world').hidden=true;$('edition').hidden=false;$('reset').hidden=true;$('help').textContent=t('TURN THE PAGES');
   $('edition').removeAttribute('aria-hidden');$('edition').setAttribute('role','img');$('edition').setAttribute('aria-label',chapters[current].alt);
   world?.disposeInput();world=null;illustrated=true;
   $('stage').classList.add('flat-stage');
@@ -518,6 +523,15 @@ for(const button of document.querySelectorAll('.view-scene')){
   };
 }
 restore();
+// A language switch opens the scene at the top. Ordinary chapter anchors open the article.
+if(location.hash.startsWith('#scene/') && route()>=0 && route()<=last){
+  const incoming=location.hash,chapter=chapters[route()].id;
+  const settle=()=>{
+    if(location.hash===incoming)history.replaceState(null,'','#'+chapter);
+  };
+  if(document.readyState==='complete')settle();
+  else window.addEventListener('pageshow',settle,{once:true});
+}
 placeOpeningPrompt();
 new ResizeObserver(placeOpeningPrompt).observe($('stage'));
 (async()=>{

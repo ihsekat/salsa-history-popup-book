@@ -1,3 +1,4 @@
+import {t} from './edition.js';
 import {orlandoFinals} from './orlando-finals.js';
 import {canvasTexture,surfaceHeight} from './craft.js';
 import {drawCongressMap,projectRegion,regions} from './congress-map.js';
@@ -385,7 +386,7 @@ function routeMap(k) {
     k.disc(board,x,y,.176,.061,p.wine,18);
     k.disc(board,x,y,.193,.032,p.gold,18);
   }
-  placard(k,board,'THE CONGRESS CIRCUIT',0,2.40,.115,3.78,.27,p.navy,null);
+  placard(k,board,t('THE CONGRESS CIRCUIT'),0,2.40,.115,3.78,.27,p.navy,null);
   return g;
 }
 
@@ -424,7 +425,7 @@ function congressWorld(k){
   }
   const jet=k.group(terminal,-.49,1.33,.24);jet.rotation.z=.21;
   k.card(jet,[[-.74,-.03],[-.06,.055],[-.26,.42],[-.13,.42],[.30,.11],[.66,.14],[.84,.07],[.77,.022],[.20,-.044],[-.11,-.45],[-.25,-.46],[-.09,-.09],[-.56,-.11],[-.75,-.25],[-.82,-.23]],p.white,0,.016);
-  placard(k,terminal,'DEPARTURES',.70,2.00,.241,1.63,.27,p.white,p.navy);
+  placard(k,terminal,t('DEPARTURES'),.70,2.00,.241,1.63,.27,p.white,p.navy);
   const bench=k.anchor(-4.25,-.72);
   k.box(bench,0,.35,0,1.76,.103,.48,p.jade);
   const back=k.box(bench,0,.57,-.20,1.76,.35,.09,p.sea);back.rotation.x=-.08;

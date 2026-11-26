@@ -2,7 +2,7 @@
 
 An interactive, illustrated history of salsa dance by Takeshi Young of Salsa Vida. Open the cover and turn through 16 pop-up scenes, or read the entire book as one illustrated article with JavaScript turned off. The pop-up format was inspired by [The Folded Atlas](https://rosy-wisdom-dw86.here.now/) by [John Lindquist](https://x.com/johnlindquist).
 
-[Open the book](https://www.salsahistory.com/) · [About the project](https://www.salsahistory.com/about/)
+[Read in English](https://www.salsahistory.com/) · [Leer en español](https://www.salsahistory.com/es/) · [About the project](https://www.salsahistory.com/about/)
 
 ## Run it locally
 
@@ -25,6 +25,8 @@ Choose **Use this template** on GitHub to create your own repository. The site r
 npm run build
 npm test
 ```
+
+The Spanish edition lives at `/es/`. Edit the Latin American Spanish chapter and card text in `dist/es/text.js`, interface labels in `dist/es/ui.js`, and information pages in `templates/es/`. Both editions use the same chapter IDs, video IDs and 3D scene code. The build generates their self-canonicals, reciprocal language links and sitemap entries.
 
 Deploy the **contents** of `dist/` to the root of a static host. Point your domain there. The build generates the homepage, static information pages, sitemap and robots.txt. The book also includes artwork source files in `artwork/`; the browser loads the finished artwork from `dist/art/`.
 
