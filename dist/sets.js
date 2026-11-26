@@ -41,9 +41,18 @@ function pilotScene(k,id){
   pilot[id](k);
   if(id==='palladium')return {};
   const sign=k.anchor(4.35,1.92);
-  k.box(sign,0,.37,0,.062,.74,.068,'#866b47');
-  k.box(sign,0,.69,0,1.17,.33,.065,'#b58347',.035);
-  const tag=k.label(sign,'Oriente',0,.695,.044,1.08,.24,{ink:'#392e20',font:'Georgia'});tag.rotation.z=.035;
+  const width=1.37,height=.42,middle=.71,depth=.08;
+  k.box(sign,0,.40,-.087,.09,.80,.094,'#866b47');
+  const plank=k.box(sign,0,middle,0,width,height,depth,'#a87c4d');
+  // Replace the front of the plank with the printed face. The ink lies on the wood.
+  const front=plank.geometry.groups[4];
+  const index=Array.from(plank.geometry.index.array);
+  index.splice(front.start,front.count);
+  plank.geometry.clearGroups();plank.geometry.setIndex(index);
+  const face=k.label(sign,'ORIENTE',0,middle,depth/2,width,height,{bg:'#dcbb83',ink:'#3e3024',font:'Georgia'});
+  face.castShadow=false;
+  sign.userData.hitAreas=[face];
+  sign.userData.notePin=new T.Vector3(0,middle,depth/2);
   return {prop:sign};
 }
 
