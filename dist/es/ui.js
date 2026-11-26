@@ -22,6 +22,7 @@ const labels={
   'Open the book':'Abrir el libro',
   'Open Illustrated History of Salsa Dance':'Abrir Historia ilustrada del baile de salsa',
   'Start again':'Volver a empezar',
+  'Share this chapter':'Compartir este capítulo',
   'Share this book':'Compartir este libro',
   'Copy this link':'Copia este enlace',
   'Link copied':'Enlace copiado',

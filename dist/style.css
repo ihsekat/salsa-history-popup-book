@@ -110,6 +110,11 @@ dialog::backdrop{background:#11241dd6;backdrop-filter:blur(4px)}
 .watch-video:hover,.watch-video:focus-visible{background:#1c352b}
 .source-list{border-top:1px solid #947e5144;padding-top:14px;margin-top:22px;font-size:.8rem}
 .source-list a{display:block;width:fit-content;margin:5px 0;color:#375949;text-underline-offset:3px}
+.chapter-share{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;color:#315440;font:15px/1.4 system-ui,sans-serif}
+.chapter-share button{padding:.48rem .85rem;border:1px solid #83917a;border-radius:2rem;background:transparent;color:#294537}
+.chapter-share button:hover,.chapter-share button:focus-visible{background:#e4dcc2}
+.chapter-share label{flex-basis:100%}
+.chapter-share input{max-width:100%;padding:.3rem;background:#fff7df;color:#244437}
 .chart{display:grid;gap:8px;margin:20px 0 2px}
 .chart button{width:100%;text-align:left;display:grid;grid-template-columns:70px 1fr;align-items:center;gap:12px;border:1px solid #b5a278;background:#efe2c1;color:#2c4135;border-radius:3px;padding:8px}
 .chart button[aria-current="page"]{border-color:#5c765e;box-shadow:inset 3px 0 0 #637d62}
@@ -274,3 +279,5 @@ dialog::backdrop{background:#11241dd6;backdrop-filter:blur(4px)}
   .tools nav{flex-shrink:0}
 }
 @media(max-width:380px){.tools .tile{display:none}}
+
+#cover-film.paper-opening{transform-origin:30% 50%;transform:translate(-50%,-50%) perspective(1000px) rotateY(var(--opening-angle))}

@@ -30,6 +30,8 @@ The Spanish edition lives at `/es/`. Edit the Latin American Spanish chapter and
 
 Deploy the **contents** of `dist/` to the root of a static host. Point your domain there. The build generates the homepage, static information pages, sitemap and robots.txt. The book also includes artwork source files in `artwork/`; the browser loads the finished artwork from `dist/art/`.
 
+On the Salsa History domain, Cloudflare caches versioned art, scripts and styles for up to one year. The build assigns content hashes to asset URLs. Public HTML is cached at the edge for up to seven days. After publishing, purge the exact changed HTML URLs in Cloudflare (including the affected language editions) and verify their public URLs. Keep query strings in the asset cache key.
+
 ### Animate a spread
 
 Register a pivot with `k.animateAtRest(pivot, motion, phase)` in its scene builder. The motion functions in `dist/paper-motion.js` use seconds and a strength from 0 to 1. Put hinges at the feet of figures or the axle of a moving part. The reader freezes the pose for page turns and honors the reader’s reduced-motion preference.

@@ -52,7 +52,7 @@ function hoverItem(key){
   for(const [item,button] of Object.entries(markers))button.classList.toggle('highlight',item===key);
 }
 function placeIllustratedItems(){
-  if(!illustrated)return;
+  if(world)return;
   const width=Math.min($('stage').clientWidth,$('stage').clientHeight*16/9),height=width*9/16;
   $('scene-notes').style.width=width+'px';
   for(const [key,story] of Object.entries(chapters[current].objects)){
@@ -62,8 +62,33 @@ function placeIllustratedItems(){
     markers[key].style.width=Math.max(36,w*width)+'px';markers[key].style.height=Math.max(36,h*height)+'px';
   }
 }
+let requestedPosition=0,waitingForArt=null,upcomingTimer,upcoming=-1;
+function warmNextPage(index){
+  const next=!cover && !transition && !anim && Number.isInteger(pos) && index<last?index+1:-1;
+  if(next===upcoming)return;
+  upcoming=next;clearTimeout(upcomingTimer);
+  if(world && next>=0 && !navigator.connection?.saveData){
+    upcomingTimer=setTimeout(()=>world?.prepare(next).catch(()=>{}),900);
+  }
+}
 function render(p){
-  pos=bounded(p);const index=Math.round(pos),c=chapters[index];
+  requestedPosition=bounded(p);
+  if(world){
+    const indices=[...new Set([Math.floor(requestedPosition),Math.ceil(requestedPosition)])];
+    if(indices.some(index=>!world.isReady(index))){
+      $('scene-notes').hidden=true;
+      const key=indices.join('-');
+      if(waitingForArt!==key){
+        waitingForArt=key;
+        Promise.all(indices.map(index=>world.prepare(index))).then(()=>{
+          if(waitingForArt===key)render(requestedPosition);
+        }).catch(useFlatEdition);
+      }
+      return;
+    }
+  }
+  waitingForArt=null;
+  pos=requestedPosition;const index=Math.round(pos),c=chapters[index];
   $('scrub').value=pos;$('scrub').setAttribute('aria-valuetext',pageCount(index)+', '+c.title);
   $('prev').setAttribute('aria-label',t(pos===0?'Close to front cover':'Previous page'));
   $('next').setAttribute('aria-label',t(pos===last?'Close book':'Next page'));
@@ -86,12 +111,12 @@ function render(p){
     placeIllustratedItems();
     $('edition').setAttribute('aria-label',c.alt);
     $('world').setAttribute('aria-label',c.alt+' '+t('Select a glowing object to read its story. Drag the paper to turn. Drag the table to rotate. Arrow keys turn pages. A and D rotate. W and S tilt. Pinch or use the plus and minus keys to zoom. R resets the view.'));
-    setIllustration(plateName(c.id));
+    if(!world)setIllustration(plateName(c.id));
     document.title=c.title+' · '+bookTitle;
   }
-  $('scene-notes').hidden=!!cover || transition || !!anim || (!world && !illustrated) || !Number.isInteger(pos);
+  $('scene-notes').hidden=!!cover || transition || !!anim || !Number.isInteger(pos);
   if($('scene-notes').hidden)world?.highlightItem(null);
-  drawBook();
+  drawBook();warmNextPage(index);
 }
 function audio(){
   try{ctx ||= new (window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume().catch(()=>{});return ctx;}catch{return null;}
@@ -101,7 +126,7 @@ function audio(){
 let pageTurnAudio;
 function rustle(){
   if(!paperSounds)return;
-  pageTurnAudio ||= new Audio(asset('page-turn.wav?v=8c3bcd540185'));
+  pageTurnAudio ||= new Audio(asset('page-turn.wav'));
   pageTurnAudio.currentTime=0;
   pageTurnAudio.play().catch(()=>{});
 }
@@ -149,7 +174,7 @@ function openItem(key){
   popup('object',markers[key],chapters[current].objects[key]);
 }
 for(const [key,button] of Object.entries(markers)){
-  button.onclick=e=>{if(illustrated || e.detail===0)openItem(key);};
+  button.onclick=e=>{if(!world || e.detail===0)openItem(key);};
   button.onfocus=()=>world?.highlightItem(key);
   button.onblur=()=>world?.highlightItem(null);
 }
@@ -186,7 +211,14 @@ function drawCoverFilm(){
   const width=spreadWidth+(coverWidth-spreadWidth)*closed,height=width*9/16;
   let picture;
   film.style.width=width+'px';
-  if(transition){
+  const buffering=transition && replayTime===null && nextFilm && (!nextFilm.complete || !nextFilm.naturalWidth);
+  film.classList.toggle('paper-opening',!!buffering);
+  if(buffering){
+    picture='resting-'+coverEdge;
+    film.style.backgroundSize='100% 100%';film.style.backgroundPosition='center';
+    film.style.setProperty('--opening-angle',((1-closed)*(coverEdge==='front'?-86:86))+'deg');
+    $('edition').hidden=false;
+  }else if(transition){
     const replay=replayTime!==null;
     const frames=replay?40:24,columns=replay?8:6,rows=frames/columns;
     const n=Math.round((frames-1)*(replay?replayTime:closed));
@@ -278,25 +310,40 @@ function resetShare(){
   shareText.textContent=back.share.label;
   $('manual-share').hidden=true;
 }
-shareButton.onclick=async()=>{
-  const payload={title:'Illustrated History of Salsa Dance',url:back.share.url};
+async function shareLink(payload){
   if(navigator.share){
-    try{await navigator.share(payload);return;}
-    catch(error){if(error.name==='AbortError')return;}
+    try{await navigator.share(payload);return 'shared';}
+    catch(error){if(error.name==='AbortError')return 'cancelled';}
   }
+  try{await navigator.clipboard.writeText(payload.url);return 'copied';}
+  catch{return 'manual';}
+}
+shareButton.onclick=async()=>{
+  const result=await shareLink({title:bookTitle,url:back.share.url});
   if(cover!=='back' || transition)return;
-  try{
-    await navigator.clipboard.writeText(payload.url);
-    if(cover!=='back' || transition)return;
+  if(result==='copied'){
     shareText.textContent=t('Link copied');
     $('announce').textContent=t('Book link copied.');
     clearTimeout(shareReset);shareReset=setTimeout(resetShare,3200);
-  }catch{
-    if(cover!=='back' || transition)return;
+  }else if(result==='manual'){
     $('manual-share').hidden=false;shareInput.focus();shareInput.select();
   }
 };
 shareInput.onclick=()=>shareInput.select();
+function chapterShare(chapter){
+  const controls=$('chapter-share-controls').content.firstElementChild.cloneNode(true);
+  const button=controls.querySelector('button'),manual=controls.querySelector('label');
+  const input=manual.querySelector('input'),status=controls.querySelector('[role=status]');
+  const url=new URL('#scene/'+chapter.id,back.share.url).href;
+  input.value=url;input.onclick=()=>input.select();
+  button.onclick=async()=>{
+    const result=await shareLink({title:chapter.title+' · '+bookTitle,url});
+    if(!controls.isConnected || !$('dialog').open)return;
+    if(result==='copied')status.textContent=t('Link copied');
+    if(result==='manual'){manual.hidden=false;input.focus();input.select();}
+  };
+  return controls;
+}
 function gateState(side){
   cover=side;
   const covered=!!side;
@@ -328,7 +375,7 @@ function animateCover(duration,update,finish){
   const film=world?null:preloadFilm(replayTime!==null?'replay':coverEdge);
   let start;
   function tick(now){
-    if(!world && film && !film.complete && !reduced.matches){coverAnim=requestAnimationFrame(tick);return;}
+    if(replayTime!==null && !world && film && !film.complete && !reduced.matches){coverAnim=requestAnimationFrame(tick);return;}
     start??=now;
     const t=reduced.matches?1:Math.min(1,(now-start)/duration);
     if(t===1){finish();return;}
@@ -356,6 +403,7 @@ function boundary(side,opening){
 function startAgain(){
   if(transition || cover!=='back')return;
   stop();transition=true;replayTime=0;
+  world?.prepare(0).catch(useFlatEdition);
   pageTurnAudio?.pause();
   gateState('back');drawBook();
   animateCover(2700,t=>{
@@ -386,8 +434,13 @@ function turn(index,update=true){
   if(distance<.004||distance>1.01){finish();return;}
   rustle();
   if(reduced.matches||!world){finish();return;}
-  const begin=performance.now(),time=Math.min(1560,420+640*distance);
-  function tick(now){const t=Math.min(1,(now-begin)/time),s=t*t*(3-2*t);render(start+(index-start)*s);if(t<1)anim=requestAnimationFrame(tick);else{anim=0;finish();}}
+  let begin;const time=Math.min(1560,420+640*distance);
+  function tick(now){
+    if(world && !world.isReady(index)){
+      world.prepare(index).catch(useFlatEdition);
+      anim=requestAnimationFrame(tick);return;
+    }
+    begin??=now;const t=Math.min(1,(now-begin)/time),s=t*t*(3-2*t);render(start+(index-start)*s);if(t<1)anim=requestAnimationFrame(tick);else{anim=0;finish();}}
   anim=requestAnimationFrame(tick);
 }
 function selectChapter(target){
@@ -421,6 +474,9 @@ function selectChapter(target){
     const elapsed=previous===undefined?0:now-previous;
     previous=now;
     if(reduced.matches){stop();turn(target);return;}
+    if(world && !world.isReady(next)){
+      world.prepare(next).catch(useFlatEdition);anim=requestAnimationFrame(tick);return;
+    }
     if(!world && plates.has(next) && !plates.get(next).complete){
       anim=requestAnimationFrame(tick);return;
     }
@@ -449,12 +505,14 @@ $('sound').onclick=()=>{
   $('sound').firstElementChild.innerHTML=icon(paperSounds?'volume':'mute');
   if(paperSounds)rustle();else pageTurnAudio?.pause();
 };
+let menuThumbnails;
 function popup(kind,button,story){
   stop();render(current);source=button;
   const c=chapters[current];
   remember(current,false);world?.pause(true);
   if(kind==='chapters'){
-    $('sheet-body').innerHTML='<span class="overline">'+bookCopy.contents.label+'</span><h2 id="dialog-title">'+bookCopy.contents.title+'</h2><div class="chart">'+chapters.map((p,i)=>'<button data-page="'+i+'" '+(i===current?'aria-current="page"':'')+'><img loading="lazy" src="'+asset(plateName(p.id))+'" alt=""><span><small>'+t('CHAPTER')+' '+number(i)+' · '+p.style.toUpperCase()+'</small><strong>'+p.title+'</strong><em>'+p.place+'</em></span></button>').join('')+'</div>';
+    $('sheet-body').innerHTML='<span class="overline">'+bookCopy.contents.label+'</span><h2 id="dialog-title">'+bookCopy.contents.title+'</h2><div class="chart">'+chapters.map((p,i)=>'<button data-page="'+i+'" '+(i===current?'aria-current="page"':'')+'><img width="64" height="56" decoding="async" data-src="'+asset(plateName(p.id))+'" alt=""><span><small>'+t('CHAPTER')+' '+number(i)+' · '+p.style.toUpperCase()+'</small><strong>'+p.title+'</strong><em>'+p.place+'</em></span></button>').join('')+'</div>';
+    $('sheet-body').querySelector('.chart').before(chapterShare(c));
     $('sheet-body').querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>selectChapter(Number(b.dataset.page)));
   }else{
     const entry=story || c;
@@ -513,10 +571,20 @@ function popup(kind,button,story){
       $('sheet-body').querySelector('.location').after(map);
     }
   }
-  $('dialog').showModal();showRestingIllustration();$('close').focus({preventScroll:true});$('dialog').scrollTop=0;
+  $('dialog').showModal();
+  if(kind==='chapters'){
+    menuThumbnails=new IntersectionObserver(entries=>{
+      for(const {target,isIntersecting} of entries){
+        if(!isIntersecting)continue;
+        target.src=target.dataset.src;menuThumbnails.unobserve(target);
+      }
+    },{root:$('dialog'),rootMargin:'100px'});
+    for(const image of $('sheet-body').querySelectorAll('.chart img'))menuThumbnails.observe(image);
+  }
+  showRestingIllustration();$('close').focus({preventScroll:true});$('dialog').scrollTop=0;
 }
 $('contents').onclick=()=>popup('chapters',$('contents'));$('read').onclick=()=>popup('read',$('read'));
-$('close').onclick=()=>$('dialog').close();$('dialog').onclose=()=>{$('sheet-body').querySelector('.listening-clip')?.remove();world?.pause(false);showRestingIllustration();source?.focus({preventScroll:true});};
+$('close').onclick=()=>$('dialog').close();$('dialog').onclose=()=>{menuThumbnails?.disconnect();$('sheet-body').querySelector('.listening-clip')?.remove();world?.pause(false);showRestingIllustration();source?.focus({preventScroll:true});};
 $('dialog').onclick=e=>{if(e.target===$('dialog'))$('dialog').close();};
 document.addEventListener('keydown',e=>{
   if(e.target.closest?.('#reading-edition'))return;
@@ -539,6 +607,11 @@ document.addEventListener('keydown',e=>{
 });
 window.addEventListener('popstate',restore);
 window.addEventListener('hashchange',restore);
+function useFlatEdition(error){
+  if(illustrated)return;
+  console.warn('Showing the illustrated edition.',error);
+  flatEdition();render(requestedPosition);
+}
 function flatEdition(){
   $('world').hidden=true;$('edition').hidden=false;$('reset').hidden=true;$('help').textContent=t('TURN THE PAGES');
   $('edition').removeAttribute('aria-hidden');$('edition').setAttribute('role','img');$('edition').setAttribute('aria-label',chapters[current].alt);
@@ -552,7 +625,7 @@ function flatEdition(){
   document.addEventListener('visibilitychange',showRestingIllustration);
   reduced.addEventListener('change',showRestingIllustration);
   drawBook();
-  new ResizeObserver(()=>{placeIllustratedItems();if(cover)drawCoverFilm();}).observe($('stage'));
+
 }
 $('scrub').max=last;
 document.querySelector('.ticks').replaceChildren(...chapters.map(()=>document.createElement('i')));
@@ -566,6 +639,7 @@ for(const button of document.querySelectorAll('.view-scene')){
     ($('world').hidden?$('read'):$('world')).focus({preventScroll:true});
   };
 }
+$('scene-notes').classList.add('illustrated');
 restore();
 // A language switch opens the scene at the top. Ordinary chapter anchors open the article.
 if(location.hash.startsWith('#scene/') && route()>=0 && route()<=last){
@@ -577,13 +651,22 @@ if(location.hash.startsWith('#scene/') && route()>=0 && route()<=last){
   else window.addEventListener('pageshow',settle,{once:true});
 }
 placeOpeningPrompt();
-new ResizeObserver(placeOpeningPrompt).observe($('stage'));
+new ResizeObserver(()=>{
+  placeOpeningPrompt();
+  if(!world){placeIllustratedItems();if(cover)drawCoverFilm();}
+}).observe($('stage'));
 (async()=>{
   try{
     const {createWorld}=await import('./world.js');
-    world=await createWorld($('world'),{scrub,turn,tap:openItem,placeItem,hoverItem,placeCover});render(pos);world.pause($('dialog').open);
-    $('world').addEventListener('webglcontextlost',event=>{event.preventDefault();flatEdition();});
-    $('edition').hidden=true;
-  }catch(error){console.warn('Showing the illustrated edition.',error);flatEdition();}
+    const built=await createWorld($('world'),{scrub,turn,tap:openItem,placeItem,hoverItem,placeCover},current);
+    while(!built.isReady(Math.floor(pos)) || !built.isReady(Math.ceil(pos))){
+      await Promise.all([built.prepare(Math.floor(pos)),built.prepare(Math.ceil(pos))]);
+    }
+    world=built;upcoming=-1;
+    $('scene-notes').classList.remove('illustrated');$('scene-notes').style.removeProperty('width');
+    for(const button of Object.values(markers))button.removeAttribute('style');
+    render(pos);world.pause($('dialog').open);
+    $('world').addEventListener('webglcontextlost',event=>{event.preventDefault();useFlatEdition('WebGL context lost');});
+  }catch(error){useFlatEdition(error);}
 })();
 

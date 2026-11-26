@@ -33,7 +33,7 @@ async function output(name,contents){
 
 const revisions={};
 for(const [language,folder] of [['en','art'],['es','es/art']]){
-  const files=(await readdir(join(dist,folder))).filter(name=>name.startsWith('ambient-') || name.startsWith('spread-')).sort();
+  const files=(await readdir(join(dist,folder))).filter(name=>/\.(avif|webp|wav|png|ttf)$/.test(name)).sort();
   revisions[language]=Object.fromEntries(await Promise.all(files.map(async name=>[name,await digest(folder+'/'+name)])));
 }
 await output('art-revisions.js','export const artRevisions='+JSON.stringify(revisions,null,2)+';\n');
@@ -80,7 +80,7 @@ async function buildEdition(edition,isSpanish){
   }
   function readingChapter(c){
     return '<section class="reading-chapter" id="'+c.id+'" aria-labelledby="'+c.id+'-title" tabindex="-1">'+
-      '<header><p class="print-kicker">'+esc(c.pageLabel)+'</p><h2 id="'+c.id+'-title">'+esc(c.title)+'</h2>'+
+      '<noscript><span id="scene/'+c.id+'"></span></noscript><header><p class="print-kicker">'+esc(c.pageLabel)+'</p><h2 id="'+c.id+'-title">'+esc(c.title)+'</h2>'+
       '<p class="print-place">'+esc(c.place)+'</p><p class="print-deck">'+esc(c.line)+'</p>'+
       '<button class="view-scene" type="button" data-scene="'+c.id+'" hidden>'+t('View pop-up scene')+'</button></header>'+
       '<img class="chapter-plate" src="'+esc(asset(plateName(c.id)))+'" width="1400" height="788" loading="lazy" decoding="async" alt="'+esc(c.alt)+'">'+
@@ -114,6 +114,7 @@ async function buildEdition(edition,isSpanish){
   const imports=Object.fromEntries(Object.entries(allModules).filter(([key])=>isSpanish||!key.startsWith('/es/')));
   if(isSpanish){
     imports['/edition.js']=imports['/es/edition.js'];
+    imports['/assets.js?shared']=imports['/assets.js'];
     imports['/assets.js']=imports['/es/assets.js'];
   }
   const scripts='<script type="importmap">\n'+JSON.stringify({imports},null,2)+'\n</script>\n'+

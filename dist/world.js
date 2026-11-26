@@ -1,6 +1,6 @@
 import * as T from './three.module.min.js';
 import {chapters as entries,bookCopy} from './edition.js';
-import {loadStock,buildChapter} from './sets.js';
+import {createFigureLibrary,buildChapter} from './sets.js';
 import {asset} from './assets.js';
 import {coverPageFrame,boardCenter,hingeHeight,replayPose} from './hardcover.js';
 import {makeBook} from './book.js';
@@ -30,7 +30,7 @@ function printBackCover(texture){
   texture.image=sheet;texture.needsUpdate=true;
 }
 
-export async function createWorld(canvas,callbacks){
+export async function createWorld(canvas,callbacks,initialIndex=0){
   const renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));
   renderer.shadowMap.enabled=true;renderer.shadowMap.autoUpdate=false;renderer.shadowMap.type=T.PCFSoftShadowMap;
@@ -39,14 +39,27 @@ export async function createWorld(canvas,callbacks){
   const scene=new T.Scene(),camera=new T.PerspectiveCamera(34,1,.15,85);
   const roll=new T.Group(),root=new T.Group();scene.add(roll);roll.add(root);
   const loader=new T.TextureLoader();
-  const [jackets,textures]=await Promise.all([
-    Promise.all(['front-cover.webp','back-cover.webp'].map(async name=>{
-      const map=await loader.loadAsync(asset(name));
-      if(name==='back-cover.webp')printBackCover(map);
-      map.colorSpace=T.SRGBColorSpace;map.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());return map;
-    })),loadStock()
-  ]);
-  const book=makeBook(root,entries,jackets);
+  const library=createFigureLibrary(),pending=new Map(),ready=new Set();
+  const book=makeBook(root,entries,[null,null]);
+  async function loadJacket(index){
+    const back=index===last;
+    const map=await loader.loadAsync(asset(back?'back-cover.webp':'front-cover.webp'));
+    if(back)printBackCover(map);
+    map.colorSpace=T.SRGBColorSpace;map.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+    const material=book.boards[back?1:0].material;
+    material.map=map;material.needsUpdate=true;
+  }
+  function prepare(index){
+    if(!pending.has(index)){
+      const assets=[library.prepare(entries[index].id)];
+      if(index===0 || index===last)assets.push(loadJacket(index));
+      pending.set(index,Promise.all(assets).then(()=>{ready.add(index);}).catch(error=>{
+        pending.delete(index);throw error;
+      }));
+    }
+    return pending.get(index);
+  }
+  await prepare(initialIndex);
   const hemisphere=new T.HemisphereLight('#fffaf1','#d0c4aa',1.85);scene.add(hemisphere);
   const key=new T.DirectionalLight('#fff1da',2.03);key.position.set(-4.8,9,5.2);
   key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.normalBias=.018;key.shadow.bias=-.00022;
@@ -55,7 +68,7 @@ export async function createWorld(canvas,callbacks){
   const chapters=new Map();
   function chapterAt(index){
     if(!chapters.has(index)){
-      const chapter=buildChapter(entries[index].id,book.pages,textures);
+      const chapter=buildChapter(entries[index].id,book.pages,library.textures);
       chapter.hitKeys=new Map();
       for(const [key,item] of Object.entries(chapter.items)){
         chapter.hitKeys.set(item.mesh,key);
@@ -81,7 +94,7 @@ export async function createWorld(canvas,callbacks){
   let allowAmbient=true,onScreen=true;
   const ray=new T.Raycaster(), pointer=new T.Vector2();
   const seat=.090;
-  let width=1,height=1,position=0, yaw=seat,pitch=0,wantYaw=seat,wantPitch=0, frame=0,beatStart=-2000,beatWhich='player';
+  let width=1,height=1,position=initialIndex, yaw=seat,pitch=0,wantYaw=seat,wantPitch=0, frame=0,beatStart=-2000,beatWhich='player';
   let closed=0,coverEdge='front',lift=0;
   const plane=new T.Plane(new T.Vector3(0,1,0),0);
   let lastTime=performance.now(), highlight=null;
@@ -285,7 +298,7 @@ export async function createWorld(canvas,callbacks){
   function play(which){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;beatStart=performance.now();beatWhich=which;request();}
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)request();},{signal:input.signal});
   reduced.addEventListener('change',request,{signal:input.signal});
-  resize();show(0);
-  return {show,replay,pause,renderPlate,nudge,zoomBy,reset,play,render,highlightItem,disposeInput};
+  resize();show(initialIndex);
+  return {show,replay,pause,prepare,isReady:index=>ready.has(index),renderPlate,nudge,zoomBy,reset,play,render,highlightItem,disposeInput};
 }
 

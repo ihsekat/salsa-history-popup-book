@@ -33,7 +33,8 @@ try{
     await page.waitForFunction(w=>document.querySelector('canvas').width===w,width);
   }
   async function capture(index,seconds,options,file){
-    const data=await page.evaluate(([index,seconds,options])=>{
+    const data=await page.evaluate(async ([index,seconds,options])=>{
+      await window.book.prepare(index);
       window.book.renderPlate(index,seconds,options);
       return document.querySelector('canvas').toDataURL().split(',')[1];
     },[index,seconds,options]);

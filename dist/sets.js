@@ -56,15 +56,26 @@ function pilotScene(k,id){
   return {prop:sign};
 }
 
-export async function loadStock(){
-  const loader=new T.TextureLoader();
-  const names=Object.values(figures).flat().map(figure=>figure[1]);
-  const pairs=await Promise.all(names.map(async name=>{
-    const texture=await loader.loadAsync(asset(name+'.webp'));
-    texture.colorSpace=T.SRGBColorSpace;texture.anisotropy=4;
-    return [name,texture];
-  }));
-  return Object.fromEntries(pairs);
+export function createFigureLibrary(){
+  const loader=new T.TextureLoader(),images=new Map(),chapters=new Map();
+  const textures={};
+  function load(name){
+    if(!images.has(name)){
+      images.set(name,loader.loadAsync(asset(name+'.webp')).then(texture=>{
+        texture.colorSpace=T.SRGBColorSpace;texture.anisotropy=4;
+        textures[name]=texture;
+      }).catch(error=>{images.delete(name);throw error;}));
+    }
+    return images.get(name);
+  }
+  function prepare(id){
+    if(!chapters.has(id)){
+      const files=new Set(figures[id].map(figure=>figure[1]));
+      chapters.set(id,Promise.all([...files].map(load)).catch(error=>{chapters.delete(id);throw error;}));
+    }
+    return chapters.get(id);
+  }
+  return {textures,prepare};
 }
 
 const tabPositions={'cuban-pachanga':-.12,'pr-performance':-.27};
