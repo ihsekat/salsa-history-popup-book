@@ -152,6 +152,7 @@ function stop(){if(anim)cancelAnimationFrame(anim);anim=0;}
 function scrub(p){if(cover || transition)return;stop();render(p);}
 function placeCover(left,top,right,bottom){
   const stage=$('stage'),button=$('cover-button');
+  $('gate').style.setProperty('--book-bottom',stage.offsetTop+bottom+'px');
   button.style.left=stage.offsetLeft+left+'px';button.style.top=stage.offsetTop+top+'px';
   button.style.width=(right-left)+'px';button.style.height=(bottom-top)+'px';
 }
