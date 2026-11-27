@@ -266,9 +266,23 @@ dialog::backdrop{background:#11241dd6;backdrop-filter:blur(4px)}
 .policy-page .policy-date,.policy-page nav{font:400 .82rem/1.5 system-ui,sans-serif}
 .policy-page .policy-date{color:#665e4d;margin-bottom:1.7rem}
 .policy-page blockquote{margin:1rem 0;padding:.1rem 1.15rem;border-inline-start:2px solid #a88957}
-.language-bubble{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:32px;padding:0 7px;border:1px solid #d4c4a265;border-radius:999px;color:#f5dfb0;background:#263d3380;text-decoration:none;font:600 12px/1 system-ui,sans-serif;letter-spacing:.03em;pointer-events:auto}
-.language-bubble:hover,.language-bubble:focus-visible{background:#354c3c;border-color:#ead4a7}
-#cover-language{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(var(--gutter),env(safe-area-inset-right))}
+.language-picker{position:relative;display:inline-block;pointer-events:auto;font:500 14px/1.35 system-ui,sans-serif;letter-spacing:normal;text-transform:none}
+.language-picker summary{display:flex;align-items:center;justify-content:center;gap:3px;min-width:38px;height:35px;padding:0 6px;border:1px solid #d1d9be4d;border-radius:99px;color:#f5dfb0;background:#314b3f;cursor:pointer;list-style:none}
+.language-picker summary::-webkit-details-marker{display:none}
+.language-picker summary svg{width:19px;height:19px}
+.language-picker summary .language-chevron{width:8px;height:6px}
+.language-picker[open] .language-chevron{transform:rotate(180deg)}
+.language-picker summary:hover,.language-picker[open] summary{background:#48624e;border-color:#e8d1a4}
+.language-picker summary:focus-visible,.language-picker li a:focus-visible{outline:2px solid #dca746;outline-offset:2px}
+.language-picker ul{position:absolute;z-index:8;inset-inline-end:0;top:100%;margin:6px 0 0;padding:5px;min-width:9.2rem;max-height:min(70svh,24rem);overflow:auto;list-style:none;text-align:start;border:1px solid #66816b;border-radius:.7rem;background:#253c32;box-shadow:0 6px 16px #15231b55}
+.language-picker li{margin:0;padding:0}
+.language-picker li a,.policy-page main .language-picker li a{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.43rem .7rem;border-radius:.4rem;color:#fff4d8;text-decoration:none}
+.language-picker li a:hover,.language-picker li a:focus-visible{background:#405d49}
+.language-picker a[aria-current]::after{content:'✓';color:#efd198}
+.tools:has(.language-picker[open]){z-index:8}
+#cover-language{position:absolute;z-index:2;top:max(12px,env(safe-area-inset-top));right:max(var(--gutter),env(safe-area-inset-right))}
+#reading-language ul{inset-inline-start:0;inset-inline-end:auto}
+@media(max-width:650px){.language-picker summary{height:32px;min-width:36px}}
 #gate.moving #cover-language{visibility:hidden}
 .policy-page main nav{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .kicker{text-transform:uppercase}

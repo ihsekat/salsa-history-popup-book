@@ -1,5 +1,5 @@
 import * as T from './three.module.min.js';
-import {chapters as entries,bookCopy} from './edition.js';
+import {chapters as entries,bookCopy,lang} from './edition.js';
 import {createFigureLibrary,buildChapter} from './sets.js';
 import {asset} from './assets.js';
 import {coverPageFrame,boardCenter,hingeHeight,replayPose} from './hardcover.js';
@@ -19,8 +19,9 @@ function printBackCover(texture){
   ink.fillStyle='#f4d58c';
   ink.font='46px Georgia, serif';
   const lines=[];let line='';
-  for(const word of bookCopy.back.copy[0].split(' ')){
-    const next=line?line+' '+word:word;
+  const separator=lang==='ja'?'':' ';
+  for(const word of bookCopy.back.copy[0].split(separator)){
+    const next=line?line+separator+word:word;
     if(line && ink.measureText(next).width>768){lines.push(line);line=word;}
     else line=next;
   }

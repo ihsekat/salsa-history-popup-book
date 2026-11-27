@@ -6,19 +6,21 @@ import {mkdtemp,rename,rm,writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {languages} from '../dist/languages.js';
 import {chapters,plateName} from '../dist/chapters.js';
 
 const run=promisify(execFile);
 const [lang,...args]=process.argv.slice(2);
 const includePoster=args.includes('--poster');
 const requested=args.filter(arg=>arg!=='--poster');
-if(!['en','es'].includes(lang) || !requested.length || requested.some(id=>!chapters.some(c=>c.id===id))){
-  throw Error('Usage: node scripts/render-ambient-edition.mjs en|es [--poster] <chapter-id> [chapter-id ...]');
+const locale=languages.find(item=>item.code===lang);
+if(!locale || !requested.length || requested.some(id=>!chapters.some(c=>c.id===id))){
+  throw Error('Usage: node scripts/render-ambient-edition.mjs <language> [--poster] <chapter-id> [chapter-id ...]');
 }
 const origin=new URL(process.env.BOOK_PREVIEW_URL || 'http://127.0.0.1:8000/');
 if(!['localhost','127.0.0.1','[::1]'].includes(origin.hostname))throw Error('Start the local preview server first.');
-const art=fileURLToPath(new URL('../dist/'+(lang==='es'?'es/':'')+'art/',import.meta.url));
-const imports=lang==='es'?{'/edition.js':'/es/edition.js','/assets.js':'/es/assets.js'}:{};
+const art=fileURLToPath(new URL('../dist/'+locale.path.slice(1)+'art/',import.meta.url));
+const imports=lang==='en'?{}:{'/edition.js':locale.path+'edition.js','/assets.js':locale.path+'assets.js'};
 const browser=await chromium.launch({args:['--enable-unsafe-swiftshader']});
 try{
   const page=await browser.newPage({deviceScaleFactor:1,reducedMotion:'no-preference'});

@@ -95,8 +95,8 @@ function paintedPage(entry,number) {
   for(const [t,alpha] of [[0,0],[.38,.04],[.49,.20],[.50,.37],[.52,.10],[.70,.035],[1,0]])binding.addColorStop(t,'rgba(97,73,40,'+alpha+')');
   c.fillStyle=binding;c.fillRect(w*.465,24,w*.07,h-50);
   c.fillStyle='#605e49';c.textBaseline='middle';
-  c.font='italic 24px Georgia';c.fillText(entry.footer[0],75,935);
-  c.textAlign='right';c.font='19px monospace';c.fillText(entry.footer[1],w-75,936);
+  c.font='italic 24px Georgia';c.fillText(entry.footer[0],75,935,w*.44);
+  c.textAlign='right';c.font='19px monospace';c.fillText(entry.footer[1],w-75,936,w*.44);
   // Vary individual paper fibers deterministically so revisiting a page is stable.
   let seed=932+number;
   function random(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;}

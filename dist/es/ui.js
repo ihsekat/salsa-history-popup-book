@@ -1,4 +1,5 @@
 const labels={
+  'Language':'Idioma',
   'Interactive pop-up book':'Libro interactivo desplegable',
   'Book tools':'Controles del libro',
   'Reset view':'Restablecer vista',

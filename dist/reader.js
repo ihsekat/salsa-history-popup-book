@@ -1,3 +1,4 @@
+import {chapterLabel,pageCountLabel} from './languages.js';
 import {drawCongressMap} from './congress-map.js';
 import {chapters,plateName,bookCopy,bookTitle,t,lang} from './edition.js';
 import {orderedReferences} from './references.js';
@@ -5,9 +6,14 @@ import {asset} from './assets.js';
 import {plateBounds} from './plate-bounds.js';
 import {artRevisions} from './art-revisions.js';
 const $=id=>document.getElementById(id);
-const otherPath=lang==='en'?'/es/':'/';
-const otherEdition=location.protocol==='file:'?new URL(otherPath,bookCopy.back.share.url).href:otherPath;
-const pageCount=index=>t('Page')+' '+(index+1)+' '+t('of')+' '+total;
+function updateLanguageLinks(id,hash) {
+  for (const link of $(id).querySelectorAll('a')) {
+    const url = new URL(link.getAttribute('href'), bookCopy.back.share.url);
+    url.hash = hash;
+    link.href = location.protocol === 'file:' ? url.href : url.pathname + url.hash;
+  }
+}
+const pageCount=index=>pageCountLabel(index+1,total,lang,t);
 const icons={
  share:'<path d="M12 14V3m-4 4 4-4 4 4M6 10H4v10h16V10h-2"/>',
  book:'<path d="M3 4.5q4-1.4 8.8 1.2v13Q7.4 16 3 17.5zM21 4.5q-4-1.4-8.8 1.2v13q4.4-2.7 8.8-1.2z"/>',
@@ -97,8 +103,8 @@ function render(p){
   $('prev').title=$('prev').getAttribute('aria-label');$('next').title=$('next').getAttribute('aria-label');
   if(current!==index){
     clearTimeout(tipTimer);current=index;
-    $('chapter-language').href=otherEdition+'#scene/'+c.id;
-    $('folio').textContent=t('CHAPTER')+' '+number(index)+' / '+total+' · '+c.style.toUpperCase();
+    updateLanguageLinks('chapter-language','#scene/'+c.id);
+    $('folio').textContent=chapterLabel(number(index),total,lang,t)+' · '+c.style.toUpperCase();
     $('title').textContent=c.title;$('place').textContent=c.place;$('line').textContent=c.line;
     $('counter').textContent=number(index)+' / '+total;$('listen').innerHTML='<i data-icon="note">'+icon('note')+'</i><span>'+(c.sound||'')+'</span>';
     $('listen').hidden=!c.sound;
@@ -248,7 +254,7 @@ function showRestingIllustration(){
   const id=chapters[current].id;
   let name=plateName(id);
   const moving='ambient-'+id+'.avif';
-  const available=artRevisions[lang==='en'?'en':'es'][moving];
+  const available=artRevisions[lang.split('-')[0]]?.[moving];
   if(available && !cover && !transition && !anim && Number.isInteger(pos) &&
     flatOnScreen && !document.hidden && !$('dialog').open && !reduced.matches && !navigator.connection?.saveData){
     if(ambientPlate?.id!==id){
@@ -352,7 +358,7 @@ function gateState(side){
   for(const element of [$('stage'),document.querySelector('.tools'),document.querySelector('.chapter'),document.querySelector('.bottom')])element.inert=covered;
   $('gate').hidden=!covered;$('cover-button').hidden=transition;
   $('gate').dataset.side=side||'front';
-  $('cover-language').href=otherEdition+(side==='back'?'#back-cover':'');
+  updateLanguageLinks('cover-language',side==='back'?'#back-cover':'');
   $('gate').classList.toggle('moving',transition);
   $('cover-action').textContent=side==='back'?back.button:front.button;
   $('cover-subtitle').hidden=side==='back';
@@ -527,12 +533,12 @@ function popup(kind,button,story){
   const c=chapters[current];
   remember(current,false);world?.pause(true);
   if(kind==='chapters'){
-    $('sheet-body').innerHTML='<span class="overline">'+bookCopy.contents.label+'</span><h2 id="dialog-title">'+bookCopy.contents.title+'</h2><div class="chart">'+chapters.map((p,i)=>'<button data-page="'+i+'" '+(i===current?'aria-current="page"':'')+'><img width="64" height="56" decoding="async" data-src="'+asset(plateName(p.id))+'" alt=""><span><small>'+t('CHAPTER')+' '+number(i)+' · '+p.style.toUpperCase()+'</small><strong>'+p.title+'</strong><em>'+p.place+'</em></span></button>').join('')+'</div>';
+    $('sheet-body').innerHTML='<span class="overline">'+bookCopy.contents.label+'</span><h2 id="dialog-title">'+bookCopy.contents.title+'</h2><div class="chart">'+chapters.map((p,i)=>'<button data-page="'+i+'" '+(i===current?'aria-current="page"':'')+'><img width="64" height="56" decoding="async" data-src="'+asset(plateName(p.id))+'" alt=""><span><small>'+chapterLabel(number(i),null,lang,t)+' · '+p.style.toUpperCase()+'</small><strong>'+p.title+'</strong><em>'+p.place+'</em></span></button>').join('')+'</div>';
     $('sheet-body').querySelector('.chart').before(chapterShare(c));
     $('sheet-body').querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>selectChapter(Number(b.dataset.page)));
   }else{
     const entry=story || c;
-    const printedLabel=story?t('FROM THE SPREAD')+' · '+c.title:t('CHAPTER')+' '+number(current)+' / '+total+' · '+c.style.toUpperCase();
+    const printedLabel=story?t('FROM THE SPREAD')+' · '+c.title:chapterLabel(number(current),total,lang,t)+' · '+c.style.toUpperCase();
     const paragraphs=entry.copy.map(p=>'<p class="body-copy">'+p+'</p>').join('');
     $('sheet-body').innerHTML='<span class="overline">'+printedLabel+'</span><h2 id="dialog-title">'+entry.title+'</h2><p class="location">'+c.place+'</p>'+paragraphs+'<div class="source-list"><small>'+t('SOURCES')+'</small></div>';
     const list=$('sheet-body').querySelector('.source-list');
@@ -603,7 +609,7 @@ $('contents').onclick=()=>popup('chapters',$('contents'));$('read').onclick=()=>
 $('close').onclick=()=>$('dialog').close();$('dialog').onclose=()=>{menuThumbnails?.disconnect();$('sheet-body').querySelector('.listening-clip')?.remove();world?.pause(false);showRestingIllustration();source?.focus({preventScroll:true});};
 $('dialog').onclick=e=>{if(e.target===$('dialog'))$('dialog').close();};
 document.addEventListener('keydown',e=>{
-  if(e.target.closest?.('#reading-edition'))return;
+  if(e.target.closest?.('#reading-edition,.language-picker'))return;
   if(e.altKey||e.metaKey||e.ctrlKey||$('dialog').open||e.target===$('scrub')||e.target===shareInput)return;
   const key=e.key.toLowerCase();
   if(transition)return;

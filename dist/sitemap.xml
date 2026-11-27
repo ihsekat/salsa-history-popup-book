@@ -3,11 +3,109 @@
   <url><loc>https://www.salsahistory.com/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/"/>
   </url>
   <url><loc>https://www.salsahistory.com/es/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/de/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/ja/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/it/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/about/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/es/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/about/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/de/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/about/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/fr/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/about/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/ja/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/about/"/>
+  </url>
+  <url><loc>https://www.salsahistory.com/it/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.salsahistory.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.salsahistory.com/es/about/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.salsahistory.com/de/about/"/>
+    <xhtml:link rel="alternate" hreflang="fr-FR" href="https://www.salsahistory.com/fr/about/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.salsahistory.com/ja/about/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.salsahistory.com/it/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.salsahistory.com/about/"/>
   </url>
 </urlset>
