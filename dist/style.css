@@ -40,7 +40,7 @@ button:disabled{cursor:default}
 .tools,.chapter,.bottom{z-index:3;position:absolute;left:var(--gutter);right:var(--gutter);pointer-events:none}
 .tools button,.chapter button,.bottom button,.bottom input,.transport{pointer-events:auto}
 .tools{top:clamp(15px,2.5vh,30px);display:flex;align-items:center;justify-content:space-between}
-.imprint{display:flex;align-items:center;gap:11px}
+.imprint{display:flex;align-items:center;gap:11px;pointer-events:auto;color:inherit;text-decoration:none}
 .tile{display:block;width:39px;height:39px;flex-shrink:0}
 .tile img{display:block;width:100%;height:100%;object-fit:contain}
 .imprint strong{font:400 clamp(17px,1.6vw,25px)/1.12 var(--serif);letter-spacing:-.04em}
