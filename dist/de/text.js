@@ -15,7 +15,7 @@ export const text = {
       "duo": {
         "title": "Das Segelschiff",
         "copy": [
-          "Die spanische Expedition unter Christoph Kolumbus erreichte am 12. Oktober 1492 die Bahamas und noch im selben Monat Kuba. Sie ebnete den Weg für die spanische Kolonisierung der Karibik. Mit ihr gelangten europäische Sprachen, religiöse Praktiken, Instrumente und gesellschaftliche Bräuche auf die Inseln. Das Schiff steht für den Beginn eines langen, oft gewaltsamen Wandels. Bis zur Entstehung der Salsa sollten noch Jahrhunderte vergehen."
+          "Die spanische Expedition unter Christoph Kolumbus erreichte am 12. Oktober 1492 die Bahamas und noch im selben Monat Kuba. Sie ebnete den Weg für die spanische Kolonisierung der Karibik. Mit ihr gelangten europäische Sprachen, religiöse Praktiken, Instrumente und gesellschaftliche Bräuche auf die Inseln. Für die Taíno-Gemeinschaften auf Kuba begann mit der Ankunft der spanischen Schiffe eine Zeit gewaltsamer Kolonialherrschaft."
         ]
       },
       "player": {

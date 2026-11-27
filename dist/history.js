@@ -28,7 +28,7 @@ export const expansion = {
       duo: {
         title: "The sailing ship",
         copy: [
-          "The Spanish expedition led by Christopher Columbus reached the Bahamas on October 12, 1492, and Cuba later that month. It opened the way for Spain’s colonization of the Caribbean, bringing European languages, religion, instruments and social customs to the islands. The ship represents the beginning of a long, often violent transformation, not the birth of salsa itself.",
+          "The Spanish expedition led by Christopher Columbus reached the Bahamas on October 12, 1492, and Cuba later that month. It opened the way for Spain’s colonization of the Caribbean, bringing European languages, religion, instruments and social customs to the islands. For Cuba’s Taíno communities, the arrival of Spanish ships marked the beginning of a violent colonial era.",
         ],
         sources: [
           archive("Columbus and the Taíno - Library of Congress", "https://www.loc.gov/exhibits/exploring-the-early-americas/columbus-and-the-taino"),

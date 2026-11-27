@@ -15,7 +15,7 @@ export const text = {
       "duo": {
         "title": "Il veliero",
         "copy": [
-          "La spedizione spagnola guidata da Cristoforo Colombo raggiunse le Bahamas il 12 ottobre 1492 e Cuba più tardi nello stesso mese. Aprì la strada alla colonizzazione spagnola dei Caraibi e all’arrivo nelle isole di lingue, religione, strumenti musicali e usanze sociali europee. Il veliero rappresenta l’inizio di una lunga trasformazione, spesso violenta. La nascita della salsa è ancora lontana."
+          "La spedizione spagnola guidata da Cristoforo Colombo raggiunse le Bahamas il 12 ottobre 1492 e Cuba più tardi nello stesso mese. Aprì la strada alla colonizzazione spagnola dei Caraibi e all’arrivo nelle isole di lingue, religione, strumenti musicali e usanze sociali europee. Per le comunità taíno di Cuba, l’arrivo delle navi spagnole aprì un’epoca di violenta dominazione coloniale."
         ]
       },
       "player": {

@@ -15,7 +15,7 @@ export const text = {
       "duo": {
         "title": "Le voilier",
         "copy": [
-          "L’expédition espagnole menée par Christophe Colomb atteint les Bahamas le 12 octobre 1492, puis Cuba au cours du même mois. Elle ouvre la voie à la colonisation des Caraïbes par l’Espagne, qui introduit dans les îles des langues, une religion, des instruments et des coutumes venus d’Europe. Ce navire symbolise le début d’une longue transformation, souvent violente. La naissance de la salsa est encore loin."
+          "L’expédition espagnole menée par Christophe Colomb atteint les Bahamas le 12 octobre 1492, puis Cuba au cours du même mois. Elle ouvre la voie à la colonisation des Caraïbes par l’Espagne, qui introduit dans les îles des langues, une religion, des instruments et des coutumes venus d’Europe. Pour les communautés taïnos de Cuba, l’arrivée des navires espagnols marque le début d’une période de domination coloniale violente."
         ]
       },
       "player": {

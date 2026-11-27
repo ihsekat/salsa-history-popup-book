@@ -15,7 +15,7 @@ export const text = {
       "duo": {
         "title": "El barco de vela",
         "copy": [
-          "La expedición española encabezada por Cristóbal Colón llegó a las Bahamas el 12 de octubre de 1492 y a Cuba ese mismo mes. Abrió el camino a la colonización del Caribe por España. Con los colonos llegaron lenguas, creencias religiosas, instrumentos y costumbres sociales de Europa. El barco señala el comienzo de una transformación larga y a menudo violenta. Faltaban siglos para que naciera la salsa."
+          "La expedición española encabezada por Cristóbal Colón llegó a las Bahamas el 12 de octubre de 1492 y a Cuba ese mismo mes. Abrió el camino a la colonización del Caribe por España. Con los colonos llegaron lenguas, creencias religiosas, instrumentos y costumbres sociales de Europa. Para las comunidades taínas de Cuba, la llegada de los barcos españoles marcó el comienzo de una época de violencia colonial."
         ]
       },
       "player": {
