@@ -112,7 +112,7 @@ function render(p){
     $('edition').setAttribute('aria-label',c.alt);
     $('world').setAttribute('aria-label',c.alt+' '+t('Select a glowing object to read its story. Drag the paper to turn. Drag the table to rotate. Arrow keys turn pages. A and D rotate. W and S tilt. Pinch or use the plus and minus keys to zoom. R resets the view.'));
     if(!world)setIllustration(plateName(c.id));
-    document.title=c.title+' · '+bookTitle;
+    if(!cover)document.title=c.title+' · '+bookTitle;
   }
   $('scene-notes').hidden=!!cover || transition || !!anim || !Number.isInteger(pos);
   if($('scene-notes').hidden)world?.highlightItem(null);
@@ -385,7 +385,7 @@ function animateCover(duration,update,finish){
   }
   coverAnim=requestAnimationFrame(tick);
 }
-function boundary(side,opening){
+function boundary(side,opening,homeUrl){
   if(transition)return;
   stop();transition=true;coverEdge=side;closed=opening?1:0;
   const index=side==='front'?0:last;
@@ -396,7 +396,11 @@ function boundary(side,opening){
   },()=>{
     cancelBoundary();closed=opening?0:1;
     gateState(opening?null:side);render(index);
-    remember(opening?index:side==='front'?-1:last+1);
+    if(homeUrl){
+      history.pushState(null,'',homeUrl);
+      world?.reset();
+      window.scrollTo(0,0);
+    }else remember(opening?index:side==='front'?-1:last+1);
     (opening?$('world').hidden?$('read'):$('world'):$('cover-prompt')).focus({preventScroll:true});
     $('announce').textContent=opening?chapters[index].title:side==='front'?t('Front cover.'):t('Back cover. Start again.');
   });
@@ -446,22 +450,26 @@ function turn(index,update=true){
 }
 function selectChapter(target){
   $('dialog').close();
-  const count=Math.abs(target-current);
-  if(count<=1 || reduced.matches){turn(target);return;}
+  if(Math.abs(target-current)<=1 || reduced.matches){turn(target);return;}
+  flipToChapter(target,()=>turn(target));
+}
 
+function flipToChapter(target,arrive){
   stop();
-  const startPage=current;
+  const startPage=pos;
+  const count=Math.ceil(Math.abs(target-startPage));
+  if(!count || reduced.matches){arrive();return;}
   const direction=Math.sign(target-startPage);
   const edgeDuration=Math.max(155,320-count*11);
-  const maxReduction=Math.min(.48,.16*(count-2));
+  const maxReduction=Math.max(0,Math.min(.48,.16*(count-2)));
   function pageDuration(page){
-    const fraction=Math.abs(page-startPage)/(count-1);
+    const fraction=Math.min(1,Math.abs(page-startPage)/Math.max(1,count-1));
     const ramp=Math.sin(Math.PI*fraction);
     return edgeDuration*(1-maxReduction*ramp*ramp);
   }
   const plates=new Map();
   if(!world){
-    for(let page=current;page!==target+direction;page+=direction){
+    for(let page=Math.floor(Math.min(startPage,target));page<=Math.ceil(Math.max(startPage,target));page++){
       const image=new Image();
       image.src=asset(plateName(chapters[page].id));
       plates.set(page,image);
@@ -471,10 +479,10 @@ function selectChapter(target){
   let milliseconds=edgeDuration;
   rustle();
   function tick(now){
-    const next=from+direction;
+    const next=direction>0?Math.floor(from)+1:Math.ceil(from)-1;
     const elapsed=previous===undefined?0:now-previous;
     previous=now;
-    if(reduced.matches){stop();turn(target);return;}
+    if(reduced.matches){stop();arrive();return;}
     if(world && !world.isReady(next)){
       world.prepare(next).catch(useFlatEdition);anim=requestAnimationFrame(tick);return;
     }
@@ -484,9 +492,9 @@ function selectChapter(target){
     // Show the bend of each leaf even when building a new 3D scene costs a frame.
     progress=Math.min(1,progress+Math.min(.34,elapsed/milliseconds));
     const eased=progress*progress*(3-2*progress);
-    render(from+direction*eased);
+    render(from+(next-from)*eased);
     if(progress===1){
-      if(next===target){stop();turn(target);return;}
+      if(next===target){stop();arrive();return;}
       from=next;progress=0;
       milliseconds=pageDuration(from);
     }
@@ -494,6 +502,13 @@ function selectChapter(target){
   }
   anim=requestAnimationFrame(tick);
 }
+document.querySelector('.imprint').onclick=event=>{
+  if(event.defaultPrevented || event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)return;
+  event.preventDefault();
+  if(cover || transition)return;
+  const homeUrl=event.currentTarget.href;
+  flipToChapter(0,()=>boundary('front',false,homeUrl));
+};
 $('prev').onclick=()=>turn(current-1);$('next').onclick=()=>turn(current+1);
 $('scrub').oninput=e=>scrub(Number(e.target.value));
 $('scrub').onchange=e=>turn(Math.round(Number(e.target.value)));
