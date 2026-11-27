@@ -140,7 +140,8 @@ export function makeBook(root,entries,jackets) {
   }
   for(const s of [-1,1]){
     const stack=k.group(root);stacks.push(stack);
-    k.box(stack,s*3.052,-.342,0,6.16,.135,6.86,'#584736');
+    // Recess the board core on all four edges so its faces clear the lighter trim.
+    k.box(stack,s*boardCenter,-.342,0,6.16,.135,6.84,'#584736');
     k.box(stack,s*boardCenter,-.395,0,6.20,.055,6.89,'#73252a');
     const print=new T.PlaneGeometry(6.20,6.89);
     print.rotateX(-Math.PI/2);print.rotateZ(Math.PI);

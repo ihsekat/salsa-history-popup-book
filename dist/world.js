@@ -36,7 +36,7 @@ export async function createWorld(canvas,callbacks,initialIndex=0){
   renderer.shadowMap.enabled=true;renderer.shadowMap.autoUpdate=false;renderer.shadowMap.type=T.PCFSoftShadowMap;
   renderer.setClearColor(0,0);
   renderer.outputColorSpace=T.SRGBColorSpace;
-  const scene=new T.Scene(),camera=new T.PerspectiveCamera(34,1,.15,85);
+  const scene=new T.Scene(),camera=new T.PerspectiveCamera(34,1,1,85);
   const roll=new T.Group(),root=new T.Group();scene.add(roll);roll.add(root);
   const loader=new T.TextureLoader();
   const library=createFigureLibrary(),pending=new Map(),ready=new Set();
