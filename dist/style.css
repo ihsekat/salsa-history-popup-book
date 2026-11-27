@@ -81,7 +81,7 @@ i[data-icon] svg{width:1.16em;height:1.16em;display:block;stroke:currentColor;fi
 .rail-row{display:flex;gap:12px;align-items:center;margin-top:4px}
 .rail-row button{width:36px;height:31px;display:grid;place-items:center;border-radius:18px;border:1px solid #c0c4a65c;background:#ffffff06;color:#fff1cd}
 .rail-row button.finish{width:auto;display:flex;align-items:center;gap:5px;padding:0 9px;white-space:nowrap}
-.rail-row button.finish::before{content:"Close book";font:600 .72rem Georgia,serif}
+.rail-row button.finish::before{content:attr(aria-label);font:600 .72rem Georgia,serif}
 .rail-row button:disabled{opacity:.32}
 .rail{position:relative;flex:1;height:32px}
 .ticks{height:1px;background:#d5c898ac;position:absolute;left:8px;right:8px;top:50%;display:flex;justify-content:space-between}
