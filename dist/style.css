@@ -111,7 +111,7 @@ dialog::backdrop{background:#11241dd6;backdrop-filter:blur(4px)}
 .source-list{border-top:1px solid #947e5144;padding-top:14px;margin-top:22px;font-size:.8rem}
 .source-list a{display:block;width:fit-content;margin:5px 0;color:#375949;text-underline-offset:3px}
 .chapter-share{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;color:#315440;font:15px/1.4 system-ui,sans-serif}
-.chapter-share button{padding:.48rem .85rem;border:1px solid #83917a;border-radius:2rem;background:transparent;color:#294537}
+.chapter-share button{display:inline-flex;align-items:center;gap:.45em;padding:.48rem .85rem;border:1px solid #83917a;border-radius:2rem;background:transparent;color:#294537}
 .chapter-share button:hover,.chapter-share button:focus-visible{background:#e4dcc2}
 .chapter-share label{flex-basis:100%}
 .chapter-share input{max-width:100%;padding:.3rem;background:#fff7df;color:#244437}

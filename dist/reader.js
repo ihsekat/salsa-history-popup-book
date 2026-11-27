@@ -333,6 +333,7 @@ shareInput.onclick=()=>shareInput.select();
 function chapterShare(chapter){
   const controls=$('chapter-share-controls').content.firstElementChild.cloneNode(true);
   const button=controls.querySelector('button'),manual=controls.querySelector('label');
+  button.prepend(shareButton.querySelector('[data-icon="share"]').cloneNode(true));
   const input=manual.querySelector('input'),status=controls.querySelector('[role=status]');
   const url=new URL('#scene/'+chapter.id,back.share.url).href;
   input.value=url;input.onclick=()=>input.select();
