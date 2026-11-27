@@ -109,6 +109,7 @@ async function buildEdition(edition,isSpanish){
       ...Object.entries(twitter).map(([k,v])=>'<meta name="'+k+'" content="'+esc(v)+'">')].join('\n');
   }
   const meta=['<title>'+esc(bookTitle)+'</title>','<meta name="description" content="'+esc(bookCopy.description)+'">',
+    ...(isSpanish?[]:['<meta name="google-site-verification" content="BGobDhfOyj8v8rKqwlLW9qh5miFfPaqJUbXfs2EIf70" />']),
     '<link rel="canonical" href="'+canonical+'">',headAlternates(''),socialMeta(bookTitle,canonical,'book',bookCopy.description),
     '<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script>'].join('\n');
   const imports=Object.fromEntries(Object.entries(allModules).filter(([key])=>isSpanish||!key.startsWith('/es/')));
