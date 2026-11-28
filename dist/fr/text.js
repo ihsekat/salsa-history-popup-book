@@ -396,7 +396,7 @@ export const text = {
       "player": {
         "title": "Compter en On2",
         "copy": [
-          "Danser sur le 2 ne veut pas forcément dire faire le premier pas sur le deuxième temps. Dans la méthode d’Eddie Torres, on pose le pied sur le 1, le 2, le 3, puis sur le 5, le 6 et le 7. C’est sur le 2 et le 6 que le pas de base change de direction. C’est l’une des grandes différences entre le style d’Eddie Torres et la méthode On1, que vous découvrirez à la page suivante."
+          "Dans le pas de base d’Eddie Torres, les danseurs posent le pied sur les temps 1, 2, 3, puis 5, 6, 7. Sur le 2 et le 6, ils changent de direction. C’est ce pas qu’on appelle le « break step ». Le compte de huit couvre deux mesures à quatre temps. Chaque changement de direction tombe donc sur le deuxième temps de la mesure, d’où le nom On2."
         ]
       },
       "prop": {
@@ -602,7 +602,7 @@ export const text = {
     "alt": "Sur une scène de mi-temps en papier figurent Bad Bunny et sa partenaire de danse, un orchestre de salsa et une casita portoricaine.",
     "copy": [
       "À la mi-temps du Super Bowl LX, le spectacle de Bad Bunny célèbre la culture portoricaine, la vie en communauté et l’unité. Au fil des tableaux, le public passe des champs de canne à sucre de l’île aux fêtes de quartier, puis à une réception de mariage où un orchestre de salsa occupe le devant de la scène. Lady Gaga chante « Die With a Smile » dans un arrangement salsa et danse avec Bad Bunny.",
-      "Le spectacle se poursuit avec « Baile Inolvidable », le succès salsa de Bad Bunny sorti en 2025, et des danseurs professionnels de salsa venus de Porto Rico, de Los Angeles et d’ailleurs. Pour le monde de la salsa, ce moment fait date. La danse tient une place de premier plan dans le spectacle, bien au-delà d’une simple chorégraphie d’accompagnement. Les artistes qui l’interprètent ont consacré des années à leur art.",
+      "Quand Bad Bunny chante « Baile Inolvidable », les danseurs de salsa venus de Porto Rico et de Los Angeles occupent le devant de la scène. Parmi eux figurent les Portoricains Tito Ortos et Tamara Livolsi, partenaires de danse de longue date. Livolsi avait également signé la chorégraphie du clip de la chanson.",
       "Née des rencontres culturelles à Cuba, cette musique a pris forme à New York sous le nom de salsa. Après avoir traversé les générations et les continents, la voici sur une nouvelle scène d’exception. Mais son histoire se poursuit bien au-delà du stade et de la retransmission télévisée. Elle se prolonge dans chaque cours de danse, dans chaque club et chez chaque personne qui goûte pour la première fois à la joie de danser la salsa. À vous de danser le prochain chapitre."
     ],
     "footerPlace": "Santa Clara, Californie",

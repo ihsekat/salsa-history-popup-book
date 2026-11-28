@@ -396,7 +396,7 @@ export const text = {
       "player": {
         "title": "On2 zählen",
         "copy": [
-          "Wer On2 tanzt, setzt den ersten Schritt nicht zwangsläufig auf den zweiten Schlag. Bei Eddies Methode liegen die Schritte auf 1, 2, 3 und 5, 6, 7. Auf 2 und 6 folgen die sogenannten Break Steps, bei denen sich im Grundschritt die Bewegungsrichtung ändert. Darin unterscheidet sich der Stil von Eddie Torres wesentlich von der On1-Methode, die auf der nächsten Seite vorgestellt wird."
+          "Beim Grundschritt von Eddie Torres setzen die Tänzer ihre Schritte auf 1, 2, 3 und 5, 6, 7. Auf 2 und 6 wechseln sie die Richtung. Diesen Schritt nennt man Break Step. Die acht Zählzeiten verteilen sich auf zwei Viervierteltakte. Der Richtungswechsel fällt also in beiden Takten auf den zweiten Schlag. Daher der Name On2."
         ]
       },
       "prop": {
@@ -602,7 +602,7 @@ export const text = {
     "alt": "Auf einer Papierbühne für die Halbzeitshow sind Bad Bunny mit einer Tanzpartnerin, eine Salsa-Band und eine puerto-ricanische Casita zu sehen.",
     "copy": [
       "Mit seiner Halbzeitshow beim Super Bowl LX feierte Bad Bunny die Kultur Puerto Ricos, das Miteinander und den Zusammenhalt. Szene für Szene führte die Show das Publikum von den Zuckerrohrfeldern der Insel über gesellige Runden in der Nachbarschaft bis zu einer Hochzeitsfeier, bei der eine Salsa-Band im Mittelpunkt stand. Lady Gaga sang „Die With a Smile“ in einem Salsa-Arrangement und tanzte mit Bad Bunny.",
-      "Es folgte „Baile Inolvidable“, Bad Bunnys Salsa-Hit aus dem Jahr 2025. Dazu tanzten Salsa-Profis aus Puerto Rico, Los Angeles und anderen Orten. Für die Salsa-Szene war das ein Meilenstein. Der Tanz bekam einen eigenen Platz im Rampenlicht. Wer hier auftrat, hatte sich dieser Kunst seit Jahren verschrieben und bot weit mehr als eine Choreografie im Hintergrund.",
+      "Als Bad Bunny „Baile Inolvidable“ sang, standen Salsatänzerinnen und Salsatänzer aus Puerto Rico und Los Angeles im Mittelpunkt. Zu ihnen gehörten Tito Ortos und Tamara Livolsi aus Puerto Rico, die schon seit vielen Jahren zusammen tanzten. Livolsi hatte auch die Choreografie für das Musikvideo zum Lied entworfen.",
       "Aus der Begegnung verschiedener Kulturen auf Kuba war eine Musik entstanden, die in New York unter dem Namen Salsa Gestalt annahm. Über Generationen und Kontinente hinweg hatte sie nun eine weitere außergewöhnliche Bühne erreicht. Doch die Geschichte endet weder im Stadion noch mit der Fernsehübertragung. Sie lebt weiter in jedem Tanzkurs, in jedem Club und in jedem Menschen, der zum ersten Mal die Freude am Salsa-Tanzen entdeckt. Das nächste Kapitel tanzt du."
     ],
     "footerPlace": "Santa Clara, Kalifornien",

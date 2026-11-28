@@ -396,7 +396,7 @@ export const text = {
       "player": {
         "title": "El conteo On2",
         "copy": [
-          "Bailar On2 no implica necesariamente dar el primer paso en el segundo tiempo. En el método de Eddie se pisa en 1, 2, 3 y 5, 6, 7. Los pasos de ruptura, en los que cambia la dirección del básico, caen en 2 y 6. Es una diferencia importante con el método On1 que verás en la página siguiente."
+          "En el paso básico de Eddie Torres, se pisa en los tiempos 1, 2, 3 y 5, 6, 7. En el 2 y el 6, los bailarines cambian de dirección con el llamado paso de ruptura. La cuenta de ocho abarca dos compases de 4/4, de modo que cada cambio de dirección cae en el segundo tiempo de su compás. De ahí viene el nombre On2."
         ]
       },
       "prop": {
@@ -602,7 +602,7 @@ export const text = {
     "alt": "Bad Bunny y una pareja de baile, una orquesta de salsa y una casita puertorriqueña aparecen en un escenario de papel durante el medio tiempo.",
     "copy": [
       "El espectáculo de medio tiempo de Bad Bunny en el Super Bowl LX celebró la cultura puertorriqueña, la comunidad y la unión. Una sucesión de escenas llevó al público desde los cañaverales y las reuniones de barrio de la isla hasta la recepción de una boda, donde una orquesta de salsa ocupó el centro del escenario. Lady Gaga cantó un arreglo salsero de «Die With a Smile» y bailó con Bad Bunny.",
-      "El espectáculo dio paso a «Baile Inolvidable», su éxito salsero de 2025, con bailarines profesionales de Puerto Rico, Los Ángeles y otros lugares. Para la comunidad salsera fue un momento histórico. El baile ocupó un lugar protagonista, en manos de artistas que llevaban años dedicados a su oficio.",
+      "Cuando Bad Bunny cantó «Baile Inolvidable», los bailarines de salsa de Puerto Rico y Los Ángeles ocuparon el centro del escenario. Entre ellos estaban los puertorriqueños Tito Ortos y Tamara Livolsi, pareja de baile desde hacía años. Livolsi también había creado la coreografía del video musical de la canción.",
       "La música nacida del encuentro de culturas en Cuba, que tomó forma con el nombre de salsa en Nueva York y viajó por generaciones y continentes, había llegado a otro escenario extraordinario. La historia sigue más allá del estadio y de la televisión. Continúa en cada clase, en cada club y en cada persona que descubre por primera vez el gusto de bailar salsa. El próximo capítulo lo bailas tú."
     ],
     "footerPlace": "Santa Clara, California",

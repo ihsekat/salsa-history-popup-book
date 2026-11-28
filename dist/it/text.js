@@ -396,7 +396,7 @@ export const text = {
       "player": {
         "title": "Il conteggio On2",
         "copy": [
-          "Ballare On2 non significa necessariamente fare il primo passo sul secondo battito. Nel metodo di Eddie si fanno i passi sull’1, sul 2, sul 3 e poi sul 5, sul 6 e sul 7. I passi che segnano il cambio di direzione nella base, detti break steps, cadono sul 2 e sul 6. È una delle differenze fondamentali tra lo stile di Eddie Torres e il metodo On1 che incontrerai nella prossima pagina."
+          "Nel passo base di Eddie Torres, i ballerini fanno un passo sui tempi 1, 2, 3 e 5, 6, 7. Sul 2 e sul 6 cambiano direzione con un passo che nel ballo si chiama break step. Il conteggio di otto tempi copre due battute in 4/4, quindi ogni cambio di direzione cade sul secondo tempo di ciascuna battuta. Da qui il nome On2."
         ]
       },
       "prop": {
@@ -602,7 +602,7 @@ export const text = {
     "alt": "Sul palco di carta dello spettacolo dell’intervallo compaiono Bad Bunny con una compagna di ballo, un’orchestra di salsa e una casita portoricana.",
     "copy": [
       "Con il suo spettacolo nell’intervallo del Super Bowl LX, Bad Bunny ha celebrato la cultura portoricana, la comunità e il suo spirito di unione. Di scena in scena, gli spettatori sono passati dai campi di canna da zucchero dell’isola e dai ritrovi di quartiere a un ricevimento di nozze, dove un’orchestra di salsa ha preso il centro della scena. Lady Gaga ha cantato «Die With a Smile» in un arrangiamento salsa e ha ballato con Bad Bunny.",
-      "Lo spettacolo è proseguito con «Baile Inolvidable», il successo salsa di Bad Bunny del 2025, con ballerini professionisti di salsa provenienti da Porto Rico, da Los Angeles e da altre parti del mondo. Per la comunità della salsa è stato un momento storico: il ballo, affidato ad artisti che avevano dedicato anni alla loro arte, ha avuto un ruolo di primo piano, ben oltre quello di una coreografia di contorno.",
+      "Quando Bad Bunny ha cantato «Baile Inolvidable», i ballerini di salsa di Porto Rico e Los Angeles hanno preso il centro della scena. Tra loro c’erano i portoricani Tito Ortos e Tamara Livolsi, partner di ballo da molti anni. Livolsi aveva anche firmato la coreografia del videoclip della canzone.",
       "La musica nata dall’incontro di culture a Cuba, che a New York aveva preso forma con il nome di salsa e aveva attraversato generazioni e continenti, era approdata a un altro palcoscenico straordinario. Ma la storia non si chiude in uno stadio o con una diretta televisiva. Continua in ogni lezione di ballo, in ogni locale e in chi scopre per la prima volta la gioia della salsa. Il prossimo capitolo lo balli tu."
     ],
     "footerPlace": "Santa Clara, California",

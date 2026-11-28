@@ -591,7 +591,7 @@ export const expansion = {
       player: {
         title: "The On2 count",
         copy: [
-          "On2 does not mean that a dancer necessarily takes the first step on beat two. In Eddie’s method, dancers step on 1, 2, 3 and 5, 6, 7. The break steps, where the basic changes direction, occur on 2 and 6. This is a key distinction between the Eddie Torres style and the On1 method you’ll meet on the next page.",
+          "In Eddie Torres’s basic, dancers step on counts 1, 2, 3 and 5, 6, 7. They change direction on counts 2 and 6, taking what dancers call a break step. The eight-count spans two measures of 4/4 music, so each break falls on the second beat of its measure. That timing gives On2 its name.",
         ],
         sources: [
           archive("New York Style Salsa (Salsa On 2) - Salsa Vida", "https://www.salsavida.com/salsa-dance-terms/new-york-style-salsa-on-2/"),
@@ -913,7 +913,7 @@ export const expansion = {
     alt: "Bad Bunny and a dance partner, a salsa band and a Puerto Rican casita appear on a paper halftime stage.",
     copy: [
       "Bad Bunny’s Super Bowl LX halftime show was a celebration of Puerto Rican culture, community and unity. A sequence of scenes brought viewers from the island’s sugarcane fields and neighborhood gatherings to a wedding reception, where a salsa band took center stage. Lady Gaga sang a salsa arrangement of “Die With a Smile” and danced with Bad Bunny.",
-      "The show then moved into “Baile Inolvidable,” his 2025 salsa hit, with professional salsa dancers from Puerto Rico, Los Angeles and beyond. For the salsa community, this was a landmark moment: the dance was a featured part of the show, performed by artists who had devoted years to their craft, not simply background choreography.",
+      "When Bad Bunny sang “Baile Inolvidable,” salsa dancers from Puerto Rico and Los Angeles took center stage. Among them were Puerto Rico’s Tito Ortos and Tamara Livolsi, longtime dance partners. Livolsi had also choreographed the song’s music video.",
       "The music that grew from Cuba’s cultural encounters, took shape under the name salsa in New York, and traveled across generations and continents had reached another extraordinary stage. But the story doesn’t end with a stadium or a television broadcast. It continues in every dance class, every club and every person discovering the joy of salsa for the first time. The next chapter is yours to dance.",
     ],
     sources: [
