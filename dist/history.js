@@ -601,7 +601,7 @@ export const expansion = {
       prop: {
         title: "The Slot",
         copy: [
-          "New York salsa dancers call the narrow lane they share the slot. In a cross-body lead, the leader steps aside, the follower travels straight through, and the partners turn to face each other from opposite ends. They can trade places again or break away for shines before meeting back in the slot.",
+          "New York salsa dancers call the narrow lane they share the slot. In a packed nightclub, each couple can keep to its own slot and dance without bumping into the couples on either side. In a cross-body lead, the leader steps aside, the follower travels straight through, and the partners turn to face each other from opposite ends. They can trade places again or break away for shines before meeting back in the slot.",
         ],
         sources: [
           archive("New York Style Salsa (Salsa On 2) - Salsa Vida", "https://www.salsavida.com/salsa-dance-terms/new-york-style-salsa-on-2/"),

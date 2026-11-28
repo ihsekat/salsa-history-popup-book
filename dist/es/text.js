@@ -402,7 +402,7 @@ export const text = {
       "prop": {
         "title": "El carril de baile",
         "copy": [
-          "Los bailarines de salsa neoyorquina llaman slot al carril estrecho que comparte la pareja. En un cross-body lead, quien guía se hace a un lado, su pareja atraviesa el carril en línea recta y ambos giran para volver a quedar frente a frente en los extremos opuestos. Pueden volver a intercambiar lugares o soltarse para hacer pasos libres antes de reencontrarse en el carril."
+          "Los bailarines de salsa neoyorquina llaman slot al carril estrecho que comparte la pareja. En un club con la pista llena, cada pareja se mantiene en su carril y así muchas parejas pueden bailar lado a lado sin chocar entre sí. En un cross-body lead, quien guía se hace a un lado, su pareja atraviesa el carril en línea recta y ambos giran para volver a quedar frente a frente en los extremos opuestos. Pueden volver a intercambiar lugares o soltarse para hacer pasos libres antes de reencontrarse en el carril."
         ]
       },
       "vhs": {

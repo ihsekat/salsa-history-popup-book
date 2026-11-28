@@ -402,7 +402,7 @@ export const text = {
       "prop": {
         "title": "Der Slot",
         "copy": [
-          "Als Slot bezeichnen New Yorker Salsa-Tänzerinnen und -Tänzer die schmale Bahn, auf der sich beide Partner bewegen. Beim Cross Body Lead tritt die führende Person zur Seite. Die folgende Person geht geradeaus vorbei, dann drehen sich beide so, dass sie einander an den entgegengesetzten Enden der Bahn gegenüberstehen. Sie können erneut die Plätze tauschen oder sich für Shines voneinander lösen und danach im Slot wieder zusammenfinden."
+          "Als Slot bezeichnen New Yorker Salsa-Tänzerinnen und -Tänzer die schmale Bahn, auf der sich beide Partner bewegen. Wenn der Club voll ist, können viele Paare nebeneinander tanzen, ohne zusammenzustoßen, solange jedes Paar auf seiner Bahn bleibt. Beim Cross Body Lead tritt die führende Person zur Seite. Die folgende Person geht geradeaus vorbei, dann drehen sich beide so, dass sie einander an den entgegengesetzten Enden der Bahn gegenüberstehen. Sie können erneut die Plätze tauschen oder sich für Shines voneinander lösen und danach im Slot wieder zusammenfinden."
         ]
       },
       "vhs": {

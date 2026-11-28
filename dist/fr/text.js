@@ -402,7 +402,7 @@ export const text = {
       "prop": {
         "title": "Le couloir de danse",
         "copy": [
-          "À New York, les danseurs de salsa appellent slot l’étroit couloir qu’ils partagent. Dans un cross-body lead, la personne qui guide s’écarte pour laisser passer son ou sa partenaire en ligne droite. Tous deux se tournent alors pour se retrouver face à face, chacun à un bout du couloir. Ils peuvent de nouveau échanger leurs places ou se séparer le temps de quelques shines avant de se rejoindre dans le couloir."
+          "À New York, les danseurs de salsa appellent slot l’étroit couloir qu’ils partagent. Quand la piste d’un club est bondée, chaque couple reste dans son couloir, ce qui permet à de nombreux couples de danser côte à côte sans se heurter. Dans un cross-body lead, la personne qui guide s’écarte pour laisser passer son ou sa partenaire en ligne droite. Tous deux se tournent alors pour se retrouver face à face, chacun à un bout du couloir. Ils peuvent de nouveau échanger leurs places ou se séparer le temps de quelques shines avant de se rejoindre dans le couloir."
         ]
       },
       "vhs": {

@@ -402,7 +402,7 @@ export const text = {
       "prop": {
         "title": "Il corridoio di ballo",
         "copy": [
-          "I ballerini di salsa newyorkese chiamano slot lo stretto corridoio in cui si muove la coppia. Nel cross-body lead, chi guida si sposta di lato per lasciar passare in linea retta chi segue. I due si voltano e si ritrovano di fronte, alle estremità opposte del corridoio. Possono scambiarsi di nuovo di posto oppure staccarsi per eseguire degli shines, prima di ritrovarsi nello slot."
+          "I ballerini di salsa newyorkese chiamano slot lo stretto corridoio in cui si muove la coppia. Quando la pista di un locale è affollata, ogni coppia rimane nel proprio corridoio e così tante coppie possono ballare fianco a fianco senza urtarsi. Nel cross-body lead, chi guida si sposta di lato per lasciar passare in linea retta chi segue. I due si voltano e si ritrovano di fronte, alle estremità opposte del corridoio. Possono scambiarsi di nuovo di posto oppure staccarsi per eseguire degli shines, prima di ritrovarsi nello slot."
         ]
       },
       "vhs": {
