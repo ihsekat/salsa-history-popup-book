@@ -27,7 +27,7 @@ export const text = {
       "prop": {
         "title": "Das Kanu",
         "copy": [
-          "Das Meer trennte die karibischen Gemeinschaften nicht nur, es verband sie auch. In Kanus gelangten Reisende, Waren und Wissen von Insel zu Insel. Selbst das englische Wort „canoe“ geht über das Spanische auf ein Wort der Taíno zurück. Wie die Maracas auf der nächsten Seite erinnert es daran, wie das indigene Erbe bis heute fortlebt."
+          "Die Taíno paddelten von Insel zu Insel, handelten mit benachbarten Gemeinschaften und gaben Neuigkeiten weiter. Das englische Wort „canoe“ stammt aus der Sprache der Taíno und kam über das Spanische ins Englische."
         ]
       }
     }
@@ -82,7 +82,7 @@ export const text = {
       "Im Laufe der jahrhundertelangen Kolonialherrschaft fasste das Spanische auf Kuba Fuß und wurde zur vorherrschenden Sprache. Das kubanische Spanisch nahm auch Wörter der Menschen auf, die zuvor schon auf der Insel lebten. Der Güiro auf der vorigen Seite trägt einen Namen aus der Sprache der Taíno. So fand das Wort Eingang ins Spanische und gehört heute zum Wortschatz der Salsa-Musik.",
       "Spanische Siedler brachten gitarrenbegleitete Lieder nach Kuba und eine Notenschrift, bei der die Töne auf fünf Linien und in deren Zwischenräumen stehen. Ein Gitarrist konnte den Gesang mit Akkorden begleiten oder zwischen den Strophen eine Melodie zupfen. Kubanische Musiker entwickelten die Tres, deren paarweise angeordnete Saiten dem Son seinen hellen, nachklingenden Ton gaben. Das Klavier kam später hinzu. Der kubanische Komponist Ignacio Cervantes griff in seinen kurzen Klavierstücken Tanzrhythmen der Insel auf. Später wurde das Klavier zu einem festen Bestandteil der Salsa-Bands.",
       "Auch europäische Gesellschaftstänze verbreiteten sich in der Karibik. Aus der Contradanza, die mehrere Paare gemeinsam tanzten, entwickelten sich mit der Zeit kubanische Formen, die den einzelnen Paaren mehr tänzerischen Freiraum ließen. Die Einflüsse kamen aus Spanien und anderen Teilen Europas. Auf ihrem Weg von Insel zu Insel veränderten sich Musik und Schritte.",
-      "Kubas Musiker entwickelten europäische Traditionen eigenständig weiter. Sie verbanden spanischsprachigen Gesang und harmonische Strukturen mit Rhythmen und Musizierweisen, die afrikanische und indigene Gemeinschaften der Karibik geprägt hatten. Dieses Zusammenspiel von Melodie, Harmonie und Rhythmus wurde zu einem wesentlichen Merkmal des Son und später der Salsa."
+      "Kubanische Musiker verbanden spanischsprachigen Gesang und europäische Harmonik mit Rhythmen und Instrumenten aus afrikanischen und indigenen Traditionen der Karibik. Dieses Zusammenspiel von Melodie, Harmonie und Rhythmus wurde zu einem wesentlichen Merkmal des Son und später der Salsa."
     ],
     "footerPlace": "Spanien und Kuba",
     "objects": {
@@ -288,7 +288,7 @@ export const text = {
     "copy": [
       "Schon als die Mambo-Ära zu Ende ging, experimentierte die New Yorker Latin-Szene mit neuen Klängen. Kubanischer Son und andere karibische Musikstile mischten sich mit Jazz, Soul und den Klängen der Großstadt. Die puerto-ricanische Bevölkerung New Yorks prägte diese neue Szene ebenso wie Musiker mit Wurzeln in allen Teilen der Karibik.",
       "Der dominikanische Bandleader Johnny Pacheco und der Anwalt Jerry Masucci gründeten 1964 Fania Records. Sie nahmen herausragende Musiker wie Willie Colón, Héctor Lavoe und Ray Barretto unter Vertrag und riefen die Fania All-Stars ins Leben. In dieser Supergroup kamen Musiker zusammen, die sonst eigene Bands leiteten oder in ihnen spielten.",
-      "Das spanische Wort „salsa“ bedeutet „Soße“ – ein passender Name für diese Mischung musikalischer Zutaten. Vieles in dieser Musik gab es schon vor Fania, und ob das Label den Begriff prägte, ist offen. Doch mit Schallplatten, Filmen und Werbung trug Fania dazu bei, Salsa als eigenständiges Genre international bekannt zu machen. Das Konzert der All-Stars 1971 im New Yorker Club Cheetah und der Film „Our Latin Thing“ (1972) fingen die Aufbruchstimmung einer Musikbewegung ein, die im Alltag der New Yorker Latinos wurzelte."
+      "Das spanische Wort „salsa“ bedeutet „Soße“ – ein passender Name für diese Mischung musikalischer Zutaten. Mit ihren Platten, Konzerten und Filmen trug die Plattenfirma Fania dazu bei, dass diese Musik weltweit unter dem Namen Salsa bekannt wurde. Das Konzert der All-Stars 1971 im New Yorker Club Cheetah und der Film „Our Latin Thing“ (1972) fingen die Aufbruchstimmung einer Musikbewegung ein, die im Alltag der New Yorker Latinos wurzelte."
     ],
     "footerPlace": "New York City",
     "objects": {
@@ -469,7 +469,7 @@ export const text = {
       "duo": {
         "title": "Die Tänzerinnen und Tänzer von Cali",
         "copy": [
-          "Die Salsa caleña ist bekannt für raffinierte Kicks, Taps, schnelle Gewichtswechsel und ausdrucksvolle Fußarbeit. Die Partner tanzen oft umeinander herum, während sie sich beim LA Style und beim New York Style typischerweise auf einer schmalen Bahn bewegen, dem Slot. Die schnellen Schritte sind ein Kennzeichen der Salsa caleña. Beim traditionellen geselligen Tanzen haben sie eine andere Form als in aufwendigen Bühnenchoreografien."
+          "Die Salsa caleña ist bekannt für raffinierte Kicks, Taps, schnelle Gewichtswechsel und ausdrucksvolle Fußarbeit. Die Partner tanzen oft umeinander herum und wechseln sich mit schnellen Kicks und Taps ab. Die Tanzgruppen aus Cali greifen diese Schritte in ihren präzise aufeinander abgestimmten Bühnenchoreografien auf."
         ]
       },
       "team": {

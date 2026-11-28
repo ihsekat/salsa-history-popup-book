@@ -27,7 +27,7 @@ export const text = {
       "prop": {
         "title": "La canoa",
         "copy": [
-          "El mar comunicaba a las comunidades del Caribe. En canoa viajaban personas, mercancías y conocimientos de una isla a otra. La propia palabra «canoa» es de origen taíno y pasó del español al inglés. Como las maracas que verás en la próxima página, es una huella de la herencia indígena que llega hasta nuestros días."
+          "Los taínos remaban de isla en isla por el Caribe para intercambiar productos y noticias con las comunidades vecinas. La palabra taína «canoa» pasó al español y de ahí al inglés, donde se escribe «canoe»."
         ]
       }
     }
@@ -82,7 +82,7 @@ export const text = {
       "A lo largo de los siglos de dominio colonial, el español arraigó en Cuba hasta convertirse en la lengua principal. También incorporó palabras de los pueblos que ya habitaban la isla. El güiro de la página anterior lleva un nombre taíno que pasó al español y al vocabulario de quienes hoy tocan salsa.",
       "Los colonos españoles trajeron canciones acompañadas con guitarra y un sistema de escritura musical en pentagrama. El guitarrista podía acompañar al cantante con rasgueos o puntear una melodía entre versos. En Cuba se desarrolló el tres, cuyas cuerdas dobles dieron al son su timbre brillante. Más tarde llegó el piano. El compositor cubano Ignacio Cervantes se inspiró en los ritmos bailables de la isla para escribir sus breves piezas pianísticas. Con el tiempo, el piano se convirtió en un pilar de las orquestas de salsa.",
       "Por el Caribe también circularon bailes sociales europeos. La contradanza se bailaba entre varias parejas y dio origen en Cuba a formas en las que cada pareja tenía más libertad de movimiento. Junto a la influencia española llegaron aportes de otras partes de Europa. La música y los pasos cambiaron al pasar de una isla a otra.",
-      "Los músicos cubanos combinaron el canto en español y las estructuras armónicas europeas con ritmos y prácticas musicales de las comunidades africanas e indígenas del Caribe. Esa relación entre melodía, armonía y ritmo sería fundamental para el son y, más adelante, para la salsa."
+      "Los músicos cubanos combinaron el canto en español y la armonía europea con ritmos e instrumentos de raíz africana e indígena del Caribe. Esa relación entre melodía, armonía y ritmo sería fundamental para el son y, más adelante, para la salsa."
     ],
     "footerPlace": "España y Cuba",
     "objects": {
@@ -288,7 +288,7 @@ export const text = {
     "copy": [
       "Mientras terminaba la época del mambo, la escena latina de Nueva York seguía experimentando. El son cubano y otros géneros caribeños se cruzaban con el jazz, el soul y los sonidos de la ciudad. Las comunidades puertorriqueñas fueron fundamentales en ese proceso, junto con músicos de otras partes del Caribe.",
       "El director dominicano Johnny Pacheco y el abogado Jerry Masucci fundaron Fania Records en 1964. Incorporaron al sello a figuras como Willie Colón, Héctor Lavoe y Ray Barretto. También formaron la Fania All-Stars, un conjunto de músicos que normalmente dirigían sus propias orquestas o tocaban en ellas.",
-      "La palabra «salsa», tomada de la cocina, le venía bien a esa mezcla de ingredientes musicales. Muchos de esos ritmos existían antes de Fania y el origen del nombre no puede atribuirse sin más al sello. Sus discos, películas y campañas sí ayudaron a que el género se reconociera internacionalmente. El concierto de la Fania All-Stars en el club Cheetah de Nueva York en 1971 y la película Nuestra Cosa Latina (1972) captaron el entusiasmo de un movimiento arraigado en la vida latina de la ciudad."
+      "La palabra «salsa», tomada de la cocina, le venía bien a esa mezcla de ingredientes musicales. Con sus discos, conciertos y películas, Fania ayudó a que el público de todo el mundo conociera esta música con el nombre de «salsa». El concierto de la Fania All-Stars en el club Cheetah de Nueva York en 1971 y la película Nuestra Cosa Latina (1972) captaron el entusiasmo de un movimiento arraigado en la vida latina de la ciudad."
     ],
     "footerPlace": "Nueva York",
     "objects": {
@@ -469,7 +469,7 @@ export const text = {
       "duo": {
         "title": "La pareja de salsa caleña",
         "copy": [
-          "La salsa caleña se distingue por sus patadas, punteos, cambios rápidos de peso y expresivo juego de pies. Las parejas suelen moverse alrededor una de otra, en vez de mantenerse en el carril estrecho de los estilos de Los Ángeles y Nueva York. Los pasos veloces son característicos, aunque el baile social tradicional tiene una dinámica distinta a la de una coreografía para el escenario."
+          "La salsa caleña se distingue por sus patadas, punteos, cambios rápidos de peso y expresivo juego de pies. Quienes bailan en pareja suelen girar uno alrededor del otro mientras intercambian patadas rápidas y punteos. Los grupos de baile de Cali llevan esos pasos al escenario en coreografías que ejecutan con gran sincronía."
         ]
       },
       "team": {

@@ -27,7 +27,7 @@ export const text = {
       "prop": {
         "title": "La pirogue",
         "copy": [
-          "La mer ne faisait pas que séparer les communautés des Caraïbes, elle les reliait. En pirogue, les voyageurs allaient d’île en île, transportant des marchandises et échangeant des savoirs. Le mot anglais « canoe » vient lui-même d’un mot taïno passé par l’espagnol. Comme les maracas que vous découvrirez à la page suivante, il témoigne de la présence de l’héritage autochtone dans le monde d’aujourd’hui."
+          "Les Taïnos allaient d’île en île à la pagaie pour échanger des marchandises et des nouvelles avec les communautés voisines. Le mot anglais « canoe » vient du taïno par l’intermédiaire de l’espagnol."
         ]
       }
     }
@@ -82,7 +82,7 @@ export const text = {
       "Au fil des siècles de domination coloniale, l’espagnol s’est implanté à Cuba et y est devenu la langue principale. L’espagnol de l’île s’est aussi enrichi de mots empruntés aux peuples qui l’habitaient déjà. Le güiro de la page précédente en est un exemple. Son nom taïno est passé en espagnol et se retrouve aujourd’hui dans le vocabulaire des musiciens de salsa.",
       "Les colons espagnols ont apporté des chansons accompagnées à la guitare et une façon d’écrire la musique sur une portée de cinq lignes. Un guitariste pouvait accompagner le chant en battant les accords, puis jouer une mélodie note à note entre deux couplets. Les musiciens cubains ont créé le tres, dont les cordes groupées par paires ont donné au son cubain sa sonorité brillante. Le piano est arrivé plus tard. Le compositeur cubain Ignacio Cervantes s’est inspiré des rythmes de danse de l’île pour écrire ses courtes pièces pour piano. L’instrument est devenu par la suite l’un des piliers des orchestres de salsa.",
       "Les danses de société européennes se sont également diffusées dans les Caraïbes. La contradanza, qui se dansait à plusieurs couples, a peu à peu pris à Cuba des formes qui laissaient à chaque couple plus de liberté pour danser à deux. Ces influences venaient d’Espagne et d’autres régions d’Europe. La musique et les pas se transformaient en circulant d’île en île.",
-      "Les musiciens de Cuba ne se sont pas contentés de reproduire les traditions européennes. Ils ont associé le chant en espagnol et les structures harmoniques européennes à des rythmes et à des pratiques musicales façonnés par les communautés africaines et autochtones des Caraïbes. Cette alliance de la mélodie, de l’harmonie et du rythme allait devenir un élément essentiel du son cubain, puis de la salsa."
+      "Les musiciens cubains ont associé le chant en espagnol et l’harmonie européenne à des rythmes et des instruments issus des traditions africaines et autochtones des Caraïbes. Cette alliance de la mélodie, de l’harmonie et du rythme allait devenir un élément essentiel du son cubain, puis de la salsa."
     ],
     "footerPlace": "Espagne et Cuba",
     "objects": {
@@ -288,7 +288,7 @@ export const text = {
     "copy": [
       "Alors même que l’ère du mambo touche à sa fin, les musiciens de la scène latine new-yorkaise multiplient les expériences. Le son cubain et d’autres genres caribéens se mêlent au jazz, à la soul et aux sonorités de la ville. Les communautés portoricaines jouent un rôle central dans cette nouvelle scène, aux côtés de musiciens originaires de tout le bassin caribéen.",
       "En 1964, le chef d’orchestre dominicain Johnny Pacheco et l’avocat Jerry Masucci fondent Fania Records. Ils signent des artistes d’exception, parmi lesquels Willie Colón, Héctor Lavoe et Ray Barretto. Ils réunissent aussi les Fania All-Stars, une formation de vedettes qui, d’ordinaire, dirigent leur propre orchestre ou jouent au sein de leur groupe respectif.",
-      "En espagnol, salsa signifie « sauce ». Le nom convient à ce mélange d’ingrédients musicaux. Fania n’a pas inventé toutes les musiques qui le composent, et rien ne dit que le label soit à l’origine du terme. Ses disques, ses films et son travail de promotion ont toutefois contribué à faire reconnaître la salsa dans le monde entier comme un genre à part entière. Le concert des All-Stars au Cheetah de New York en 1971 et le film Our Latin Thing (1972) témoignent de l’effervescence d’un mouvement musical né au sein des communautés latinos de la ville."
+      "En espagnol, salsa signifie « sauce ». Le nom convient à ce mélange d’ingrédients musicaux. Par ses disques, ses concerts et ses films, Fania a contribué à faire connaître cette musique dans le monde entier sous le nom de salsa. Le concert des All-Stars au Cheetah de New York en 1971 et le film Our Latin Thing (1972) témoignent de l’effervescence d’un mouvement musical né au sein des communautés latinos de la ville."
     ],
     "footerPlace": "New York",
     "objects": {
@@ -469,7 +469,7 @@ export const text = {
       "duo": {
         "title": "Les danseurs de salsa caleña",
         "copy": [
-          "La salsa caleña se reconnaît à ses combinaisons de coups de pied, à ses frappes légères au sol, à ses changements d’appui rapides et à ses jeux de jambes expressifs. Les partenaires dansent souvent l’un autour de l’autre, alors qu’à Los Angeles et à New York, ils évoluent généralement dans un couloir étroit. Si les pas rapides caractérisent la salsa caleña, la pratique traditionnelle en soirée se distingue des chorégraphies élaborées pour la scène."
+          "La salsa caleña se reconnaît à ses combinaisons de coups de pied, à ses frappes légères au sol, à ses changements d’appui rapides et à ses jeux de jambes expressifs. Les partenaires tournent souvent l’un autour de l’autre et se répondent par de rapides coups de pied et de petites frappes au sol. Sur scène, les troupes de Cali reprennent ces pas dans des chorégraphies de groupe réglées avec précision."
         ]
       },
       "team": {

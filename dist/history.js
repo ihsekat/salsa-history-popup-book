@@ -49,7 +49,7 @@ export const expansion = {
       prop: {
         title: "The canoe",
         copy: [
-          "The sea connected Caribbean communities rather than simply separating them. Canoes carried travelers, goods and knowledge between islands. Even the word “canoe” comes to English through Spanish from a Taíno word. Like the maracas you’ll meet on the next page, it’s a reminder of the Indigenous legacy in the modern world.",
+          "Taíno paddlers traveled between Caribbean islands by canoe, trading goods and sharing news with neighboring communities. The English word “canoe” came through Spanish from Taíno.",
         ],
         sources: [
           archive("Mesoamerica / Caribbean - National Museum of the American Indian", "https://americanindian.si.edu/exhibitions/infinityofnations/mesoamerica-caribbean.html"),
@@ -142,7 +142,7 @@ export const expansion = {
       "Spanish took root in Cuba through centuries of colonial rule and became its principal language. The Spanish spoken on the island also absorbed words from the people who already lived there. The güiro on the previous page carries a Taíno name into Spanish and into the vocabulary of salsa musicians today.",
       "Spanish settlers brought songs accompanied by guitar and a way of writing music on a five-line staff. A guitarist could strum beneath a singer or pick out a tune between verses. Cuban players developed the tres, whose paired strings gave son its ringing sound. The piano arrived later. Cuban composer Ignacio Cervantes drew on the island’s dance rhythms in his short piano pieces, and the piano later became a mainstay of salsa bands.",
       "European social dances also spread through the Caribbean. Contradanza, a dance performed by multiple couples, eventually developed Cuban forms in which pairs had more freedom to dance together. The influence came from several parts of Europe as well as Spain, and the music and steps changed as they circulated through the islands.",
-      "Cuba’s musicians didn’t simply reproduce European traditions. They combined Spanish-language singing and harmonic structures with rhythms and musical practices shaped by African and Indigenous Caribbean communities. This combination of melody, harmony and rhythm would become central to son and, eventually, salsa.",
+      "Cuban musicians combined Spanish-language singing and European harmony with rhythms and instruments rooted in African and Indigenous Caribbean traditions. This combination of melody, harmony and rhythm would become central to son and, eventually, salsa.",
     ],
     sources: [
       archive("History of Salsa Dance - Salsa Vida", "https://www.salsavida.com/articles/history-of-salsa-dance/#caribbean-cultural-influences"),
@@ -389,7 +389,7 @@ export const expansion = {
     copy: [
       "Even as the mambo era was ending, the Latin music scene in New York was alive with experimentation. Cuban son and other Caribbean genres mingled with jazz, soul and the sounds of the city. Puerto Rican communities were central to this new scene, as were musicians with roots across the Caribbean.",
       "Fania Records began in 1964, founded by Dominican bandleader Johnny Pacheco and lawyer Jerry Masucci. They built a roster of extraordinary talent, including Willie Colón, Héctor Lavoe and Ray Barretto, and assembled the Fania All-Stars, a supergroup of musicians who normally led or performed in their own bands.",
-      "The Spanish word salsa means sauce, a fitting name for this blend of musical ingredients. Fania didn’t invent all the music or necessarily coin the word, but its recordings, films and promotion helped turn salsa into an internationally recognized genre. The All-Stars’ 1971 concert at New York’s Cheetah club and the film Our Latin Thing (1972) captured the excitement of a new musical movement rooted in Latino life in the city.",
+      "The Spanish word salsa means sauce, a fitting name for this blend of musical ingredients. Through its records, concerts and films, Fania helped make salsa the name listeners around the world came to know. The All-Stars’ 1971 concert at New York’s Cheetah club and the film Our Latin Thing (1972) captured the excitement of a new musical movement rooted in Latino life in the city.",
     ],
     sources: [
       archive("History of Salsa Dance — Salsa Vida", "https://www.salsavida.com/articles/history-of-salsa-dance/"),
@@ -721,7 +721,7 @@ export const expansion = {
       duo: {
         title: "The caleña dancers",
         copy: [
-          "Salsa caleña is known for intricate kicks, taps, quick changes of weight and expressive footwork. Partners often dance around one another rather than staying in the narrow slot associated with LA and New York styles. The fast steps are characteristic of the dance, but traditional social dancing and elaborate stage choreography are not the same thing.",
+          "Salsa caleña is known for intricate kicks, taps, quick changes of weight and expressive footwork. Partners often circle one another, trading quick kicks and taps. Cali’s performance teams build those steps into tightly synchronized stage routines.",
         ],
         sources: [
           archive("La Vieja Guardia: Salsa Dancing in Cali, Colombia — Smithsonian Folklife", "https://folklife.si.edu/magazine/la-vieja-guardia-salsa-dancing-cali-colombia"),
